@@ -28,8 +28,13 @@ namespace devoir_maison
 
         protected string name;
 
+        protected bool isLiving;
+
+        protected int pain;
+
         public Character()
         {
+            this.pain = -1;
         }
 
         public int GetAttack()
@@ -130,6 +135,26 @@ namespace devoir_maison
         public void SetName(string name)
         {
             this.name = name;
+        }
+
+        public bool GetIsLiving()
+        {
+            return isLiving;
+        }
+
+        public void SetIsLiving(bool isLiving)
+        {
+            this.isLiving = isLiving;
+        }
+
+        public int GetPain()
+        {
+            return pain;
+        }
+        
+        public void SetPain(int pain)
+        {
+            this.pain = pain;
         }
     }
 }

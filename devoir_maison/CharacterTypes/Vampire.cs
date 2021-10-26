@@ -20,6 +20,7 @@ namespace devoir_maison.CharacterTypes
             totalAttackNumber = 2;
             currentAttackNumber = 2;
             characterType = "Zombie";
+            isLiving = false;
         }
     }
 }

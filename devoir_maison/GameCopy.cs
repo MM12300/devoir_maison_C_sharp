@@ -257,5 +257,48 @@ namespace devoir_maison
             }
             return isAlive(character1) ? character1.GetCharacterType() + " won" : character2.GetCharacterType();
         }
+
+
+        public void pain(Character character, int damage, int defenderLifePoints)
+        {
+            if (character.GetIsLiving())
+            {
+                int painGiven = ((damage - defenderLifePoints) * 2) / (defenderLifePoints + damage);
+                //If more than 50% of pain then has effects of pain, otherwise nothing happens
+                Random random1 = new Random();
+                int randomRoll = random1.Next(0, 100);
+
+                if (painGiven < randomRoll){
+                    Random random2 = new Random();
+                    int roundsToSkip = random2.Next(0, 2);
+                    
+                    if (character.GetPain() < roundsToSkip)
+                    {
+                        character.SetPain(roundsToSkip);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Pain is already here and stronger than that", character);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Pain is not strong enough to affect {0}", character);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Undead are not sensitive to pain");
+            }
+        }
+
+        public void removePain(Character character)
+        {
+            if(character.GetPain() > -1)
+            {
+                character.SetPain(character.GetPain() - 1);
+                Console.WriteLine("{0} pain is decreased", character.GetName());
+            }
+        }
     }
 }

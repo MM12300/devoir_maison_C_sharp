@@ -20,6 +20,7 @@ namespace devoir_maison.CharacterTypes
             totalAttackNumber = 3;
             currentAttackNumber = 3;
             characterType = "Guardian";
+            isLiving = true;
         }
     }
 }

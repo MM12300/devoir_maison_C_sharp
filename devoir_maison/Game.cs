@@ -175,7 +175,6 @@ namespace devoir_maison
                     Console.WriteLine("{0} attack number = {1}", character2.GetCharacterType(), character2.GetCurrentAttackNumber());
                 }else if (initiativeRollCharacter1 < initiativeRollCharacter2)
                 {
-
                     if(roll() > 50)
                     {
                         Console.WriteLine("{0} has initiative", character1.GetCharacterType());

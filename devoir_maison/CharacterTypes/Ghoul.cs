@@ -20,6 +20,7 @@ namespace devoir_maison.CharacterTypes
             totalAttackNumber = 5;
             currentAttackNumber = 5;
             characterType = "Ghoul";
+            isLiving = false;
         }
     }
 }
