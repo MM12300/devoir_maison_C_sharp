@@ -26,13 +26,26 @@ namespace devoir_maison
 
         protected string characterType;
 
-        public Character()
+        protected string name;
+
+        public Character(string name)
         {
+            this.name = name;
         }
 
         public int GetAttack()
         {
             return attack;
+        }
+
+        public void SetAttack(string name)
+        {
+            this.name = name;
+        }
+
+        public string GetName()
+        {
+            return name;
         }
 
         public void SetAttack(int attack)
