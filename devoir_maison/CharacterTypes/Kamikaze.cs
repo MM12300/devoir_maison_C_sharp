@@ -8,8 +8,9 @@ namespace devoir_maison.CharacterTypes
 {
     class Kamikaze : Character
     {
-        public Kamikaze()
+        public Kamikaze(string name)
         {
+            this.name = name;
             attack = 50;
             defense = 125;
             initiative = 20;

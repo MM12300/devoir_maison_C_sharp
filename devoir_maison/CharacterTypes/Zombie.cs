@@ -8,8 +8,9 @@ namespace devoir_maison.CharacterTypes
 {
     class Zombie : Character
     {
-        public Zombie()
+        public Zombie(string name)
         {
+            this.name = name;
             attack = 100;
             defense = 0;
             initiative = 20;

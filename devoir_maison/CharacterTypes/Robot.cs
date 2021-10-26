@@ -8,8 +8,9 @@ namespace devoir_maison.CharacterTypes
 {
     class Robot : Character
     {
-        public Robot()
+        public Robot(string name)
         {
+            this.name = name;
             attack = 10;
             defense = 100;
             initiative = 50;

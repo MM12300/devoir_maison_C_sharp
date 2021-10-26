@@ -8,8 +8,9 @@ namespace devoir_maison.CharacterTypes
 {
     class Guardian : Character
     {
-        public Guardian()
+        public Guardian(string name)
         {
+            this.name = name;
             attack = 50;
             defense = 150;
             initiative = 50;

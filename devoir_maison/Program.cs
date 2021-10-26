@@ -26,16 +26,10 @@ namespace devoir_maison
 
 
             GameCopy game = new GameCopy();
-            Character billyGhoul = new Warrior();
-            Character bobbyRobot = new Berserker();
+            Character billy = new Warrior("billy");
+            Character bobby = new Berserker("bobby");
             Console.WriteLine("FIGHT BEGINS!");
-            game.fight(billyGhoul, bobbyRobot);
-
-
-
-
-
-
+            game.fight(billy, bobby);
         }
     }
 }

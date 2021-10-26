@@ -8,8 +8,9 @@ namespace devoir_maison.CharacterTypes
 {
     class Ghoul : Character
     {
-        public Ghoul()
+        public Ghoul(string name)
         {
+            this.name = name;
             attack = 50;
             defense = 80;
             initiative = 120;

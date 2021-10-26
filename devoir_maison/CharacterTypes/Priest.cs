@@ -8,8 +8,9 @@ namespace devoir_maison.CharacterTypes
 {
     class Priest : Character
     {
-        public Priest()
+        public Priest(string name)
         {
+            this.name = name;
             attack = 75;
             defense = 125;
             initiative =50;

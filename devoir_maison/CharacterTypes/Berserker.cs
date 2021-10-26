@@ -8,8 +8,9 @@ namespace devoir_maison.CharacterTypes
 {
     class Berserker : Character
     {
-        public Berserker()
+        public Berserker(string name)
         {
+            this.name = name;
             attack = 100;
             defense = 100;
             initiative = 80;

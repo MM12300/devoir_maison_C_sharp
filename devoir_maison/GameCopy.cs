@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 
 namespace devoir_maison
 {
-
-
     //TODO CHANGE CONSOLEWRITELINE AVEC OPERATORS
     class GameCopy
     {

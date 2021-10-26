@@ -8,8 +8,9 @@ namespace devoir_maison.CharacterTypes
 {
     class Lich : Character
     {
-        public Lich()
+        public Lich(string name)
         {
+            this.name = name;
             attack = 75;
             defense = 125;
             initiative = 80;

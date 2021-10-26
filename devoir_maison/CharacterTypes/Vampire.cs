@@ -8,8 +8,9 @@ namespace devoir_maison.CharacterTypes
 {
     class Vampire : Character
     {
-        public Vampire()
+        public Vampire(string name)
         {
+            this.name = name;
             attack = 100;
             defense = 100;
             initiative = 120;

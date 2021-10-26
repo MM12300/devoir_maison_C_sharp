@@ -167,12 +167,29 @@ namespace devoir_maison
                     Console.WriteLine("{0} attack number = {1}", character1.GetCharacterType(), character1.GetCurrentAttackNumber());
                     Console.WriteLine("{0} attack number = {1}", character2.GetCharacterType(), character2.GetCurrentAttackNumber());
                 }
-                else
+                else if(initiativeRollCharacter1 < initiativeRollCharacter2)
                 {
                     Console.WriteLine("{0} has initiative", character2.GetCharacterType());
                     attackAndDefend(character2, character1);
                     Console.WriteLine("{0} attack number = {1}", character1.GetCharacterType(), character1.GetCurrentAttackNumber());
                     Console.WriteLine("{0} attack number = {1}", character2.GetCharacterType(), character2.GetCurrentAttackNumber());
+                }else if (initiativeRollCharacter1 < initiativeRollCharacter2)
+                {
+
+                    if(roll() > 50)
+                    {
+                        Console.WriteLine("{0} has initiative", character1.GetCharacterType());
+                        attackAndDefend(character1, character2);
+                        Console.WriteLine("{0} attack number = {1}", character1.GetCharacterType(), character1.GetCurrentAttackNumber());
+                        Console.WriteLine("{0} attack number = {1}", character2.GetCharacterType(), character2.GetCurrentAttackNumber());
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} has initiative", character2.GetCharacterType());
+                        attackAndDefend(character2, character1);
+                        Console.WriteLine("{0} attack number = {1}", character1.GetCharacterType(), character1.GetCurrentAttackNumber());
+                        Console.WriteLine("{0} attack number = {1}", character2.GetCharacterType(), character2.GetCurrentAttackNumber());
+                    }
                 }
                 Console.WriteLine("|||||||||||||||||");
                 Console.WriteLine("{0} lifepoints = {1} -- {2} lifepoints = {3}", character1.GetCharacterType(), character1.GetCurrentLife(), character2.GetCharacterType(), character2.GetCurrentLife());
