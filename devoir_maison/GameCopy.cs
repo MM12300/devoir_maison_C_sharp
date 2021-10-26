@@ -189,6 +189,10 @@ namespace devoir_maison
                     
                 }
                 Console.WriteLine("{0} attack is OVER", attacker.GetCharacterType());
+                Console.WriteLine("<3<3<3<3<3<3<3");
+                showLife(attacker);
+                showLife(defender);
+                Console.WriteLine("<3<3<3<3<3<3<3");
                 Console.WriteLine("---------------");
                 Console.WriteLine("{0} attack BEGINS", defender.GetCharacterType());
 
@@ -196,6 +200,11 @@ namespace devoir_maison
                 {
                     simpleAttack(defender, attacker);
                 }
+                Console.WriteLine("{0} attack is OVER", defender.GetCharacterType());
+                Console.WriteLine("<3<3<3<3<3<3<3");
+                showLife(attacker);
+                showLife(defender);
+                Console.WriteLine("<3<3<3<3<3<3<3");
             }
             else
             {
@@ -204,10 +213,9 @@ namespace devoir_maison
         }
 
 
-        public void round(Character character1, Character character2)
+        public void round(Character character1, Character character2, int roundNumber)
         {
-            
-            if(isAlive(character1) && isAlive(character2))
+            if (isAlive(character1) && isAlive(character2))
             {
                 Console.WriteLine("===================");
                 Console.WriteLine("A NEW ROUND STARTS");
@@ -244,17 +252,18 @@ namespace devoir_maison
             {
                 Console.WriteLine("One fighter is dead !");
             }
-            
-            
         }
 
         public string fight(Character character1, Character character2)
         {
+            int roundNumber = 1;
             while (isAlive(character1) && isAlive(character2))
             {
-                round(character1, character2);
+                Console.WriteLine("LETS START THE ROUND {0} ? (push enter key)", roundNumber);
+                Console.ReadLine();
+                round(character1, character2, roundNumber);
+                roundNumber++;
             }
-
             return isAlive(character1) ? character1.GetCharacterType() + " won" : character2.GetCharacterType();
         }
     }
