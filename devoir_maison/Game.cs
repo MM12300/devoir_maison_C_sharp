@@ -350,14 +350,14 @@ namespace devoir_maison
                         int roundsToSkip;
 
                         //WARRIOR RULES
-                         if(character.GetCharacterType() != "Warrior")
+                         if(character.GetCharacterType() == "Warrior")
                         {
-                            Random random = new Random();
-                            roundsToSkip = random.Next(0, 2);
+                            roundsToSkip = 1;
                         }
                         else
                         {
-                            roundsToSkip = 1;
+                            Random random = new Random();
+                            roundsToSkip = random.Next(0, 2);
                         }
 
                         Console.WriteLine("rounds to skip possible = {0}", roundsToSkip);
