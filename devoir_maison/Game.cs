@@ -233,7 +233,19 @@ namespace devoir_maison
 
                     if (fighting > 0)
                     {
-                        int damage = fighting * attacker.GetDamages() / 100;
+                        int damage;
+
+                        //BERSERKER RULE : add lost life points of Berserker to his damage during an attack
+                        if (attacker.GetCharacterType() == "Berserker")
+                        {
+                            int berserkerLostLifePoints = attacker.GetMaximumLife() - attacker.GetCurrentLife();
+                            damage = fighting * (attacker.GetDamages()+berserkerLostLifePoints) / 100;
+                        }
+                        else
+                        {
+                            damage = fighting * attacker.GetDamages() / 100;
+                        }
+
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, attacker.GetDamages());
                         int damageGiven = damageModifier(attacker, defender, damage);
                         defender.SetCurrentLife(defender.GetCurrentLife() - damageGiven);
@@ -296,9 +308,9 @@ namespace devoir_maison
                 Console.WriteLine("===================");
                 Console.ResetColor();
 
-                //RESET CURENT ATTACK NUMBER
-                character1.SetCurrentAttackNumber(character1.GetTotalAttackNumber());
-                character2.SetCurrentAttackNumber(character2.GetTotalAttackNumber());
+                //RESET CURENT ATTACK NUMBER (BERSERKER RULE)
+                resetAttackNumber(character1);
+                resetAttackNumber(character2);
 
                 //INITIATIVE
                 int rollInitiativeCharacter1 = roll();
@@ -359,7 +371,8 @@ namespace devoir_maison
         //PAIN RULES
         public void pain(Character character, int damage, int defenderLifePointsLeft)
         {
-            if (character.GetIsLiving() && isAlive(character))
+            //BERSERKER AND PAIN RULE
+            if (character.GetIsLiving() && isAlive(character) && character.GetCharacterType() != "Berserker")
             {
                 Console.WriteLine("{0} is a living character sensitive to pain, damage {1}, lifePointsLeft {2}", character.GetName(), damage, character.GetCurrentLife());
                 if (damage > defenderLifePointsLeft)
@@ -406,21 +419,40 @@ namespace devoir_maison
             }
             else
             {
-                Console.WriteLine("Undead are not sensitive to pain");
+                Console.WriteLine("Undead and Berserkers are not sensitive to pain");
             }
         }
 
         //CURSED AND BLESSED RULES
         public int damageModifier(Character attacker, Character defender, int damage)
         {
+            // if defender = blessed AND attacker = cursed OR defender = cursed AND attacker = blessed, life points lost after attack multiplied by 2
             if( (defender.GetIsBlessed() && attacker.GetIsCursed()) || (defender.GetIsCursed() && attacker.GetIsBlessed()) ){
                 int doubleDamage = damage * 2;
                 Console.WriteLine("Attacker is a {0} and defender is a {1} so damage*2 = {2} * 2 = {3}", attacker.GetCharacterType(), defender.GetCharacterType(), damage, doubleDamage);
                 return doubleDamage;
             }
+            else if(attacker.GetCharacterType() == "Berserker")
+            {
+                int berserkerLostLifePoints = attacker.GetMaximumLife() - attacker.GetCurrentLife();
+                return damage + berserkerLostLifePoints;
+            }
             else
             {
                 return damage;
+            }
+        }
+
+        public void resetAttackNumber(Character character)
+        {
+            //BERSERKER RULE
+            if (character.GetCharacterType() == "Berserker" && character.GetCurrentLife() < (character.GetMaximumLife()/2))
+            {
+                character.SetCurrentAttackNumber(4);
+            }
+            else
+            {
+                character.SetCurrentAttackNumber(character.GetTotalAttackNumber());
             }
         }
     }
