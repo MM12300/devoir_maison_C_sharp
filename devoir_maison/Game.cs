@@ -155,6 +155,7 @@ namespace devoir_maison
                 else if (fighting <= 0)
                 {
                     Console.WriteLine("{0} counter-attack", counterDefender.GetCharacterType());
+                    Console.WriteLine("Counter-Attacke value = {0}", fighting);
                     counterAttack(counterDefender, counterAttacker, fighting);
                 }
             }
@@ -193,8 +194,8 @@ namespace devoir_maison
                     //Delta negative = defender counter-attack
                     else if (fighting <= 0)
                     {
-                        Console.WriteLine("Counter-Attacke value = {0}", fighting);
                         Console.WriteLine("{0} counter-attack", defender.GetCharacterType());
+                        Console.WriteLine("Counter-Attacke value = {0}", fighting);
                         counterAttack(defender, attacker, fighting);
                     }
                 }
@@ -314,10 +315,11 @@ namespace devoir_maison
             if (character.GetIsLiving())
             {
                 Console.WriteLine("{0} is a living character sensitive to pain, damage {1}, lifePointsLeft {2}", character.GetName(), damage, character.GetCurrentLife());
-                if(damage > defenderLifePointsLeft)
+                Console.WriteLine("Damage, defenderLifePointsleft : {1}", damage, defenderLifePointsLeft);
+                if (damage > defenderLifePointsLeft)
                 {
                     float painPercentage = ((damage - defenderLifePointsLeft) * 2) / (defenderLifePointsLeft + damage);
-                    Console.WriteLine("Pain Percentage : {0}");
+
                     if(painPercentage * 100 > roll())
                     {
                         Random random = new Random();
@@ -337,7 +339,7 @@ namespace devoir_maison
                     }
                 }else
                 {
-                    Console.WriteLine("Pain is not strong enough to affect {0}", character);
+                    Console.WriteLine("Pain is not strong enough to affect {0}", character.GetName());
                 }
             }
             else
