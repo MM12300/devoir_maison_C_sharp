@@ -342,6 +342,8 @@ namespace devoir_maison
                     {
                         Random random = new Random();
                         int roundsToSkip = random.Next(0, 2);
+                        Console.WriteLine("rounds to skip possible = {0}", roundsToSkip);
+
                         if (character.GetPain() < roundsToSkip)
                         {
                             character.SetPain(roundsToSkip);
