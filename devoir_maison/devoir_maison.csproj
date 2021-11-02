@@ -54,7 +54,6 @@
     <Compile Include="CharacterTypes\Vampire.cs" />
     <Compile Include="CharacterTypes\Warrior.cs" />
     <Compile Include="CharacterTypes\Zombie.cs" />
-    <Compile Include="GameCopy.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
