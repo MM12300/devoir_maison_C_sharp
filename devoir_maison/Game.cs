@@ -137,16 +137,16 @@ namespace devoir_maison
 
         public void attenuatePain(Character character)
         {
+            if (character.GetPain() == -1)
+            {
+                Console.WriteLine("{0} pain is now back to normal ({1})", character.GetName(), character.GetPain());
+            }
             if (character.GetPain() > -1)
             {
                 int painBeforeAttenuation = character.GetPain();
                 int painAfterAttenuation = character.GetPain() - 1;
                 character.SetPain(painAfterAttenuation);
                 Console.WriteLine("{0} pain decreases from {1} to {2}", character.GetName(), painBeforeAttenuation, painAfterAttenuation);
-            }
-            if(character.GetPain() == -1)
-            {
-                Console.WriteLine("{0} pain is now back to normal ({1})", character.GetName(), character.GetPain());
             }
         }
 
@@ -329,21 +329,23 @@ namespace devoir_maison
 
         public void pain(Character character, int damage, int defenderLifePointsLeft)
         {
-            if (character.GetIsLiving())
+            if (character.GetIsLiving() && isAlive(character))
             {
                 Console.WriteLine("{0} is a living character sensitive to pain, damage {1}, lifePointsLeft {2}", character.GetName(), damage, character.GetCurrentLife());
-                Console.WriteLine("Damage, defenderLifePointsleft : {1}", damage, defenderLifePointsLeft);
                 if (damage > defenderLifePointsLeft)
                 {
-                    float painPercentage = ((damage - defenderLifePointsLeft) * 2) / (defenderLifePointsLeft + damage);
+                    double painPercentage = ((Convert.ToDouble(damage) - Convert.ToDouble(defenderLifePointsLeft)) * 2) / (Convert.ToDouble(defenderLifePointsLeft) + Convert.ToDouble(damage));
+                    double painRoll = Convert.ToDouble(roll());
+                    Console.WriteLine("painPercentage = {0}, painRoll = {1}", painPercentage*100, painRoll);
 
-                    if(painPercentage * 100 > roll())
+                    if (painPercentage * 100 > painRoll)
                     {
                         Random random = new Random();
                         int roundsToSkip = random.Next(0, 2);
                         if (character.GetPain() < roundsToSkip)
                         {
                             character.SetPain(roundsToSkip);
+                            Console.WriteLine("{0} has now a pain of ({1})", character.GetName(), character.GetPain());
                         }
                         else
                         {
@@ -352,7 +354,7 @@ namespace devoir_maison
                     }
                     else
                     {
-                        Console.WriteLine("Luckily don't feel the pain");
+                        Console.WriteLine("Luckily don't feel the pain, painPercentage = {0}", painPercentage);
                     }
                 }else
                 {
@@ -362,15 +364,6 @@ namespace devoir_maison
             else
             {
                 Console.WriteLine("Undead are not sensitive to pain");
-            }
-        }
-
-        public void removePain(Character character)
-        {
-            if(character.GetPain() > -1)
-            {
-                character.SetPain(character.GetPain() - 1);
-                Console.WriteLine("{0} pain is decreased", character.GetName());
             }
         }
     }
