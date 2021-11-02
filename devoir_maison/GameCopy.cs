@@ -100,6 +100,35 @@ namespace devoir_maison
         //TODO A COMPLETER REMAPL:CER IF ELSE DANS SIMPLE ATTACK ET COUNTER ATTACK
         public void stillHasAttacks() { }
 
+        public bool canAttack(Character character)
+        {
+            if(character.GetPain() > -1)
+            {
+                Console.WriteLine("{0} must skip turn because of pain ({1})", character.GetName(), character.GetPain());
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("No turn to skip because of pain");
+                return true;
+            }
+        }
+
+        public void attenuatePain(Character character)
+        {
+            if (character.GetPain() > -1)
+            {
+                int painBeforeAttenuation = character.GetPain();
+                int painAfterAttenuation = character.GetPain() - 1;
+                character.SetPain(painAfterAttenuation);
+                Console.WriteLine("{0} pain decreases from {1} to {2}", character.GetName(), painBeforeAttenuation, painAfterAttenuation);
+            }
+            if(character.GetPain() == -1)
+            {
+                Console.WriteLine("{0} pain is now back to normal ({1})", character.GetName(), character.GetPain());
+            }
+        }
+
 
         public void counterAttack(Character counterAttacker, Character counterDefender, int counterAttackValue)
         {
@@ -120,6 +149,7 @@ namespace devoir_maison
                     Console.WriteLine("Counter-Attache : {0}", counterAttackValue);
                     counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - (-counterAttackValue));
                     Console.WriteLine("{0} **counter-attacks** : removes {1} life points to {2}", counterAttacker.GetCharacterType(), counterAttackValue, counterDefender.GetCharacterType());
+                    pain(counterDefender, (-counterAttackValue), counterDefender.GetCurrentLife());
                 }
                 //Delta negative = defender counter-attack
                 else if (fighting <= 0)
@@ -158,6 +188,7 @@ namespace devoir_maison
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, attacker.GetDamages());
                         defender.SetCurrentLife(defender.GetCurrentLife() - damage);
                         Console.WriteLine("{0} **attacks** removes {1} life points to {2}", attacker.GetCharacterType(), damage, defender.GetCharacterType());
+                        pain(defender, damage, defender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
                     else if (fighting <= 0)
@@ -177,29 +208,34 @@ namespace devoir_maison
 
         public void attackAndDefend(Character attacker, Character defender)
         {
-            if (attacker.GetCurrentLife() > 0 && defender.GetCurrentLife() > 0)
-            {
-                Console.WriteLine("---------------");
-                Console.WriteLine("{0} attack BEGINS", attacker.GetCharacterType());
-
-                for (int i = 1; i <= attacker.GetTotalAttackNumber(); i++)
+                if (attacker.GetCurrentLife() > 0 && defender.GetCurrentLife() > 0)
                 {
-                    simpleAttack(attacker, defender);
-                }
-                Console.WriteLine("{0} attack is OVER", attacker.GetCharacterType());
-                showLife(attacker);
-                showLife(defender);
-                Console.WriteLine("---------------");
-                Console.WriteLine("{0} attack BEGINS", defender.GetCharacterType());
+                    Console.WriteLine("---------------");
+                    Console.WriteLine("{0} attack BEGINS", attacker.GetCharacterType());
 
-                for (int j = 0; j < defender.GetTotalAttackNumber(); j++)
-                {
-                    simpleAttack(defender, attacker);
+                    for (int i = 1; i <= attacker.GetTotalAttackNumber(); i++)
+                    {
+                        if (canAttack(attacker)) {
+                            simpleAttack(attacker, defender);
+                        }
+                    }
+                    Console.WriteLine("{0} attack is OVER", attacker.GetCharacterType());
+                    showLife(attacker);
+                    showLife(defender);
+                    Console.WriteLine("---------------");
+                    Console.WriteLine("{0} attack BEGINS", defender.GetCharacterType());
+
+                    for (int j = 0; j < defender.GetTotalAttackNumber(); j++)
+                    {
+                        if (canAttack(defender))
+                        {
+                            simpleAttack(defender, attacker);
+                        }
+                    }
+                    Console.WriteLine("{0} attack is OVER", defender.GetCharacterType());
+                    showLife(attacker);
+                    showLife(defender);
                 }
-                Console.WriteLine("{0} attack is OVER", defender.GetCharacterType());
-                showLife(attacker);
-                showLife(defender);
-            }
         }
 
 
@@ -217,12 +253,11 @@ namespace devoir_maison
                 character1.SetCurrentAttackNumber(character1.GetTotalAttackNumber());
                 character2.SetCurrentAttackNumber(character2.GetTotalAttackNumber());
 
-                //INITIATIVE CALCULATIONS
+                //INITIATIVE
                 int rollInitiativeCharacter1 = roll();
                 int rollInitiativeCharacter2 = roll();
                 int initiativeRollCharacter1 = rollOf("initiative", rollInitiativeCharacter1, character1);
                 int initiativeRollCharacter2 = rollOf("initiative", rollInitiativeCharacter2, character2);
-
                 if (initiativeRollCharacter1 > initiativeRollCharacter2)
                 {
                     Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character1.GetCharacterType(), character1.GetTotalAttackNumber());
@@ -244,6 +279,10 @@ namespace devoir_maison
                         attackAndDefend(character2, character1);
                     }
                 }
+
+                attenuatePain(character1);
+                attenuatePain(character2);
+
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("===================");
                 Console.WriteLine("THE ROUND IS OVER : {0} LIFEPOINTS : {1} --- {2} LIFEPOINTS : {3}", character1.GetCharacterType(), character1.GetCurrentLife(), character2.GetCharacterType(), character2.GetCurrentLife());
@@ -274,10 +313,12 @@ namespace devoir_maison
         {
             if (character.GetIsLiving())
             {
+                Console.WriteLine("{0} is a living character sensitive to pain, damage {1}, lifePointsLeft {2}", character.GetName(), damage, character.GetCurrentLife());
                 if(damage > defenderLifePointsLeft)
                 {
-                    int painPercentage = ((damage - defenderLifePointsLeft) * 2) / (defenderLifePointsLeft + damage);
-                    if(painPercentage > roll())
+                    float painPercentage = ((damage - defenderLifePointsLeft) * 2) / (defenderLifePointsLeft + damage);
+                    Console.WriteLine("Pain Percentage : {0}");
+                    if(painPercentage * 100 > roll())
                     {
                         Random random = new Random();
                         int roundsToSkip = random.Next(0, 2);
