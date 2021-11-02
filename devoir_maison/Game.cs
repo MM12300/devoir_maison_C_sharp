@@ -368,5 +368,17 @@ namespace devoir_maison
                 Console.WriteLine("Undead are not sensitive to pain");
             }
         }
+
+        public int damageModifier(Character attacker, Character defender, int damage)
+        {
+            if( (defender.GetIsBlessed() && attacker.GetIsCursed()) || (defender.GetIsCursed() && defender.GetIsBlessed()) ){
+                int doubleDamage = damage * 2;
+                return doubleDamage;
+            }
+            else
+            {
+                return damage;
+            }
+        }
     }
 }
