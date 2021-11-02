@@ -228,10 +228,21 @@ namespace devoir_maison
                     Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character1.GetCharacterType(), character1.GetTotalAttackNumber());
                     attackAndDefend(character1, character2);
                 }
-                else
+                else if (initiativeRollCharacter1 < initiativeRollCharacter2)
                 {
                     Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character2.GetCharacterType(), character2.GetTotalAttackNumber());
                     attackAndDefend(character2, character1);
+                }else if(initiativeRollCharacter1 == initiativeRollCharacter2)
+                {
+                    int randomRoll = roll();
+                    if(randomRoll >= 50)
+                    {
+                        attackAndDefend(character1, character2);
+                    }
+                    else
+                    {
+                        attackAndDefend(character2, character1);
+                    }
                 }
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("===================");
@@ -259,29 +270,31 @@ namespace devoir_maison
         }
 
 
-        public void pain(Character character, int damage, int defenderLifePoints)
+        public void pain(Character character, int damage, int defenderLifePointsLeft)
         {
             if (character.GetIsLiving())
             {
-                int painGiven = ((damage - defenderLifePoints) * 2) / (defenderLifePoints + damage);
-                //If more than 50% of pain then has effects of pain, otherwise nothing happens
-                Random random1 = new Random();
-                int randomRoll = random1.Next(0, 100);
-
-                if (painGiven < randomRoll){
-                    Random random2 = new Random();
-                    int roundsToSkip = random2.Next(0, 2);
-                    
-                    if (character.GetPain() < roundsToSkip)
+                if(damage > defenderLifePointsLeft)
+                {
+                    int painPercentage = ((damage - defenderLifePointsLeft) * 2) / (defenderLifePointsLeft + damage);
+                    if(painPercentage > roll())
                     {
-                        character.SetPain(roundsToSkip);
+                        Random random = new Random();
+                        int roundsToSkip = random.Next(0, 2);
+                        if (character.GetPain() < roundsToSkip)
+                        {
+                            character.SetPain(roundsToSkip);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Pain is already here and stronger than that", character);
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Pain is already here and stronger than that", character);
+                        Console.WriteLine("Luckily don't feel the pain");
                     }
-                }
-                else
+                }else
                 {
                     Console.WriteLine("Pain is not strong enough to affect {0}", character);
                 }
