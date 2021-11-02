@@ -98,20 +98,41 @@ namespace devoir_maison
         }
 
         //TODO A COMPLETER REMAPL:CER IF ELSE DANS SIMPLE ATTACK ET COUNTER ATTACK
-        public void stillHasAttacks() { }
-
-        public bool canAttack(Character character)
+        public bool hasAttacks(Character attacker) 
         {
-            if(character.GetPain() > -1)
+            if(attacker.GetCurrentAttackNumber() > 0)
             {
-                Console.WriteLine("{0} must skip turn because of pain ({1})", character.GetName(), character.GetPain());
-                return false;
+                Console.WriteLine("{0} attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
+                return true;
             }
             else
             {
-                Console.WriteLine("No turn to skip because of pain");
+                Console.WriteLine("Counter-attack is cancelled : {0} has no more attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
+                return false;
+            }
+        }
+
+        public bool canAttackPain(Character attacker)
+        {     
+            if (attacker.GetIsLiving())
+            {
+                if (attacker.GetPain() > -1)
+                {
+                    Console.WriteLine("{0} must skip turn because of pain ({1})", attacker.GetName(), attacker.GetPain());
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("No turn to skip because of pain");
+                    return true;
+                }
+            }
+            else
+            {
+                Console.WriteLine("{0} is not sensitive do pain", attacker.GetName());
                 return true;
             }
+
         }
 
         public void attenuatePain(Character character)
@@ -132,13 +153,14 @@ namespace devoir_maison
 
         public void counterAttack(Character counterAttacker, Character counterDefender, int counterAttackValue)
         {
+            //CHECK IF ATTACKERS AND DEFENDERS ARE ALIVE
             if (isAlive(counterAttacker) && isAlive(counterDefender))
             {
-                if (counterAttacker.GetCurrentAttackNumber() > 0)
+                if (hasAttacks(counterAttacker) && canAttackPain(counterAttacker))
                 {
                     showLife(counterAttacker);
                     showLife(counterDefender);
-                    Console.WriteLine("{0} attacks ({1}/{2})", counterAttacker.GetName(), counterAttacker.GetCurrentAttackNumber(), counterAttacker.GetTotalAttackNumber());
+
                     //Remove attacks to attacker
                     counterAttacker.SetCurrentAttackNumber(counterAttacker.GetCurrentAttackNumber() - 1);
                     int counterAttacking = attack(counterAttacker);
@@ -161,22 +183,17 @@ namespace devoir_maison
                         counterAttack(counterDefender, counterAttacker, fighting);
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Counter-attack is cancelled : {0} has no more attacks ({1}/{2})", counterAttacker.GetName(), counterAttacker.GetCurrentAttackNumber(), counterAttacker.GetTotalAttackNumber());
-                }
             }
         }
 
         public void simpleAttack(Character attacker, Character defender)
         {
+            //CHECK IF ATTACKERS AND DEFENDERS ARE ALIVE
             if (isAlive(attacker) && isAlive(defender)){
-                if (attacker.GetCurrentAttackNumber() > 0)
+                if (hasAttacks(attacker) && canAttackPain(attacker))
                 {
                     showLife(attacker);
                     showLife(defender);
-
-                    Console.WriteLine("{0} attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
                     //Remove attacks to attacker
                     attacker.SetCurrentAttackNumber(attacker.GetCurrentAttackNumber() - 1);
                     //calculate attack and defense values
@@ -202,10 +219,6 @@ namespace devoir_maison
                         counterAttack(defender, attacker, fighting);
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Attack is cancelled : {0} has no more attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
-                }
             }
         }
 
@@ -221,10 +234,7 @@ namespace devoir_maison
                     {
                         if(isAlive(attacker) && isAlive(defender))
                         {
-                            if (canAttack(attacker))
-                            {
-                                simpleAttack(attacker, defender);
-                            }
+                            simpleAttack(attacker, defender);
                         }
                     }
                     Console.WriteLine("{0} attack is OVER", attacker.GetName());
@@ -237,10 +247,7 @@ namespace devoir_maison
                     {
                         if (isAlive(attacker) && isAlive(defender))
                         {
-                            if (canAttack(attacker))
-                            {
-                                simpleAttack(defender, attacker);
-                            }
+                            simpleAttack(defender, attacker);
                         }
                     }
                     Console.WriteLine("{0} attack is OVER", defender.GetName());
