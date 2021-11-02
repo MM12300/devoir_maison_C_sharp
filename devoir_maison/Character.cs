@@ -32,6 +32,10 @@ namespace devoir_maison
 
         protected int pain;
 
+        protected bool isBlessed;
+
+        protected bool isCursed;
+
         public Character()
         {
             this.pain = -1;
@@ -155,6 +159,26 @@ namespace devoir_maison
         public void SetPain(int pain)
         {
             this.pain = pain;
+        }
+
+        public bool GetIsBlessed()
+        {
+            return isBlessed;
+        }
+
+        public void SetIsBlessed(bool isBlessed)
+        {
+            this.isBlessed = isBlessed;
+        }
+
+        public bool GetIsCursed()
+        {
+            return isCursed;
+        }
+
+        public void SetIsCursed(bool isCursed)
+        {
+            this.isCursed = isCursed;
         }
     }
 }

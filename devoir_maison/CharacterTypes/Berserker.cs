@@ -21,6 +21,8 @@ namespace devoir_maison.CharacterTypes
             currentAttackNumber = 1;
             characterType = "Berserker";
             isLiving = true;
+            isCursed = false;
+            isBlessed = false;
         }
     }
 }

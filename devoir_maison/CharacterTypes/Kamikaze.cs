@@ -21,6 +21,8 @@ namespace devoir_maison.CharacterTypes
             currentAttackNumber = 6;
             characterType = "Kamikaze";
             isLiving = true;
+            isCursed = false;
+            isBlessed = false;
         }
     }
 }

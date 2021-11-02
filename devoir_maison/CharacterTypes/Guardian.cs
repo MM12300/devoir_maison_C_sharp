@@ -21,6 +21,8 @@ namespace devoir_maison.CharacterTypes
             currentAttackNumber = 3;
             characterType = "Guardian";
             isLiving = true;
+            isCursed = false;
+            isBlessed = true;
         }
     }
 }

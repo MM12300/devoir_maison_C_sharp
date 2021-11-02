@@ -21,6 +21,8 @@ namespace devoir_maison.CharacterTypes
             currentAttackNumber = 2;
             characterType = "Warrior";
             isLiving = true;
+            isCursed = false;
+            isBlessed = false;
         }
     }
 }

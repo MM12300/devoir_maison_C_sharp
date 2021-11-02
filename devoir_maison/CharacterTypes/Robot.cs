@@ -21,6 +21,8 @@ namespace devoir_maison.CharacterTypes
             currentAttackNumber = 1;
             characterType = "Robot";
             isLiving = true;
+            isCursed = false;
+            isBlessed = false;
         }
     }
 }

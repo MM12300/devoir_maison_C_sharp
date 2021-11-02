@@ -21,6 +21,8 @@ namespace devoir_maison.CharacterTypes
             currentAttackNumber = 5;
             characterType = "Ghoul";
             isLiving = false;
+            isCursed = true;
+            isBlessed = false;
         }
     }
 }

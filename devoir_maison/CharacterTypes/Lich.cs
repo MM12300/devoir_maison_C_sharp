@@ -21,6 +21,8 @@ namespace devoir_maison.CharacterTypes
             currentAttackNumber = 3;
             characterType = "Lich";
             isLiving = false;
+            isCursed = true;
+            isBlessed = false;
         }
     }
 }

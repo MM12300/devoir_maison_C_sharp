@@ -21,6 +21,8 @@ namespace devoir_maison.CharacterTypes
             currentAttackNumber = 1;
             characterType = "Zombie";
             isLiving = false;
+            isCursed = true;
+            isBlessed = false;
         }
     }
 }
