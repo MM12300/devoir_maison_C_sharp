@@ -17,6 +17,8 @@ namespace devoir_maison
 
             bobby.SetCurrentLife(50);
             billy.SetCurrentLife(50);
+
+            billy.SetAttack(500);
             Console.WriteLine("FIGHT BEGINS!");
             game.fight(billy, bobby);
         }
