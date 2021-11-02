@@ -164,21 +164,44 @@ namespace devoir_maison
 
                     //Remove attacks to attacker
                     counterAttacker.SetCurrentAttackNumber(counterAttacker.GetCurrentAttackNumber() - 1);
-                    int counterAttacking = attack(counterAttacker);
+                    int counterAttacking;
+
+                    //GUARDIAN RULES
+                    if (counterAttacker.GetCharacterType() == "Guardian")
+                    {
+                        counterAttacking = attack(counterAttacker) + (counterAttackValue * -2);
+                    }
+                    else
+                    {
+                        counterAttacking = attack(counterAttacker) + counterAttackValue * -1;
+                    }
                     int counterDefending = defense(counterDefender);
 
                     int fighting = counterAttacking - counterDefending;
 
                     if (fighting > 0)
                     {
+                        //------ VIEILLE VERSION DE LA CONTRE-ATTAQUE
+                        //Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        //Console.WriteLine("COUNTER ATTACK SUCCESS");
+                        //Console.ResetColor();
+                        //Console.WriteLine("Counter-Attack : {0}", counterAttackValue);
+                        //int damageGiven = damageModifier(counterAttacker, counterDefender, -counterAttackValue);
+
+                        //counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - damageGiven);
+                        //Console.WriteLine("{0} **counter-attacks** : removes {1} life points to {2}", counterAttacker.GetName(), damageGiven, counterDefender.GetName());
+                        //pain(counterDefender, (-counterAttackValue), counterDefender.GetCurrentLife());
+
+                        //----------------
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("COUNTER ATTACK SUCCESS");
                         Console.ResetColor();
-                        Console.WriteLine("Counter-Attack : {0}", counterAttackValue);
-                        int damageGiven = damageModifier(counterAttacker, counterDefender, -counterAttackValue);
+                        int damage = fighting * counterAttacker.GetDamages() / 100;
+                        Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, counterAttacker.GetDamages());
+                        int damageGiven = damageModifier(counterAttacker, counterDefender, damage);
                         counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - damageGiven);
-                        Console.WriteLine("{0} **counter-attacks** : removes {1} life points to {2}", counterAttacker.GetName(), damageGiven, counterDefender.GetName());
-                        pain(counterDefender, (-counterAttackValue), counterDefender.GetCurrentLife());
+                        Console.WriteLine("{0} **attacks** removes {1} life points to {2}", counterAttacker.GetName(), damageGiven, counterDefender.GetName());
+                        pain(counterDefender, damage, counterDefender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
                     else if (fighting <= 0)
