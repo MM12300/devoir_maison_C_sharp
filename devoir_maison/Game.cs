@@ -97,7 +97,6 @@ namespace devoir_maison
             Console.ResetColor();
         }
 
-        //TODO A COMPLETER REMAPL:CER IF ELSE DANS SIMPLE ATTACK ET COUNTER ATTACK
         public bool hasAttacks(Character attacker) 
         {
             if(attacker.GetCurrentAttackNumber() > 0)
@@ -112,6 +111,7 @@ namespace devoir_maison
             }
         }
 
+        //PAIN RULES
         public bool canAttackPain(Character attacker)
         {     
             if (attacker.GetIsLiving())
@@ -135,6 +135,7 @@ namespace devoir_maison
 
         }
 
+        //PAIN RULES
         public void attenuatePain(Character character)
         {
             if (character.GetPain() == -1)
@@ -332,6 +333,7 @@ namespace devoir_maison
         }
 
 
+        //PAIN RULES
         public void pain(Character character, int damage, int defenderLifePointsLeft)
         {
             if (character.GetIsLiving() && isAlive(character))
@@ -345,8 +347,19 @@ namespace devoir_maison
 
                     if (painPercentage * 100 > painRoll)
                     {
-                        Random random = new Random();
-                        int roundsToSkip = random.Next(0, 2);
+                        int roundsToSkip;
+
+                        //WARRIOR RULES
+                         if(character.GetCharacterType() != "Warrior")
+                        {
+                            Random random = new Random();
+                            roundsToSkip = random.Next(0, 2);
+                        }
+                        else
+                        {
+                            roundsToSkip = 1;
+                        }
+
                         Console.WriteLine("rounds to skip possible = {0}", roundsToSkip);
 
                         if (character.GetPain() < roundsToSkip)
@@ -374,6 +387,7 @@ namespace devoir_maison
             }
         }
 
+        //CURSED AND BLESSED RULES
         public int damageModifier(Character attacker, Character defender, int damage)
         {
             if( (defender.GetIsBlessed() && attacker.GetIsCursed()) || (defender.GetIsCursed() && attacker.GetIsBlessed()) ){
