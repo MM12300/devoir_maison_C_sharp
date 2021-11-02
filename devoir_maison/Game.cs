@@ -138,7 +138,7 @@ namespace devoir_maison
                 {
                     showLife(counterAttacker);
                     showLife(counterDefender);
-                    Console.WriteLine("{0} attacks ({1}/{2})", counterAttacker.GetCharacterType(), counterAttacker.GetCurrentAttackNumber(), counterAttacker.GetTotalAttackNumber());
+                    Console.WriteLine("{0} attacks ({1}/{2})", counterAttacker.GetName(), counterAttacker.GetCurrentAttackNumber(), counterAttacker.GetTotalAttackNumber());
                     //Remove attacks to attacker
                     counterAttacker.SetCurrentAttackNumber(counterAttacker.GetCurrentAttackNumber() - 1);
                     int counterAttacking = attack(counterAttacker);
@@ -150,20 +150,20 @@ namespace devoir_maison
                     {
                         Console.WriteLine("Counter-Attack : {0}", counterAttackValue);
                         counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - (-counterAttackValue));
-                        Console.WriteLine("{0} **counter-attacks** : removes {1} life points to {2}", counterAttacker.GetCharacterType(), counterAttackValue, counterDefender.GetCharacterType());
+                        Console.WriteLine("{0} **counter-attacks** : removes {1} life points to {2}", counterAttacker.GetName(), counterAttackValue, counterDefender.GetName());
                         pain(counterDefender, (-counterAttackValue), counterDefender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
                     else if (fighting <= 0)
                     {
-                        Console.WriteLine("{0} counter-attack", counterDefender.GetCharacterType());
+                        Console.WriteLine("{0} counter-attack", counterDefender.GetName());
                         Console.WriteLine("Counter-Attacke value = {0}", fighting);
                         counterAttack(counterDefender, counterAttacker, fighting);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Counter-attack is cancelled : {0} has no more attacks ({1}/{2})", counterAttacker.GetCharacterType(), counterAttacker.GetCurrentAttackNumber(), counterAttacker.GetTotalAttackNumber());
+                    Console.WriteLine("Counter-attack is cancelled : {0} has no more attacks ({1}/{2})", counterAttacker.GetName(), counterAttacker.GetCurrentAttackNumber(), counterAttacker.GetTotalAttackNumber());
                 }
             }
         }
@@ -176,7 +176,7 @@ namespace devoir_maison
                     showLife(attacker);
                     showLife(defender);
 
-                    Console.WriteLine("{0} attacks ({1}/{2})", attacker.GetCharacterType(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
+                    Console.WriteLine("{0} attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
                     //Remove attacks to attacker
                     attacker.SetCurrentAttackNumber(attacker.GetCurrentAttackNumber() - 1);
                     //calculate attack and defense values
@@ -191,20 +191,20 @@ namespace devoir_maison
                         int damage = fighting * attacker.GetDamages() / 100;
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, attacker.GetDamages());
                         defender.SetCurrentLife(defender.GetCurrentLife() - damage);
-                        Console.WriteLine("{0} **attacks** removes {1} life points to {2}", attacker.GetCharacterType(), damage, defender.GetCharacterType());
+                        Console.WriteLine("{0} **attacks** removes {1} life points to {2}", attacker.GetName(), damage, defender.GetName());
                         pain(defender, damage, defender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
                     else if (fighting <= 0)
                     {
-                        Console.WriteLine("{0} counter-attack", defender.GetCharacterType());
+                        Console.WriteLine("{0} counter-attack", defender.GetName());
                         Console.WriteLine("Counter-Attacke value = {0}", fighting);
                         counterAttack(defender, attacker, fighting);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Attack is cancelled : {0} has no more attacks ({1}/{2})", attacker.GetCharacterType(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
+                    Console.WriteLine("Attack is cancelled : {0} has no more attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
                 }
             }
         }
@@ -215,7 +215,7 @@ namespace devoir_maison
                 if (attacker.GetCurrentLife() > 0 && defender.GetCurrentLife() > 0)
                 {
                     Console.WriteLine("---------------");
-                    Console.WriteLine("{0} attack BEGINS", attacker.GetCharacterType());
+                    Console.WriteLine("{0} attack BEGINS", attacker.GetName());
 
                     for (int i = 1; i <= attacker.GetTotalAttackNumber(); i++)
                     {
@@ -227,11 +227,11 @@ namespace devoir_maison
                             }
                         }
                     }
-                    Console.WriteLine("{0} attack is OVER", attacker.GetCharacterType());
+                    Console.WriteLine("{0} attack is OVER", attacker.GetName());
                     showLife(attacker);
                     showLife(defender);
                     Console.WriteLine("---------------");
-                    Console.WriteLine("{0} attack BEGINS", defender.GetCharacterType());
+                    Console.WriteLine("{0} attack BEGINS", defender.GetName());
 
                     for (int j = 0; j < defender.GetTotalAttackNumber(); j++)
                     {
@@ -243,7 +243,7 @@ namespace devoir_maison
                             }
                         }
                     }
-                    Console.WriteLine("{0} attack is OVER", defender.GetCharacterType());
+                    Console.WriteLine("{0} attack is OVER", defender.GetName());
                     showLife(attacker);
                     showLife(defender);
                 }
@@ -256,7 +256,7 @@ namespace devoir_maison
             {
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("===================");
-                Console.WriteLine("A NEW ROUND STARTS : {0} LIFEPOINTS : {1} --- {2} LIFEPOINTS : {3}", character1.GetCharacterType(), character1.GetCurrentLife(), character2.GetCharacterType(), character2.GetCurrentLife());
+                Console.WriteLine("A NEW ROUND STARTS : {0} LIFEPOINTS : {1} --- {2} LIFEPOINTS : {3}", character1.GetName(), character1.GetCurrentLife(), character2.GetName(), character2.GetCurrentLife());
                 Console.WriteLine("===================");
                 Console.ResetColor();
 
@@ -271,12 +271,12 @@ namespace devoir_maison
                 int initiativeRollCharacter2 = rollOf("initiative", rollInitiativeCharacter2, character2);
                 if (initiativeRollCharacter1 > initiativeRollCharacter2)
                 {
-                    Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character1.GetCharacterType(), character1.GetTotalAttackNumber());
+                    Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character1.GetName(), character1.GetTotalAttackNumber());
                     attackAndDefend(character1, character2);
                 }
                 else if (initiativeRollCharacter1 < initiativeRollCharacter2)
                 {
-                    Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character2.GetCharacterType(), character2.GetTotalAttackNumber());
+                    Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character2.GetName(), character2.GetTotalAttackNumber());
                     attackAndDefend(character2, character1);
                 }else if(initiativeRollCharacter1 == initiativeRollCharacter2)
                 {
@@ -296,7 +296,7 @@ namespace devoir_maison
 
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("===================");
-                Console.WriteLine("THE ROUND IS OVER : {0} LIFEPOINTS : {1} --- {2} LIFEPOINTS : {3}", character1.GetCharacterType(), character1.GetCurrentLife(), character2.GetCharacterType(), character2.GetCurrentLife());
+                Console.WriteLine("THE ROUND IS OVER : {0} LIFEPOINTS : {1} --- {2} LIFEPOINTS : {3}", character1.GetName(), character1.GetCurrentLife(), character2.GetName(), character2.GetCurrentLife());
                 Console.WriteLine("===================");
                 Console.ResetColor();
             }
@@ -316,7 +316,7 @@ namespace devoir_maison
                 round(character1, character2, roundNumber);
                 roundNumber++;
             }
-            return isAlive(character1) ? character1.GetCharacterType() + " won" : character2.GetCharacterType();
+            return isAlive(character1) ? character1.GetName() + " won" : character2.GetName();
         }
 
 

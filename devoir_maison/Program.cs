@@ -13,12 +13,11 @@ namespace devoir_maison
         {
             Game game = new Game();
             Character billy = new Warrior("billy the warrior");
-            Character bobby = new Guardian("bobby the guardian");
+            Character bobby = new Warrior("bobby the warrior");
 
-            bobby.SetCurrentLife(50);
-            billy.SetCurrentLife(50);
+            billy.SetPain(2);
 
-            billy.SetAttack(500);
+
             Console.WriteLine("FIGHT BEGINS!");
             game.fight(billy, bobby);
         }
