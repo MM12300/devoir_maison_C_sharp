@@ -42,19 +42,19 @@ namespace devoir_maison
             if (typeOfRoll == "attack")
             {
                 rollResult = rollValue + character.GetAttack();
-                Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{3})", character.GetCharacterType(), rollResult, rollValue, character.GetAttack());
+                Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{3})", character.GetName(), rollResult, rollValue, character.GetAttack());
 
             }
             else if (typeOfRoll == "initiative")
             {
                 rollResult = rollValue + character.GetInitiative();
-                Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{3})", character.GetCharacterType(), rollResult, rollValue, character.GetInitiative());
+                Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{3})", character.GetName(), rollResult, rollValue, character.GetInitiative());
 
             }
             else if (typeOfRoll == "defense")
             {
                 rollResult = rollValue + character.GetDefense();
-                Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", character.GetCharacterType(), rollResult, rollValue, character.GetDefense());
+                Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", character.GetName(), rollResult, rollValue, character.GetDefense());
             }
 
             Console.ResetColor();
@@ -81,7 +81,7 @@ namespace devoir_maison
         {
             if (character.GetCurrentLife() < 0)
             {
-                Console.WriteLine("{0} ({1}) is dead", character.GetName(), character.GetCharacterType());
+                Console.WriteLine("{0} ({1}) is dead", character.GetName(), character.GetName());
                 return false;
             }
             else
@@ -93,7 +93,7 @@ namespace devoir_maison
         public void showLife(Character character)
         {
             Console.BackgroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("<3<3<3 -- {0} has {1}/{2} lifepoints -- <3<3<3", character.GetCharacterType(), character.GetCurrentLife(), character.GetMaximumLife());
+            Console.WriteLine("<3<3<3 -- {0} has {1}/{2} lifepoints -- <3<3<3", character.GetName(), character.GetCurrentLife(), character.GetMaximumLife());
             Console.ResetColor();
         }
 
