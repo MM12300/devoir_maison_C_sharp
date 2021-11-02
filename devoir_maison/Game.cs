@@ -170,9 +170,13 @@ namespace devoir_maison
 
                     if (fighting > 0)
                     {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("COUNTER ATTACK SUCCESS");
+                        Console.ResetColor();
                         Console.WriteLine("Counter-Attack : {0}", counterAttackValue);
-                        counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - damageModifier(counterAttacker, counterDefender, -counterAttackValue));
-                        Console.WriteLine("{0} **counter-attacks** : removes {1} life points to {2}", counterAttacker.GetName(), counterAttackValue, counterDefender.GetName());
+                        int damageGiven = damageModifier(counterAttacker, counterDefender, -counterAttackValue);
+                        counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - damageGiven);
+                        Console.WriteLine("{0} **counter-attacks** : removes {1} life points to {2}", counterAttacker.GetName(), damageGiven, counterDefender.GetName());
                         pain(counterDefender, (-counterAttackValue), counterDefender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
@@ -207,8 +211,9 @@ namespace devoir_maison
                     {
                         int damage = fighting * attacker.GetDamages() / 100;
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, attacker.GetDamages());
-                        defender.SetCurrentLife(defender.GetCurrentLife() - damageModifier(attacker, defender, damage));
-                        Console.WriteLine("{0} **attacks** removes {1} life points to {2}", attacker.GetName(), damage, defender.GetName());
+                        int damageGiven = damageModifier(attacker, defender, damage);
+                        defender.SetCurrentLife(defender.GetCurrentLife() - damageGiven);
+                        Console.WriteLine("{0} **attacks** removes {1} life points to {2}", attacker.GetName(), damageGiven, defender.GetName());
                         pain(defender, damage, defender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
@@ -371,7 +376,7 @@ namespace devoir_maison
 
         public int damageModifier(Character attacker, Character defender, int damage)
         {
-            if( (defender.GetIsBlessed() && attacker.GetIsCursed()) || (defender.GetIsCursed() && defender.GetIsBlessed()) ){
+            if( (defender.GetIsBlessed() && attacker.GetIsCursed()) || (defender.GetIsCursed() && attacker.GetIsBlessed()) ){
                 int doubleDamage = damage * 2;
                 Console.WriteLine("Attacker is a {0} and defender is a {1} so damage*2 = {2} * 2 = {3}", attacker.GetCharacterType(), defender.GetCharacterType(), damage, doubleDamage);
                 return doubleDamage;
