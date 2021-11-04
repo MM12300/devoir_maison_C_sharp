@@ -297,7 +297,17 @@ namespace devoir_maison
                     {
                         Console.WriteLine("{0} counter-attack", defender.GetName());
                         Console.WriteLine("Counter-Attacke value = {0}", fighting);
-                        counterAttack(defender, attacker, fighting);
+                        
+                        if(attacker.GetCharacterType() != "zombie")
+                        {
+                            counterAttack(defender, attacker, fighting);
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("{0} can't counter attack", attacker.GetCharacterType());
+                        }
+
                     }
                 }
             }
@@ -438,8 +448,8 @@ namespace devoir_maison
                         }
                         else
                         {
-                            Random random = new Random();
-                            roundsToSkip = random.Next(0, 2);
+                            Random pain = new Random();
+                            roundsToSkip = pain.Next(0, 2);
                         }
 
                         Console.WriteLine("rounds to skip possible = {0}", roundsToSkip);
