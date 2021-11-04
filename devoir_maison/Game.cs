@@ -53,8 +53,12 @@ namespace devoir_maison
 
         public int rollOf(string typeOfRoll, int rollValue, Character character)
         {
+            if(character.GetCharacterType() == "Robot")
+            {
+                rollValue = 0;
+            }
             Console.BackgroundColor = ConsoleColor.Blue;
-            int rollResult = 0;
+            int rollResult;
             if (typeOfRoll == "attack")
             {
                 rollResult = rollValue + character.GetAttack();
@@ -80,6 +84,11 @@ namespace devoir_maison
                 }
                 
                 Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", character.GetName(), rollResult, rollValue, character.GetDefense());
+            }
+            else
+            {
+                rollResult = 0;
+                Console.WriteLine("type of roll must be attack, defense or initiative");
             }
             Console.ResetColor();
             return rollResult;
