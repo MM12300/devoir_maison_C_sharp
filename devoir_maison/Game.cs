@@ -35,6 +35,22 @@ namespace devoir_maison
             return randomNumber;
         }
 
+        public bool luckyRoll()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(1, 100);
+            if(randomNumber > 50)
+            {
+                Console.WriteLine("Lucky Roll");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Not Lucky Roll");
+                return false;
+            }
+        }
+
         public int rollOf(string typeOfRoll, int rollValue, Character character)
         {
             Console.BackgroundColor = ConsoleColor.Blue;
@@ -53,14 +69,20 @@ namespace devoir_maison
             }
             else if (typeOfRoll == "defense")
             {
-                rollResult = rollValue + character.GetDefense();
+                if(character.GetCharacterType() == "zombie")
+                {
+                    Console.WriteLine("{0} defense roll is always 0", character.GetType());
+                    rollResult = rollValue + character.GetDefense();
+                }
+                else
+                {
+                    rollResult = rollValue + character.GetDefense();
+                }
+                
                 Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", character.GetName(), rollResult, rollValue, character.GetDefense());
             }
-
             Console.ResetColor();
             return rollResult;
-
-            
         }
 
         public int attack(Character character)
@@ -75,6 +97,13 @@ namespace devoir_maison
             int rollValue = roll();
             int defenseRollValue = rollOf("defense", rollValue, character);
             return defenseRollValue;
+        }
+
+        public int initiative(Character character)
+        {
+            int rollValue = roll();
+            int initiativeRollValue = rollOf("initiative", rollValue, character);
+            return initiativeRollValue;
         }
 
         public bool isAlive(Character character)
@@ -169,6 +198,7 @@ namespace devoir_maison
                     //GUARDIAN RULES
                     if (counterAttacker.GetCharacterType() == "Guardian")
                     {
+                        Console.WriteLine("The {0} has a double counter-attack : counter-attacke value original ({1}) and now doubled ({2})", counterAttacker.GetCharacterType(), counterAttackValue, counterAttackValue * 2);
                         counterAttacking = attack(counterAttacker) + (counterAttackValue * -2);
                     }
                     else
@@ -240,6 +270,7 @@ namespace devoir_maison
                         {
                             int berserkerLostLifePoints = attacker.GetMaximumLife() - attacker.GetCurrentLife();
                             damage = fighting * (attacker.GetDamages()+berserkerLostLifePoints) / 100;
+                            Console.WriteLine("Berserker type of attack , lost live points : {0} = {1} - {2}", berserkerLostLifePoints, attacker.GetMaximumLife(), attacker.GetCurrentLife());
                         }
                         else
                         {
@@ -313,10 +344,8 @@ namespace devoir_maison
                 resetAttackNumber(character2);
 
                 //INITIATIVE
-                int rollInitiativeCharacter1 = roll();
-                int rollInitiativeCharacter2 = roll();
-                int initiativeRollCharacter1 = rollOf("initiative", rollInitiativeCharacter1, character1);
-                int initiativeRollCharacter2 = rollOf("initiative", rollInitiativeCharacter2, character2);
+                int initiativeRollCharacter1 = initiative(character1);
+                int initiativeRollCharacter2 = initiative(character2);
                 if (initiativeRollCharacter1 > initiativeRollCharacter2)
                 {
                     Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character1.GetName(), character1.GetTotalAttackNumber());
@@ -328,8 +357,7 @@ namespace devoir_maison
                     attackAndDefend(character2, character1);
                 }else if(initiativeRollCharacter1 == initiativeRollCharacter2)
                 {
-                    int randomRoll = roll();
-                    if(randomRoll >= 50)
+                    if(luckyRoll())
                     {
                         attackAndDefend(character1, character2);
                     }
@@ -374,11 +402,19 @@ namespace devoir_maison
             //BERSERKER AND PAIN RULE
             if (character.GetIsLiving() && isAlive(character) && character.GetCharacterType() != "Berserker")
             {
+                if(character.GetCharacterType() != "Berserker")
+                {
+                    Console.WriteLine("Berserker doesn't feel the pain");
+                }
                 Console.WriteLine("{0} is a living character sensitive to pain, damage {1}, lifePointsLeft {2}", character.GetName(), damage, character.GetCurrentLife());
                 if (damage > defenderLifePointsLeft)
                 {
                     double painPercentage = ((Convert.ToDouble(damage) - Convert.ToDouble(defenderLifePointsLeft)) * 2) / (Convert.ToDouble(defenderLifePointsLeft) + Convert.ToDouble(damage));
-                    double painRoll = Convert.ToDouble(roll());
+
+                    Random random = new Random();
+                    int roll = random.Next(1, 100);
+                    double painRoll = Convert.ToDouble(roll);
+
                     Console.WriteLine("painPercentage = {0}, painRoll = {1}", painPercentage*100, painRoll);
 
                     if (painPercentage * 100 > painRoll)
@@ -389,6 +425,7 @@ namespace devoir_maison
                          if(character.GetCharacterType() == "Warrior")
                         {
                             roundsToSkip = 1;
+                            Console.Write("When in pain the {0} ({1}) can only skip the current turn", character.GetCharacterType(), character.GetName());
                         }
                         else
                         {
@@ -448,7 +485,9 @@ namespace devoir_maison
             //BERSERKER RULE
             if (character.GetCharacterType() == "Berserker" && character.GetCurrentLife() < (character.GetMaximumLife()/2))
             {
+                Console.WriteLine("Character is a {0} with less than half of its total life points {1}/{2}", character.GetCharacterType(), character.GetCurrentLife(), character.GetMaximumLife());
                 character.SetCurrentAttackNumber(4);
+                Console.WriteLine("Attack number is set at {0}", character.GetTotalAttackNumber());
             }
             else
             {
