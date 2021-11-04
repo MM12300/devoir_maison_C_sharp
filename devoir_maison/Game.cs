@@ -247,6 +247,13 @@ namespace devoir_maison
                         int damage = fighting * counterAttacker.GetDamages() / 100;
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, counterAttacker.GetDamages());
                         int damageGiven = damageModifier(counterAttacker, counterDefender, damage);
+
+                        //VAMPIRE RULE
+                        if (counterAttacker.GetCharacterType() == "Vampire")
+                        {
+                            counterAttacker.SetCurrentLife(counterAttacker.GetCurrentLife() + (damageGiven / 2));
+                        }
+
                         counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - damageGiven);
                         Console.WriteLine("{0} **attacks** removes {1} life points to {2}", counterAttacker.GetName(), damageGiven, counterDefender.GetName());
                         pain(counterDefender, damage, counterDefender.GetCurrentLife());
@@ -303,9 +310,6 @@ namespace devoir_maison
                         {
                             attacker.SetCurrentLife(attacker.GetCurrentLife() + (damageGiven / 2));
                         }
-
-
-
 
                         defender.SetCurrentLife(defender.GetCurrentLife() - damageGiven);
                         Console.WriteLine("{0} **attacks** removes {1} life points to {2}", attacker.GetName(), damageGiven, defender.GetName());
