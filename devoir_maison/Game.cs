@@ -53,6 +53,7 @@ namespace devoir_maison
 
         public int rollOf(string typeOfRoll, int rollValue, Character character)
         {
+            //ROBOT RULE
             if(character.GetCharacterType() == "Robot")
             {
                 rollValue = 0;
@@ -73,6 +74,7 @@ namespace devoir_maison
             }
             else if (typeOfRoll == "defense")
             {
+                //ZOMBIE RULE
                 if(character.GetCharacterType() == "zombie")
                 {
                     Console.WriteLine("{0} defense roll is always 0", character.GetType());
@@ -189,6 +191,13 @@ namespace devoir_maison
             }
         }
 
+        public void checkCharacterType(Character character)
+        {
+            if(character.GetCharacterType() == "Robot")
+            {
+                character.SetAttack(Convert.ToInt32(character.GetAttack() * 1.5));
+            }
+        }
 
         public void counterAttack(Character counterAttacker, Character counterDefender, int counterAttackValue)
         {
@@ -288,6 +297,15 @@ namespace devoir_maison
 
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, attacker.GetDamages());
                         int damageGiven = damageModifier(attacker, defender, damage);
+
+                        if(attacker.GetCharacterType() == "Vampire")
+                        {
+
+                        }
+
+
+
+
                         defender.SetCurrentLife(defender.GetCurrentLife() - damageGiven);
                         Console.WriteLine("{0} **attacks** removes {1} life points to {2}", attacker.GetName(), damageGiven, defender.GetName());
                         pain(defender, damage, defender.GetCurrentLife());
@@ -297,11 +315,11 @@ namespace devoir_maison
                     {
                         Console.WriteLine("{0} counter-attack", defender.GetName());
                         Console.WriteLine("Counter-Attacke value = {0}", fighting);
-                        
-                        if(attacker.GetCharacterType() != "zombie")
+
+                        //ZOMBIE RULE
+                        if (attacker.GetCharacterType() != "zombie")
                         {
                             counterAttack(defender, attacker, fighting);
-
                         }
                         else
                         {
@@ -352,6 +370,9 @@ namespace devoir_maison
         {
             if (isAlive(character1) && isAlive(character2))
             {
+                checkCharacterType(character1);
+                checkCharacterType(character2);
+
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("===================");
                 Console.WriteLine("A NEW ROUND STARTS : {0} LIFEPOINTS : {1} --- {2} LIFEPOINTS : {3}", character1.GetName(), character1.GetCurrentLife(), character2.GetName(), character2.GetCurrentLife());
@@ -418,64 +439,74 @@ namespace devoir_maison
         //PAIN RULES
         public void pain(Character character, int damage, int defenderLifePointsLeft)
         {
-            //BERSERKER AND PAIN RULE
-            if (character.GetIsLiving() && isAlive(character) && character.GetCharacterType() != "Berserker")
+            if (isAlive(character))
             {
-                if(character.GetCharacterType() != "Berserker")
-                {
-                    Console.WriteLine("Berserker doesn't feel the pain");
-                }
-                Console.WriteLine("{0} is a living character sensitive to pain, damage {1}, lifePointsLeft {2}", character.GetName(), damage, character.GetCurrentLife());
-                if (damage > defenderLifePointsLeft)
-                {
-                    double painPercentage = ((Convert.ToDouble(damage) - Convert.ToDouble(defenderLifePointsLeft)) * 2) / (Convert.ToDouble(defenderLifePointsLeft) + Convert.ToDouble(damage));
-
-                    Random random = new Random();
-                    int roll = random.Next(1, 100);
-                    double painRoll = Convert.ToDouble(roll);
-
-                    Console.WriteLine("painPercentage = {0}, painRoll = {1}", painPercentage*100, painRoll);
-
-                    if (painPercentage * 100 > painRoll)
+                if(character.GetIsLiving() || character.GetCharacterType() == "Ghoul"){
+                    //BERSERKER AND PAIN RULE
+                    if (character.GetCharacterType() != "Berserker")
                     {
-                        int roundsToSkip;
-
-                        //WARRIOR RULES
-                         if(character.GetCharacterType() == "Warrior")
+                        Console.WriteLine("{0} is a living character sensitive to pain, damage {1}, lifePointsLeft {2}", character.GetName(), damage, character.GetCurrentLife());
+                        if (damage > defenderLifePointsLeft)
                         {
-                            roundsToSkip = 1;
-                            Console.Write("When in pain the {0} ({1}) can only skip the current turn", character.GetCharacterType(), character.GetName());
+                            double painPercentage = ((Convert.ToDouble(damage) - Convert.ToDouble(defenderLifePointsLeft)) * 2) / (Convert.ToDouble(defenderLifePointsLeft) + Convert.ToDouble(damage));
+
+                            Random random = new Random();
+                            int roll = random.Next(1, 100);
+                            double painRoll = Convert.ToDouble(roll);
+
+                            Console.WriteLine("painPercentage = {0}, painRoll = {1}", painPercentage * 100, painRoll);
+
+                            if (painPercentage * 100 > painRoll)
+                            {
+                                int roundsToSkip;
+
+                                //WARRIOR RULES
+                                if (character.GetCharacterType() == "Warrior")
+                                {
+                                    roundsToSkip = 1;
+                                    Console.Write("When in pain the {0} ({1}) can only skip the current turn", character.GetCharacterType(), character.GetName());
+                                }
+                                else
+                                {
+                                    Random pain = new Random();
+                                    roundsToSkip = pain.Next(0, 2);
+                                }
+
+                                Console.WriteLine("rounds to skip possible = {0}", roundsToSkip);
+
+                                if (character.GetPain() < roundsToSkip)
+                                {
+                                    character.SetPain(roundsToSkip);
+                                    Console.WriteLine("{0} has now a pain of ({1})", character.GetName(), character.GetPain());
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Pain is already here and stronger than that", character);
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Luckily don't feel the pain, painPercentage = {0}", painPercentage);
+                            }
                         }
                         else
                         {
-                            Random pain = new Random();
-                            roundsToSkip = pain.Next(0, 2);
-                        }
-
-                        Console.WriteLine("rounds to skip possible = {0}", roundsToSkip);
-
-                        if (character.GetPain() < roundsToSkip)
-                        {
-                            character.SetPain(roundsToSkip);
-                            Console.WriteLine("{0} has now a pain of ({1})", character.GetName(), character.GetPain());
-                        }
-                        else
-                        {
-                            Console.WriteLine("Pain is already here and stronger than that", character);
+                            Console.WriteLine("Pain is not strong enough to affect {0}", character.GetName());
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Luckily don't feel the pain, painPercentage = {0}", painPercentage);
+                        Console.WriteLine("Berserker doesn't feel the pain");
                     }
-                }else
+                }
+                else
                 {
-                    Console.WriteLine("Pain is not strong enough to affect {0}", character.GetName());
+                    Console.WriteLine("Undead doesn't feel the pain, except the ghoul");
                 }
             }
             else
             {
-                Console.WriteLine("Undead and Berserkers are not sensitive to pain");
+                Console.WriteLine("{0} is dead so can't feel the pain", character.GetName());
             }
         }
 

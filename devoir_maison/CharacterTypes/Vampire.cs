@@ -13,7 +13,7 @@
             currentLife = 300;
             totalAttackNumber = 2;
             currentAttackNumber = 2;
-            characterType = "Zombie";
+            characterType = "Vampire";
             isLiving = false;
             isCursed = true;
             isBlessed = false;
