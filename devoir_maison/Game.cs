@@ -193,9 +193,16 @@ namespace devoir_maison
 
         public void checkCharacterType(Character character)
         {
+            //ROBOT RULES
             if(character.GetCharacterType() == "Robot")
             {
                 character.SetAttack(Convert.ToInt32(character.GetAttack() * 1.5));
+            }
+
+            //PRIEST RULES
+            if(character.GetCharacterType() == "Priest")
+            {
+                character.SetCurrentLife(character.GetCurrentLife() + (Convert.ToInt32(character.GetMaximumLife()*1.1)));
             }
         }
 
