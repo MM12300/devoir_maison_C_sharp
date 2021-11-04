@@ -298,9 +298,10 @@ namespace devoir_maison
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, attacker.GetDamages());
                         int damageGiven = damageModifier(attacker, defender, damage);
 
+                        //VAMPIRE RULE
                         if(attacker.GetCharacterType() == "Vampire")
                         {
-
+                            attacker.SetCurrentLife(attacker.GetCurrentLife() + (damageGiven / 2));
                         }
 
 
@@ -514,7 +515,7 @@ namespace devoir_maison
         public int damageModifier(Character attacker, Character defender, int damage)
         {
             // if defender = blessed AND attacker = cursed OR defender = cursed AND attacker = blessed, life points lost after attack multiplied by 2
-            if( (defender.GetIsBlessed() && attacker.GetIsCursed()) || (defender.GetIsCursed() && attacker.GetIsBlessed()) ){
+            if( (defender.GetIsBlessed() && attacker.GetCursedDamage()) || (defender.GetIsCursed() && attacker.GetBlessedDamage()) ){
                 int doubleDamage = damage * 2;
                 Console.WriteLine("Attacker is a {0} and defender is a {1} so damage*2 = {2} * 2 = {3}", attacker.GetCharacterType(), defender.GetCharacterType(), damage, doubleDamage);
                 return doubleDamage;
