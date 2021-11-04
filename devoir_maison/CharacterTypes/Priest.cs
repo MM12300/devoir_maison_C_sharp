@@ -17,6 +17,8 @@
             isLiving = true;
             isCursed = false;
             isBlessed = true;
+            blessedDamage = true;
+            cursedDamage = false;
         }
     }
 }
