@@ -202,7 +202,17 @@ namespace devoir_maison
             //PRIEST RULES
             if(character.GetCharacterType() == "Priest")
             {
-                character.SetCurrentLife(character.GetCurrentLife() + (Convert.ToInt32(character.GetMaximumLife()*1.1)));
+                //int newLifeValue = character.GetCurrentLife() + (Convert.ToInt32(character.GetMaximumLife() * 1.1));
+
+                //if (newLifeValue > character.GetMaximumLife())
+                //{
+                //    character.SetCurrentLife(character.GetMaximumLife());
+                //}
+                //else
+                //{
+                //    character.SetCurrentLife(newLifeValue);
+                //}
+                lifeModifier(character, (Convert.ToInt32(character.GetMaximumLife() * 1.1)));
             }
         }
 
@@ -258,7 +268,17 @@ namespace devoir_maison
                         //VAMPIRE RULE
                         if (counterAttacker.GetCharacterType() == "Vampire")
                         {
-                            counterAttacker.SetCurrentLife(counterAttacker.GetCurrentLife() + (damageGiven / 2));
+                            //int newLifeValue = counterAttacker.GetCurrentLife() + (damageGiven / 2);
+
+                            //if(newLifeValue > counterAttacker.GetMaximumLife())
+                            //{
+                            //    counterAttacker.SetCurrentLife(counterAttacker.GetMaximumLife());
+                            //}
+                            //else
+                            //{
+                            //    counterAttacker.SetCurrentLife(newLifeValue);
+                            //}
+                            lifeModifier(counterAttacker, (counterAttacker.GetCurrentLife() + (damageGiven / 2)));
                         }
 
                         counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - damageGiven);
@@ -539,6 +559,20 @@ namespace devoir_maison
             else
             {
                 return damage;
+            }
+        }
+
+        public void lifeModifier(Character character, int lifeModifier)
+        {
+            int newLifeValue = character.GetCurrentLife() + lifeModifier;
+
+            if (newLifeValue > character.GetMaximumLife())
+            {
+                character.SetCurrentLife(character.GetMaximumLife());
+            }
+            else
+            {
+                character.SetCurrentLife(newLifeValue);
             }
         }
 
