@@ -204,16 +204,6 @@ namespace devoir_maison
             //PRIEST RULES
             if(character.GetCharacterType() == "Priest")
             {
-                //int newLifeValue = character.GetCurrentLife() + (Convert.ToInt32(character.GetMaximumLife() * 1.1));
-
-                //if (newLifeValue > character.GetMaximumLife())
-                //{
-                //    character.SetCurrentLife(character.GetMaximumLife());
-                //}
-                //else
-                //{
-                //    character.SetCurrentLife(newLifeValue);
-                //}
                 lifeModifier(character, (Convert.ToInt32(character.GetMaximumLife() * 1.1)));
             }
         }
@@ -248,18 +238,6 @@ namespace devoir_maison
 
                     if (fighting > 0)
                     {
-                        //------ VIEILLE VERSION DE LA CONTRE-ATTAQUE
-                        //Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        //Console.WriteLine("COUNTER ATTACK SUCCESS");
-                        //Console.ResetColor();
-                        //Console.WriteLine("Counter-Attack : {0}", counterAttackValue);
-                        //int damageGiven = damageModifier(counterAttacker, counterDefender, -counterAttackValue);
-
-                        //counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - damageGiven);
-                        //Console.WriteLine("{0} **counter-attacks** : removes {1} life points to {2}", counterAttacker.GetName(), damageGiven, counterDefender.GetName());
-                        //pain(counterDefender, (-counterAttackValue), counterDefender.GetCurrentLife());
-
-                        //----------------
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("COUNTER ATTACK SUCCESS");
                         Console.ResetColor();
@@ -270,16 +248,6 @@ namespace devoir_maison
                         //VAMPIRE RULE
                         if (counterAttacker.GetCharacterType() == "Vampire")
                         {
-                            //int newLifeValue = counterAttacker.GetCurrentLife() + (damageGiven / 2);
-
-                            //if(newLifeValue > counterAttacker.GetMaximumLife())
-                            //{
-                            //    counterAttacker.SetCurrentLife(counterAttacker.GetMaximumLife());
-                            //}
-                            //else
-                            //{
-                            //    counterAttacker.SetCurrentLife(newLifeValue);
-                            //}
                             lifeModifier(counterAttacker, (counterAttacker.GetCurrentLife() + (damageGiven / 2)));
                         }
 
