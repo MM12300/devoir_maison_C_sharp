@@ -11,18 +11,14 @@ namespace devoir_maison
     {
         static void Main(string[] args)
         {
-
-            //double test = (1.0 / 4.0);
-            //Console.WriteLine(test);
-
             Game game = new Game();
-            //Character billy = new Priest("billy the priest");
-            //Character bobby = new Vampire("bobby the vampire");
+            Character billy = new Warrior("Warrior1");
+            Character bobby = new Warrior("Warrior2");
 
-            //Console.WriteLine("FIGHT BEGINS!");
-            //game.fight(billy, bobby);
+            Console.WriteLine("FIGHT BEGINS!");
+            game.fight(billy, bobby);
 
-            game.battleroyale();
+            //game.battleroyale();
         }
     }
 }
