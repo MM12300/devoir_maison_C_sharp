@@ -245,9 +245,6 @@ namespace devoir_maison
                         Console.WriteLine("Counter-Attack value = {0}", attack_margin);
                         Console.ResetColor();
 
-
-
-
                         int damage;
                         //BERSERKER RULE : add lost life points of Berserker to his damage during an attack
                         if (counterAttacker.GetCharacterType() == "Berserker")
@@ -262,8 +259,6 @@ namespace devoir_maison
                         {
                             damage = attack_margin * counterAttacker.GetDamages() / 100;
                         }
-
-
 
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, attack_margin, counterAttacker.GetDamages());
                         int damageGiven = damageModifier(counterAttacker, counterDefender, damage);
@@ -317,6 +312,7 @@ namespace devoir_maison
                         {
                             int berserkerLostLifePoints = attacker.GetMaximumLife() - attacker.GetCurrentLife();
                             damage = attack_margin * (attacker.GetDamages()+berserkerLostLifePoints) / 100;
+                            Console.WriteLine("berserker damage : {0} CROSSCHECK", damage);
                             Console.BackgroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("Berserker type of attack , lost live points : {0} = {1} - {2}", berserkerLostLifePoints, attacker.GetMaximumLife(), attacker.GetCurrentLife());
                             Console.ResetColor();
@@ -324,6 +320,7 @@ namespace devoir_maison
                         else
                         {
                             damage = attack_margin * attacker.GetDamages() / 100;
+                            Console.WriteLine("test");
                         }
 
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, attack_margin, attacker.GetDamages());
@@ -549,11 +546,6 @@ namespace devoir_maison
                 int doubleDamage = damage * 2;
                 Console.WriteLine("Attacker is a {0} and defender is a {1} so damage*2 = {2} * 2 = {3}", attacker.GetCharacterType(), defender.GetCharacterType(), damage, doubleDamage);
                 return doubleDamage;
-            }
-            else if(attacker.GetCharacterType() == "Berserker")
-            {
-                int berserkerLostLifePoints = attacker.GetMaximumLife() - attacker.GetCurrentLife();
-                return damage + berserkerLostLifePoints;
             }
             else
             {
