@@ -261,8 +261,10 @@ namespace devoir_maison
                     //Delta negative = defender counter-attack
                     else if (attack_margin <= 0)
                     {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("{0} counter-attack", counterDefender.GetName());
                         Console.WriteLine("Counter-Attack value = {0}", attack_margin);
+                        Console.ResetColor();
                         counterAttack(counterDefender, counterAttacker, attack_margin);
                     }
                 }
