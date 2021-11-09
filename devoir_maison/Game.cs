@@ -244,7 +244,27 @@ namespace devoir_maison
                         Console.WriteLine("COUNTER ATTACK SUCCESS");
                         Console.WriteLine("Counter-Attack value = {0}", attack_margin);
                         Console.ResetColor();
-                        int damage = attack_margin * counterAttacker.GetDamages() / 100;
+
+
+
+
+                        int damage;
+                        //BERSERKER RULE : add lost life points of Berserker to his damage during an attack
+                        if (counterAttacker.GetCharacterType() == "Berserker")
+                        {
+                            int berserkerLostLifePoints = counterAttacker.GetMaximumLife() - counterAttacker.GetCurrentLife();
+                            damage = attack_margin * (counterAttacker.GetDamages() + berserkerLostLifePoints) / 100;
+                            Console.BackgroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("Berserker type of attack , lost live points : {0} = {1} - {2}", berserkerLostLifePoints, counterAttacker.GetMaximumLife(), counterAttacker.GetCurrentLife());
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            damage = attack_margin * counterAttacker.GetDamages() / 100;
+                        }
+
+
+
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, attack_margin, counterAttacker.GetDamages());
                         int damageGiven = damageModifier(counterAttacker, counterDefender, damage);
 
