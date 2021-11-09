@@ -55,46 +55,72 @@ namespace devoir_maison
 
         public int rollOf(string typeOfRoll, int rollValue, Character character)
         {
-            //ROBOT RULE
-            if(character.GetCharacterType() == "Robot")
-            {
-                rollValue = 0;
-            }
             Console.BackgroundColor = ConsoleColor.Blue;
             int rollResult;
-            if (typeOfRoll == "attack")
-            {
-                rollResult = rollValue + character.GetAttack();
-                Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{3})", character.GetName(), rollResult, rollValue, character.GetAttack());
 
-            }
-            else if (typeOfRoll == "initiative")
+            //ROBOT RULES
+            if(character.GetCharacterType() == "Robot")
             {
-                rollResult = rollValue + character.GetInitiative();
-                Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{3})", character.GetName(), rollResult, rollValue, character.GetInitiative());
-
-            }
-            else if (typeOfRoll == "defense")
-            {
-                //ZOMBIE RULE
-                if(character.GetCharacterType() == "Zombie")
+                if (typeOfRoll == "attack")
                 {
-                    Console.BackgroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("{0} defense roll is always 0", character.GetType());
-                    rollResult = rollValue + character.GetDefense();
+                    rollResult = 50 + character.GetAttack();
+                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (50 + attack:{3})", character.GetName(), rollResult, character.GetAttack());
+                }
+                else if (typeOfRoll == "initiative")
+                {
+                    rollResult = 50 + character.GetInitiative();
+                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (50 + initiative:{3})", character.GetName(), rollResult, character.GetInitiative());
+
+                }
+                else if (typeOfRoll == "defense")
+                {
+                    rollResult = 50 + character.GetDefense();
+                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (50 + defense:{3})", character.GetName(), rollResult, character.GetDefense());
                 }
                 else
                 {
-                    rollResult = rollValue + character.GetDefense();
+                    Console.WriteLine("type of roll must be attack, defense or initiative");
+                    throw new ArgumentException("Type of roll can't have these values : attack, defense, initiative", nameof(typeOfRoll));
                 }
-                
-                Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", character.GetName(), rollResult, rollValue, character.GetDefense());
             }
             else
             {
-                rollResult = 0;
-                Console.WriteLine("type of roll must be attack, defense or initiative");
+                if (typeOfRoll == "attack")
+                {
+                    rollResult = rollValue + character.GetAttack();
+                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{3})", character.GetName(), rollResult, rollValue, character.GetAttack());
+
+                }
+                else if (typeOfRoll == "initiative")
+                {
+                    rollResult = rollValue + character.GetInitiative();
+                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{3})", character.GetName(), rollResult, rollValue, character.GetInitiative());
+
+                }
+                else if (typeOfRoll == "defense")
+                {
+                    //ZOMBIE RULE
+                    if (character.GetCharacterType() == "Zombie")
+                    {
+                        Console.WriteLine("{0} defense roll is always 0", character.GetCharacterType());
+                        rollResult = character.GetDefense();
+                    }
+                    else
+                    {
+                        rollResult = rollValue + character.GetDefense();
+                    }
+
+                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", character.GetName(), rollResult, rollValue, character.GetDefense());
+                }
+                else
+                {
+                    Console.WriteLine("type of roll must be attack, defense or initiative");
+                    throw new ArgumentException("Type of roll can't have these values : attack, defense, initiative", nameof(typeOfRoll));
+                }
             }
+            
+            
+            
             Console.ResetColor();
             return rollResult;
         }
@@ -199,7 +225,10 @@ namespace devoir_maison
             //ROBOT RULES
             if(character.GetCharacterType() == "Robot")
             {
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Robot attack was {0}", character.GetAttack());
                 character.SetAttack(Convert.ToInt32(character.GetAttack() * 1.5));
+                Console.WriteLine("Robot attack is now {0}", character.GetAttack());
             }
 
             //PRIEST RULES
@@ -317,11 +346,9 @@ namespace devoir_maison
                         {
                             damage = attack_margin * attacker.GetDamages() / 100;
                         }
-
                         int damageGiven = damageModifier(attacker, defender, damage);
 
                         Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, attacker.GetDamages());
-
 
                         //VAMPIRE RULE
                         if (attacker.GetCharacterType() == "Vampire")
@@ -341,17 +368,15 @@ namespace devoir_maison
                         Console.WriteLine("Counter-Attacke value = {0}", attack_margin);
                         Console.ResetColor();
 
-                        //ZOMBIE RULE
+                        //ZOMBIE RULE : useless because zombie defense is 0 and defense roll is always 0 but better to keep it if we want to change this character parameters later
                         if (attacker.GetCharacterType() != "Zombie")
                         {
                             counterAttack(defender, attacker, attack_margin);
                         }
                         else
                         {
-                            Console.BackgroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("{0} can't counter attack, he is a {1}", attacker.GetName(), attacker.GetCharacterType());
                         }
-
                     }
                 }
             }

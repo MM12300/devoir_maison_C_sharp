@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using devoir_maison.CharacterTypes;
 
 namespace devoir_maison
@@ -12,8 +8,8 @@ namespace devoir_maison
         static void Main(string[] args)
         {
             Game game = new Game();
-            Character billy = new Zombie("zombie1");
-            Character bobby = new Zombie("zombie2");
+            Character billy = new Robot("robot1");
+            Character bobby = new Robot("robot2");
 
             Console.WriteLine("FIGHT BEGINS!");
             game.fight(billy, bobby);
