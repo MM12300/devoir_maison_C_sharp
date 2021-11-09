@@ -226,7 +226,6 @@ namespace devoir_maison
             //ROBOT RULES
             if(character.GetCharacterType() == "Robot")
             {
-                Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Robot attack was {0}", character.GetAttack());
                 character.SetAttack(Convert.ToInt32(character.GetAttack() * 1.5));
                 Console.WriteLine("Robot attack is now {0}", character.GetAttack());
@@ -494,6 +493,8 @@ namespace devoir_maison
             if (isAlive(character))
             {
                 if(character.GetIsLiving() || character.GetCharacterType() == "Ghoul"){
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Ghoul is a {0}", character.GetCharacterType());
                     //BERSERKER AND PAIN RULE
                     if (character.GetCharacterType() != "Berserker")
                     {
