@@ -148,7 +148,7 @@ namespace devoir_maison
             }
             else
             {
-                Console.WriteLine("Counter-attack is cancelled : {0} has no more attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
+                Console.WriteLine("Attacking is cancelled : {0} has no more attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
                 return false;
             }
         }
