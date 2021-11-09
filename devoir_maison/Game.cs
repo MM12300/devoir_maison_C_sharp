@@ -466,8 +466,6 @@ namespace devoir_maison
                                 if (character.GetCharacterType() == "Warrior")
                                 {
                                     roundsToSkip = 0;
-                                    Console.BackgroundColor = ConsoleColor.Yellow;
-
                                     Console.Write("When in pain the {0} ({1}) can only skip the current turn", character.GetCharacterType(), character.GetName());
                                 }
                                 else
