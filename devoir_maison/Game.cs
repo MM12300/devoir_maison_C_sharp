@@ -226,23 +226,25 @@ namespace devoir_maison
                     if (counterAttacker.GetCharacterType() == "Guardian")
                     {
                         Console.WriteLine("The {0} has a double counter-attack : counter-attacke value original ({1}) and now doubled ({2})", counterAttacker.GetCharacterType(), counterAttackValue, counterAttackValue * 2);
+                        //COUNTER-ATTACKE RULE : We add the counter attack value to the attack value
                         counterAttacking = attack(counterAttacker) + (counterAttackValue * -2);
                     }
                     else
                     {
+                        //COUNTER-ATTACKE RULE : We add the counter attack value to the attack value
                         counterAttacking = attack(counterAttacker) + (counterAttackValue * -1);
                     }
                     int counterDefending = defense(counterDefender);
 
-                    int fighting = counterAttacking - counterDefending;
+                    int attack_margin = counterAttacking - counterDefending;
 
-                    if (fighting > 0)
+                    if (attack_margin > 0)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("COUNTER ATTACK SUCCESS");
                         Console.ResetColor();
-                        int damage = fighting * counterAttacker.GetDamages() / 100;
-                        Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, counterAttacker.GetDamages());
+                        int damage = attack_margin * counterAttacker.GetDamages() / 100;
+                        Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, attack_margin, counterAttacker.GetDamages());
                         int damageGiven = damageModifier(counterAttacker, counterDefender, damage);
 
                         //VAMPIRE RULE
@@ -256,11 +258,11 @@ namespace devoir_maison
                         pain(counterDefender, damage, counterDefender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
-                    else if (fighting <= 0)
+                    else if (attack_margin <= 0)
                     {
                         Console.WriteLine("{0} counter-attack", counterDefender.GetName());
-                        Console.WriteLine("Counter-Attacke value = {0}", fighting);
-                        counterAttack(counterDefender, counterAttacker, fighting);
+                        Console.WriteLine("Counter-Attacke value = {0}", attack_margin);
+                        counterAttack(counterDefender, counterAttacker, attack_margin);
                     }
                 }
             }
