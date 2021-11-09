@@ -230,7 +230,7 @@ namespace devoir_maison
                     }
                     else
                     {
-                        counterAttacking = attack(counterAttacker) + counterAttackValue * -1;
+                        counterAttacking = attack(counterAttacker) + (counterAttackValue * -1);
                     }
                     int counterDefending = defense(counterDefender);
 
@@ -281,9 +281,9 @@ namespace devoir_maison
                     int defending = defense(defender);
 
                     //(marge d'attaque) calculate delta between attack and defense values
-                    int fighting = attacking - defending;
+                    int attack_margin = attacking - defending;
 
-                    if (fighting > 0)
+                    if (attack_margin > 0)
                     {
                         int damage;
 
@@ -291,15 +291,15 @@ namespace devoir_maison
                         if (attacker.GetCharacterType() == "Berserker")
                         {
                             int berserkerLostLifePoints = attacker.GetMaximumLife() - attacker.GetCurrentLife();
-                            damage = fighting * (attacker.GetDamages()+berserkerLostLifePoints) / 100;
+                            damage = attack_margin * (attacker.GetDamages()+berserkerLostLifePoints) / 100;
                             Console.WriteLine("Berserker type of attack , lost live points : {0} = {1} - {2}", berserkerLostLifePoints, attacker.GetMaximumLife(), attacker.GetCurrentLife());
                         }
                         else
                         {
-                            damage = fighting * attacker.GetDamages() / 100;
+                            damage = attack_margin * attacker.GetDamages() / 100;
                         }
 
-                        Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, fighting, attacker.GetDamages());
+                        Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, attack_margin, attacker.GetDamages());
                         int damageGiven = damageModifier(attacker, defender, damage);
 
                         //VAMPIRE RULE
@@ -313,15 +313,15 @@ namespace devoir_maison
                         pain(defender, damage, defender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
-                    else if (fighting <= 0)
+                    else if (attack_margin <= 0)
                     {
                         Console.WriteLine("{0} counter-attack", defender.GetName());
-                        Console.WriteLine("Counter-Attacke value = {0}", fighting);
+                        Console.WriteLine("Counter-Attacke value = {0}", attack_margin);
 
                         //ZOMBIE RULE
-                        if (attacker.GetCharacterType() != "zombie")
+                        if (attacker.GetCharacterType() != "Zombie")
                         {
-                            counterAttack(defender, attacker, fighting);
+                            counterAttack(defender, attacker, attack_margin);
                         }
                         else
                         {
