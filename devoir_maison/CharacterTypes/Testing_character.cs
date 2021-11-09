@@ -11,8 +11,8 @@
             damages = 20;
             maximumLife = 300;
             currentLife = 300;
-            totalAttackNumber = 1;
-            currentAttackNumber = 1;
+            totalAttackNumber = 2;
+            currentAttackNumber = 2;
             characterType = "Testing_character";
             isLiving = true;
             isCursed = false;
