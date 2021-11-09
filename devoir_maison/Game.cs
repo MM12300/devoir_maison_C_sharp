@@ -64,18 +64,18 @@ namespace devoir_maison
                 if (typeOfRoll == "attack")
                 {
                     rollResult = 50 + character.GetAttack();
-                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (50 + attack:{3})", character.GetName(), rollResult, character.GetAttack());
+                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (50 + attack:{2})", character.GetName(), rollResult, character.GetAttack());
                 }
                 else if (typeOfRoll == "initiative")
                 {
                     rollResult = 50 + character.GetInitiative();
-                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (50 + initiative:{3})", character.GetName(), rollResult, character.GetInitiative());
+                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (50 + initiative:{2})", character.GetName(), rollResult, character.GetInitiative());
 
                 }
                 else if (typeOfRoll == "defense")
                 {
                     rollResult = 50 + character.GetDefense();
-                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (50 + defense:{3})", character.GetName(), rollResult, character.GetDefense());
+                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (50 + defense:{2})", character.GetName(), rollResult, character.GetDefense());
                 }
                 else
                 {
@@ -88,13 +88,13 @@ namespace devoir_maison
                 if (typeOfRoll == "attack")
                 {
                     rollResult = rollValue + character.GetAttack();
-                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{3})", character.GetName(), rollResult, rollValue, character.GetAttack());
+                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{2})", character.GetName(), rollResult, rollValue, character.GetAttack());
 
                 }
                 else if (typeOfRoll == "initiative")
                 {
                     rollResult = rollValue + character.GetInitiative();
-                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{3})", character.GetName(), rollResult, rollValue, character.GetInitiative());
+                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{2})", character.GetName(), rollResult, rollValue, character.GetInitiative());
 
                 }
                 else if (typeOfRoll == "defense")
@@ -110,12 +110,13 @@ namespace devoir_maison
                         rollResult = rollValue + character.GetDefense();
                     }
 
-                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", character.GetName(), rollResult, rollValue, character.GetDefense());
+                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{2})", character.GetName(), rollResult, rollValue, character.GetDefense());
                 }
                 else
                 {
+                    //TODO : remove this throw error
+                    rollResult = 0;
                     Console.WriteLine("type of roll must be attack, defense or initiative");
-                    throw new ArgumentException("Type of roll can't have these values : attack, defense, initiative", nameof(typeOfRoll));
                 }
             }
             
