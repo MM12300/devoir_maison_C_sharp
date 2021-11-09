@@ -77,8 +77,9 @@ namespace devoir_maison
             else if (typeOfRoll == "defense")
             {
                 //ZOMBIE RULE
-                if(character.GetCharacterType() == "zombie")
+                if(character.GetCharacterType() == "Zombie")
                 {
+                    Console.BackgroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("{0} defense roll is always 0", character.GetType());
                     rollResult = rollValue + character.GetDefense();
                 }
@@ -347,7 +348,8 @@ namespace devoir_maison
                         }
                         else
                         {
-                            Console.WriteLine("{0} can't counter attack", attacker.GetCharacterType());
+                            Console.BackgroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("{0} can't counter attack, he is a {1}", attacker.GetName(), attacker.GetCharacterType());
                         }
 
                     }
@@ -568,11 +570,10 @@ namespace devoir_maison
             //BERSERKER RULE
             if (character.GetCharacterType() == "Berserker" && character.GetCurrentLife() < (character.GetMaximumLife()/2))
             {
-                Console.BackgroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Character is a {0} with less than half of its total life points {1}/{2}", character.GetCharacterType(), character.GetCurrentLife(), character.GetMaximumLife());
+                Console.WriteLine("{0} is a {1} with less than half of its total life points {2}/{3}", character.GetName(), character.GetCharacterType(), character.GetCurrentLife(), character.GetMaximumLife());
                 character.SetCurrentAttackNumber(4);
-                Console.WriteLine("Attack number is set at {0}", character.GetTotalAttackNumber());
-                Console.ResetColor();
+                character.SetTotalAttackNumber(4);
+                Console.WriteLine("Attack number is set at {0}", character.GetCurrentAttackNumber());
             }
             else
             {
