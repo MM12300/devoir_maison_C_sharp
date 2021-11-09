@@ -297,7 +297,9 @@ namespace devoir_maison
                         {
                             int berserkerLostLifePoints = attacker.GetMaximumLife() - attacker.GetCurrentLife();
                             damage = attack_margin * (attacker.GetDamages()+berserkerLostLifePoints) / 100;
+                            Console.BackgroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("Berserker type of attack , lost live points : {0} = {1} - {2}", berserkerLostLifePoints, attacker.GetMaximumLife(), attacker.GetCurrentLife());
+                            Console.ResetColor();
                         }
                         else
                         {
@@ -558,9 +560,11 @@ namespace devoir_maison
             //BERSERKER RULE
             if (character.GetCharacterType() == "Berserker" && character.GetCurrentLife() < (character.GetMaximumLife()/2))
             {
+                Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Character is a {0} with less than half of its total life points {1}/{2}", character.GetCharacterType(), character.GetCurrentLife(), character.GetMaximumLife());
                 character.SetCurrentAttackNumber(4);
                 Console.WriteLine("Attack number is set at {0}", character.GetTotalAttackNumber());
+                Console.ResetColor();
             }
             else
             {
