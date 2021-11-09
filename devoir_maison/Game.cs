@@ -242,6 +242,7 @@ namespace devoir_maison
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("COUNTER ATTACK SUCCESS");
+                        Console.WriteLine("Counter-Attack value = {0}", attack_margin);
                         Console.ResetColor();
                         int damage = attack_margin * counterAttacker.GetDamages() / 100;
                         Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, attack_margin, counterAttacker.GetDamages());
@@ -261,7 +262,7 @@ namespace devoir_maison
                     else if (attack_margin <= 0)
                     {
                         Console.WriteLine("{0} counter-attack", counterDefender.GetName());
-                        Console.WriteLine("Counter-Attacke value = {0}", attack_margin);
+                        Console.WriteLine("Counter-Attack value = {0}", attack_margin);
                         counterAttack(counterDefender, counterAttacker, attack_margin);
                     }
                 }
@@ -317,8 +318,10 @@ namespace devoir_maison
                     //Delta negative = defender counter-attack
                     else if (attack_margin <= 0)
                     {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("{0} counter-attack", defender.GetName());
                         Console.WriteLine("Counter-Attacke value = {0}", attack_margin);
+                        Console.ResetColor();
 
                         //ZOMBIE RULE
                         if (attacker.GetCharacterType() != "Zombie")
