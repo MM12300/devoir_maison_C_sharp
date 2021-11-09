@@ -251,17 +251,15 @@ namespace devoir_maison
                         {
                             int berserkerLostLifePoints = counterAttacker.GetMaximumLife() - counterAttacker.GetCurrentLife();
                             damage = attack_margin * (counterAttacker.GetDamages() + berserkerLostLifePoints) / 100;
-                            Console.BackgroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("Berserker type of attack , lost live points : {0} = {1} - {2}", berserkerLostLifePoints, counterAttacker.GetMaximumLife(), counterAttacker.GetCurrentLife());
-                            Console.ResetColor();
                         }
                         else
                         {
                             damage = attack_margin * counterAttacker.GetDamages() / 100;
                         }
 
-                        Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, attack_margin, counterAttacker.GetDamages());
                         int damageGiven = damageModifier(counterAttacker, counterDefender, damage);
+                        Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, counterAttacker.GetDamages());
 
                         //VAMPIRE RULE
                         if (counterAttacker.GetCharacterType() == "Vampire")
@@ -288,6 +286,8 @@ namespace devoir_maison
 
         public void simpleAttack(Character attacker, Character defender)
         {
+            int damage;
+
             //CHECK IF ATTACKERS AND DEFENDERS ARE ALIVE
             if (isAlive(attacker) && isAlive(defender)){
                 if (hasAttacks(attacker) && canAttackPain(attacker))
@@ -305,29 +305,25 @@ namespace devoir_maison
 
                     if (attack_margin > 0)
                     {
-                        int damage;
-
                         //BERSERKER RULE : add lost life points of Berserker to his damage during an attack
                         if (attacker.GetCharacterType() == "Berserker")
                         {
                             int berserkerLostLifePoints = attacker.GetMaximumLife() - attacker.GetCurrentLife();
                             damage = attack_margin * (attacker.GetDamages()+berserkerLostLifePoints) / 100;
-                            Console.WriteLine("berserker damage : {0} CROSSCHECK", damage);
-                            Console.BackgroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("Berserker type of attack , lost live points : {0} = {1} - {2}", berserkerLostLifePoints, attacker.GetMaximumLife(), attacker.GetCurrentLife());
-                            Console.ResetColor();
                         }
                         else
                         {
                             damage = attack_margin * attacker.GetDamages() / 100;
-                            Console.WriteLine("test");
                         }
 
-                        Console.WriteLine("Damage ({0}) = {1} * {2} /100", damage, attack_margin, attacker.GetDamages());
                         int damageGiven = damageModifier(attacker, defender, damage);
 
+                        Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, attacker.GetDamages());
+
+
                         //VAMPIRE RULE
-                        if(attacker.GetCharacterType() == "Vampire")
+                        if (attacker.GetCharacterType() == "Vampire")
                         {
                             attacker.SetCurrentLife(attacker.GetCurrentLife() + (damageGiven / 2));
                         }
