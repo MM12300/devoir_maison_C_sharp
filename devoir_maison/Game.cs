@@ -234,7 +234,10 @@ namespace devoir_maison
             //PRIEST RULES
             if(character.GetCharacterType() == "Priest")
             {
-                lifeModifier(character, (Convert.ToInt32(character.GetMaximumLife() * 1.1)));
+                Console.WriteLine("Priest rule");
+                Console.WriteLine("{1} life before : {0}", character.GetCurrentLife(), character.GetName());
+                lifeModifier(character, (Convert.ToInt32(character.GetMaximumLife() * 0.1)));
+                Console.WriteLine("{1} life after : {0}", character.GetCurrentLife(), character.GetName());
             }
         }
 
