@@ -256,12 +256,10 @@ namespace devoir_maison
                     if (counterAttacker.GetCharacterType() == "Guardian")
                     {
                         Console.WriteLine("The {0} has a double counter-attack : counter-attacke value original ({1}) and now doubled ({2})", counterAttacker.GetCharacterType(), counterAttackValue, counterAttackValue * 2);
-                        //COUNTER-ATTACKE RULE : We add the counter attack value to the attack value
                         counterAttacking = attack(counterAttacker) + (counterAttackValue * -2);
                     }
                     else
                     {
-                        //COUNTER-ATTACKE RULE : We add the counter attack value to the attack value
                         counterAttacking = attack(counterAttacker) + (counterAttackValue * -1);
                     }
                     int counterDefending = defense(counterDefender);
@@ -272,7 +270,6 @@ namespace devoir_maison
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("COUNTER ATTACK SUCCESS");
-                        Console.WriteLine("Counter-Attack value = {0}", attack_margin);
                         Console.ResetColor();
 
                         int damage;
@@ -294,6 +291,7 @@ namespace devoir_maison
                         //VAMPIRE RULE
                         if (counterAttacker.GetCharacterType() == "Vampire")
                         {
+                            Console.WriteLine("VAmpire life modifier");
                             lifeModifier(counterAttacker, (counterAttacker.GetCurrentLife() + (damageGiven / 2)));
                         }
 
@@ -305,7 +303,7 @@ namespace devoir_maison
                     else if (attack_margin <= 0)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.WriteLine("{0} counter-attack", counterDefender.GetName());
+                        Console.WriteLine("{0} has failded so {1} counter-attack BACK", counterAttacker.GetName(), counterDefender.GetName());
                         Console.WriteLine("Counter-Attack value = {0}", attack_margin);
                         Console.ResetColor();
                         counterAttack(counterDefender, counterAttacker, attack_margin);
@@ -353,7 +351,8 @@ namespace devoir_maison
                         //VAMPIRE RULE
                         if (attacker.GetCharacterType() == "Vampire")
                         {
-                            attacker.SetCurrentLife(attacker.GetCurrentLife() + (damageGiven / 2));
+                            Console.WriteLine("Vampire life modifier");
+                            lifeModifier(attacker, (attacker.GetCurrentLife() + (damageGiven / 2)));
                         }
 
                         defender.SetCurrentLife(defender.GetCurrentLife() - damageGiven);
@@ -493,8 +492,7 @@ namespace devoir_maison
             if (isAlive(character))
             {
                 if(character.GetIsLiving() || character.GetCharacterType() == "Ghoul"){
-                    Console.BackgroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Ghoul is a {0}", character.GetCharacterType());
+                    Console.WriteLine("{0} is a {1}", character.GetName(), character.GetCharacterType());
                     //BERSERKER AND PAIN RULE
                     if (character.GetCharacterType() != "Berserker")
                     {
@@ -584,10 +582,12 @@ namespace devoir_maison
 
             if (newLifeValue > character.GetMaximumLife())
             {
+                Console.WriteLine("new life value is maxed");
                 character.SetCurrentLife(character.GetMaximumLife());
             }
             else
             {
+                Console.WriteLine("Life has been changed");
                 character.SetCurrentLife(newLifeValue);
             }
         }
