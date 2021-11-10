@@ -12,22 +12,6 @@ namespace devoir_maison
     //TODO CHANGE CONSOLEWRITELINE AVEC OPERATORS
     class Game
     {
-        public Character CreateCharacter(int attack, int defense, int initiative, int damages, int maximumLife, int currentLife, int currentAttackNumber, int totalAttackNumber)
-        {
-            Character newCharacter = new Character();
-
-            newCharacter.SetAttack(attack);
-            newCharacter.SetDefense(defense);
-            newCharacter.SetInitiative(initiative);
-            newCharacter.SetDamages(damages);
-            newCharacter.SetMaximumLife(maximumLife);
-            newCharacter.SetCurrentLife(currentLife);
-            newCharacter.SetCurrentAttackNumber(currentAttackNumber);
-            newCharacter.SetTotalAttackNumber(totalAttackNumber);
-
-            return new Character();
-        }
-
         public int roll()
         {
             Random random = new Random();
@@ -417,7 +401,6 @@ namespace devoir_maison
                 }
         }
 
-
         public void round(Character character1, Character character2)
         {
             if (isAlive(character1) && isAlive(character2))
@@ -486,7 +469,6 @@ namespace devoir_maison
             }
             return isAlive(character1) ? character1.GetName() + " won" : character2.GetName();
         }
-
 
         //PAIN RULES
         public void pain(Character character, int damage, int defenderLifePointsLeft)
@@ -612,10 +594,66 @@ namespace devoir_maison
             }
         }
 
+        public List<Character> battleRoyaleFighterList()
+        {
+            Character jojo = new Priest("jojo");
+            Character jiji = new Priest("jiji");
+            Character jaja = new Priest("jaja");
+            Character juju = new Priest("juju");
+            Character test = new Priest("test");
+            Character bobby = new Priest("bobby");
+            Character billy = new Priest("billy");
+
+            List<Character> fightersList = new List<Character>();
+
+            fightersList.Add(jojo);
+            fightersList.Add(jiji);
+            fightersList.Add(jaja);
+            fightersList.Add(juju);
+            fightersList.Add(test);
+
+            return fightersList;
+        }
+
+        public List<Character> battleRoyaleFightersInitiative(List<Character> fightersList)
+        {
+            Dictionary<Character, int> fightersUnsorted = new Dictionary<Character, int>();
+
+            foreach (Character fighter in fightersList)
+            {
+                fightersUnsorted.Add(fighter, initiative(fighter));
+            }
+
+            foreach (KeyValuePair<Character, int> fighters in fightersUnsorted)
+            {
+                Console.WriteLine("Character name: {0}, Initiative: {1}",
+                    fighters.Key.GetName(), fighters.Value);
+            }
+
+            var fightersSorted = from entry in fightersUnsorted orderby entry.Value descending select entry;
+
+            foreach (KeyValuePair<Character, int> player in fightersSorted)
+            {
+                Console.WriteLine("Key: {0}, Value: {1}",
+                    player.Key.GetName(), player.Value);
+            }
+
+            List<Character> fightersListInitiative = fightersSorted.Select(kvp => kvp.Key).ToList();
+
+            return fightersListInitiative;
+        }
+
+        public void battleRoyaleGood()
+        {
+            List<Character> fighters = battleRoyaleFighterList();
+            battleRoyaleFightersInitiative(fighters);
+        }
+
+
 
         public void battleroyale()
         {
-            //Players
+            //Initiative a list of battleroyale fighters
             Character jojo = new Priest("jojo");
             Character jiji = new Priest("jiji");
             Character jaja = new Priest("jaja");
@@ -625,9 +663,9 @@ namespace devoir_maison
             Character billy = new Priest("billy");
 
 
-            //Players in Dictionnary
+            //Store players and their initiative value
             Dictionary<Character, int> fightersUnsorted = new Dictionary<Character, int>();
-            fightersUnsorted.Add(jojo, rollOf("initiative", roll(), jojo));
+            fightersUnsorted.Add(jojo, initiative(jojo));
             fightersUnsorted.Add(jiji, rollOf("initiative", roll(), jiji));
             fightersUnsorted.Add(jaja, rollOf("initiative", roll(), jaja));
             fightersUnsorted.Add(juju, rollOf("initiative", roll(), juju));
