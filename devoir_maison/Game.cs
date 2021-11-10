@@ -643,9 +643,53 @@ namespace devoir_maison
             return fightersListInitiative;
         }
 
-        public void battleRoyaleRound()
+        public void battleRoyaleRound(List<Character> fightersList)
         {
+            //si les combattants sont vivants à tester ?
 
+            pickRandomFighter(fightersList);
+
+        }
+
+        public void battleRoyaleFight(List <Character> fightersList)
+        {
+            int roundNumber = 1;
+            while (areFightersStillAlive(fightersList))
+            {
+                Console.WriteLine("LETS START THE ROUND {0} ? (push enter key)", roundNumber);
+                Console.ReadLine();
+                round(character1, character2);
+                roundNumber++;
+            }
+            return isAlive(character1) ? character1.GetName() + " won" : character2.GetName();
+        }
+        
+        public bool areFightersStillAlive(List<Character> fightersList)
+        {
+            List<Character> aliveFighters = new List<Character>();
+            
+            foreach (Character fighter in fightersList)
+            {
+                if(fighter.GetCurrentLife() > 0)
+                {
+                    aliveFighters.Add(fighter);
+                }
+                else
+                {
+                    Console.WriteLine("{0} is dead", fighter.GetName());
+                }
+            }
+
+            if(aliveFighters.Count() >= 2)
+            {
+                Console.WriteLine("{0} still on the fight", aliveFighters.Count());
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("only one fighter is left : he is the winner");
+                return false;
+            }
         }
 
         public void battleRoyaleGood()
