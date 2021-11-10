@@ -8,8 +8,8 @@ namespace devoir_maison
         static void Main(string[] args)
         {
             Game game = new Game();
-            Character billy = new Priest("priest1");
-            Character bobby = new Priest("priest2");
+            Character billy = new Priest("priest");
+            Character bobby = new Lich("lich");
 
             Console.WriteLine("FIGHT BEGINS!");
             game.fight(billy, bobby);

@@ -384,7 +384,6 @@ namespace devoir_maison
             }
         }
 
-
         public void attackAndDefend(Character attacker, Character defender)
         {
                 if (attacker.GetCurrentLife() > 0 && defender.GetCurrentLife() > 0)
@@ -419,7 +418,7 @@ namespace devoir_maison
         }
 
 
-        public void round(Character character1, Character character2, int roundNumber)
+        public void round(Character character1, Character character2)
         {
             if (isAlive(character1) && isAlive(character2))
             {
@@ -482,7 +481,7 @@ namespace devoir_maison
             {
                 Console.WriteLine("LETS START THE ROUND {0} ? (push enter key)", roundNumber);
                 Console.ReadLine();
-                round(character1, character2, roundNumber);
+                round(character1, character2);
                 roundNumber++;
             }
             return isAlive(character1) ? character1.GetName() + " won" : character2.GetName();
@@ -570,7 +569,9 @@ namespace devoir_maison
             // if defender = blessed AND attacker = cursed OR defender = cursed AND attacker = blessed, life points lost after attack multiplied by 2
             if( (defender.GetIsBlessed() && attacker.GetCursedDamage()) || (defender.GetIsCursed() && attacker.GetBlessedDamage()) ){
                 int doubleDamage = damage * 2;
+                Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Attacker is a {0} and defender is a {1} so damage*2 = {2} * 2 = {3}", attacker.GetCharacterType(), defender.GetCharacterType(), damage, doubleDamage);
+                Console.ResetColor();
                 return doubleDamage;
             }
             else
