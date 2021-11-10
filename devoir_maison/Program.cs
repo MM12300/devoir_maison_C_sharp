@@ -7,14 +7,14 @@ namespace devoir_maison
     {
         static void Main(string[] args)
         {
-            Game game = new Game();
+            Game game_classic = new Game();
             //Character billy = new Priest("priest");
             //Character bobby = new Lich("lich");
-
+            
             //Console.WriteLine("FIGHT BEGINS!");
             //game.fight(billy, bobby);
 
-            game.battleRoyaleGood();
+            //game.battleRoyaleGood();
         }
     }
 }

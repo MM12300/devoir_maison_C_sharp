@@ -643,12 +643,38 @@ namespace devoir_maison
             return fightersListInitiative;
         }
 
+        public void battleRoyaleRound()
+        {
+
+        }
+
         public void battleRoyaleGood()
         {
             List<Character> fighters = battleRoyaleFighterList();
             battleRoyaleFightersInitiative(fighters);
         }
 
+        public Character pickRandomFighter(List<Character> fighterList, Character attacker)
+        {
+            //List<Character> opponentsList = fighterList;
+
+            List<Character> opponentsList = new List<Character>(fighterList);
+            opponentsList.Remove(attacker);
+
+            Console.WriteLine("Opponents of {0} are : ", attacker.GetName());
+            foreach (Character opponent in opponentsList)
+            {
+                Console.WriteLine("{0}", opponent.GetName());
+            }
+
+            Random random = new Random();
+            Thread.Sleep(100);
+            int randomFighterIndex = random.Next(0, opponentsList.Count() - 1);
+            Console.WriteLine(randomFighterIndex);
+
+            Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
+            return opponentsList[randomFighterIndex];
+        }
 
 
         public void battleroyale()
@@ -697,28 +723,6 @@ namespace devoir_maison
                 Character randomFighter = pickRandomFighter(fightersList, fighter);
             }
             
-        }
-
-        public Character pickRandomFighter(List<Character> fighterList, Character attacker)
-        {
-            //List<Character> opponentsList = fighterList;
-
-            List<Character> opponentsList = new List<Character>(fighterList);
-            opponentsList.Remove(attacker);
-
-            Console.WriteLine("Opponents of {0} are : ", attacker.GetName());
-            foreach (Character opponent in opponentsList)
-            {
-                Console.WriteLine("{0}", opponent.GetName());
-            }
-
-            Random random = new Random();
-            Thread.Sleep(100);
-            int randomFighterIndex = random.Next(0, opponentsList.Count()-1);
-            Console.WriteLine(randomFighterIndex);
-
-            Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
-            return opponentsList[randomFighterIndex];
         }
     }
 }
