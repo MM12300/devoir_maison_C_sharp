@@ -401,6 +401,27 @@ namespace devoir_maison
                 }
         }
 
+
+        public void battleRoyaleAttackAndDefend(Character attacker, Character defender)
+        {
+            if (attacker.GetCurrentLife() > 0 && defender.GetCurrentLife() > 0)
+            {
+                Console.WriteLine("---------------");
+                Console.WriteLine("{0} attack BEGINS", attacker.GetName());
+
+                for (int i = 1; i <= attacker.GetTotalAttackNumber(); i++)
+                {
+                    if (isAlive(attacker) && isAlive(defender))
+                    {
+                        simpleAttack(attacker, defender);
+                    }
+                }
+                Console.WriteLine("{0} attack is OVER", attacker.GetName());
+                showLife(attacker);
+                showLife(defender);
+            }
+        }
+
         public void round(Character character1, Character character2)
         {
             if (isAlive(character1) && isAlive(character2))
@@ -679,8 +700,9 @@ namespace devoir_maison
             //si les combattants sont vivants à tester ?
             foreach (Character fighter in fightersList)
             {
+                Console.WriteLine("ATTAQUE DE {0}", fighter.GetName());
                 Character opponent = pickRandomFighter(fightersList, fighter);
-                attackAndDefend(fighter, opponent);
+                battleRoyaleAttackAndDefend(fighter, opponent);
             }
 
             battleRoyaleResetAttackNumber(fightersList);
