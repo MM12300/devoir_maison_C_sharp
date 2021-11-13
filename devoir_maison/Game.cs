@@ -596,8 +596,8 @@ namespace devoir_maison
 
         public List<Character> battleRoyaleFightersList()
         {
-            Character jojo = new Priest("jojo");
-            Character jiji = new Priest("jiji");
+            Character jojo = new Testing_character("jojo");
+            Character jiji = new Testing_character("jiji");
             Character jaja = new Priest("jaja");
             Character juju = new Priest("juju");
             Character test = new Priest("test");
@@ -608,7 +608,7 @@ namespace devoir_maison
 
             fightersList.Add(jojo);
             fightersList.Add(jiji);
-            fightersList.Add(jaja);
+            //fightersList.Add(jaja);
             //fightersList.Add(juju);
             //fightersList.Add(test);
 
