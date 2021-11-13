@@ -729,54 +729,5 @@ namespace devoir_maison
             Console.ResetColor();
             return opponentsList[randomFighterIndex];
         }
-
-
-        public void battleroyale()
-        {
-            //Initiative a list of battleroyale fighters
-            Character jojo = new Priest("jojo");
-            Character jiji = new Priest("jiji");
-            Character jaja = new Priest("jaja");
-            Character juju = new Priest("juju");
-            Character test = new Priest("test");
-            Character bobby = new Priest("bobby");
-            Character billy = new Priest("billy");
-
-
-            //Store players and their initiative value
-            Dictionary<Character, int> fightersUnsorted = new Dictionary<Character, int>();
-            fightersUnsorted.Add(jojo, initiative(jojo));
-            fightersUnsorted.Add(jiji, rollOf("initiative", roll(), jiji));
-            fightersUnsorted.Add(jaja, rollOf("initiative", roll(), jaja));
-            fightersUnsorted.Add(juju, rollOf("initiative", roll(), juju));
-            fightersUnsorted.Add(test, rollOf("initiative", roll(), test));
-            fightersUnsorted.Add(bobby, rollOf("initiative", roll(), bobby));
-            fightersUnsorted.Add(billy, rollOf("initiative", roll(), billy));
-
-            foreach (KeyValuePair<Character, int> fighters in fightersUnsorted)
-            {
-                Console.WriteLine("Character name: {0}, Initiative: {1}",
-                    fighters.Key.GetName(), fighters.Value);
-            }
-
-            //Sort dictionnary with initiative : highest initiative first
-            var fightersSorted = from entry in fightersUnsorted orderby entry.Value descending select entry;
-            Console.WriteLine("....");
-
-            foreach (KeyValuePair<Character, int> player in fightersSorted)
-            {
-                Console.WriteLine("Key: {0}, Value: {1}",
-                    player.Key.GetName(), player.Value);
-            }
-
-            List<Character> fightersList = fightersSorted.Select(kvp => kvp.Key).ToList();
-
-            foreach (Character fighter in fightersList)
-            {
-                Console.WriteLine("Now {0} is attacking", fighter.GetName());
-                Character randomFighter = pickRandomFighter(fightersList, fighter);
-            }
-            
-        }
     }
 }
