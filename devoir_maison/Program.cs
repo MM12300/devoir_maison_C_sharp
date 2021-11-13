@@ -7,7 +7,7 @@ namespace devoir_maison
     {
         static void Main(string[] args)
         {
-            Game game_classic = new Game();
+            Game game = new Game();
             //Character billy = new Priest("priest");
             //Character bobby = new Lich("lich");
             

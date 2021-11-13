@@ -609,8 +609,8 @@ namespace devoir_maison
             fightersList.Add(jojo);
             fightersList.Add(jiji);
             fightersList.Add(jaja);
-            fightersList.Add(juju);
-            fightersList.Add(test);
+            //fightersList.Add(juju);
+            //fightersList.Add(test);
 
             return fightersList;
         }
@@ -660,10 +660,11 @@ namespace devoir_maison
             {
                 Console.WriteLine("LETS START THE ROUND {0} ? (push enter key)", roundNumber);
                 Console.ReadLine();
-                round(character1, character2);
+                battleRoyaleRound(fightersList);
                 roundNumber++;
             }
-            return isAlive(character1) ? character1.GetName() + " won" : character2.GetName();
+            
+            //TODO: Do I need to return a value ?
         }
         
         public bool areFightersStillAlive(List<Character> fightersList)
@@ -689,12 +690,12 @@ namespace devoir_maison
             }
             else
             {
-                Console.WriteLine("only one fighter is left : he is the winner");
+                Console.WriteLine("only one fighter is left : {0} is the winner", aliveFighters[0]);
                 return false;
             }
         }
 
-        public void battleRoyaleGood(List<Character> fighters)
+        public void battleRoyaleGood()
         {
 
 
