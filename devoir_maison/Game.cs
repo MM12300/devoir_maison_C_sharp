@@ -413,6 +413,9 @@ namespace devoir_maison
                 {
                     if (isAlive(attacker) && isAlive(defender))
                     {
+
+
+
                         simpleAttack(attacker, defender);
                     }
                 }
@@ -705,12 +708,24 @@ namespace devoir_maison
             foreach (Character fighter in fightersListSortedByInitiative)
             {
                 Console.WriteLine("ATTAQUE DE {0}", fighter.GetName());
-                Character opponent = pickRandomFighter(fightersList, fighter);
-                battleRoyaleAttackAndDefend(fighter, opponent);
+
+                //KAMIKAZE ATTACK
+                if(fighter.GetCharacterType() != "Kamikaze")
+                {
+                    Character opponent = chooseOpponent(fightersList, fighter);
+                    battleRoyaleAttackAndDefend(fighter, opponent);
+                }
+                else
+                {
+                    kamikazeAttack(fighter, fightersList);
+                }
             }
 
             battleRoyaleResetAttackNumber(fightersList);
         }
+
+
+
 
         public void battleRoyaleFight(List <Character> fightersList)
         {
@@ -756,25 +771,74 @@ namespace devoir_maison
             }
         }
 
-        public void battleRoyaleGood()
+        public void battleRoyale()
         {
             List<Character> allFighters = battleRoyaleFightersList();
             battleRoyaleFight(allFighters);
         }
 
-        public Character pickRandomFighter(List<Character> fighterList, Character attacker)
+        public Character chooseOpponent(List<Character> fighterList, Character attacker)
         {
             List<Character> opponentsList = new List<Character>(fighterList);
             opponentsList.Remove(attacker);
 
+            //PRIEST RULE
+            if(attacker.GetCharacterType() != "Priest")
+            {
+                Random random = new Random();
+                Thread.Sleep(100);
+                int randomFighterIndex = random.Next(0, opponentsList.Count() - 1);
+
+                Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
+                Console.ResetColor();
+            }
+            else
+            {
+                foreach(Character opponent in opponentsList)
+                {
+                    if (opponent.GetIsLiving())
+                    {
+                        Console.WriteLine("{0} is a priest and attack living fighters in priority so {1} is removed from opponents list", attacker.GetName(), opponent.GetName());
+                        opponentsList.Remove(opponent);
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} is a priest and attack living fighters in priority so {1} is NOT removed from opponents list", attacker.GetName(), opponent.GetName());
+                    }
+                }
+            }
+            return pickRandomFighter(attacker, opponentsList);
+        }
+
+        public Character pickRandomFighter(Character attacker, List<Character> opponentsList)
+        {
             Random random = new Random();
             Thread.Sleep(100);
             int randomFighterIndex = random.Next(0, opponentsList.Count() - 1);
-
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
             Console.ResetColor();
             return opponentsList[randomFighterIndex];
+        }
+
+        public void kamikazeAttack(Character kamikaze, List<Character> fightersList)
+        {
+            List<Character> opponentsList = new List<Character>(fightersList);
+            opponentsList.Remove(kamikaze);
+
+            foreach(Character fighter in fightersList)
+            {
+                if (!luckyRoll())
+                {
+                    Console.WriteLine("{0} is not lucky and so {1} attacks him", fighter.GetCharacterType(), kamikaze.GetCharacterType());
+                    attackAndDefend(kamikaze, fighter);
+                }
+                else
+                {
+                    Console.WriteLine("{0} is lucky and avoids attack from {1}", fighter.GetCharacterType(), kamikaze.GetCharacterType());
+                }
+            }
         }
     }
 }
