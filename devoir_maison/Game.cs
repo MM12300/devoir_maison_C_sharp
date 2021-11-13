@@ -483,7 +483,9 @@ namespace devoir_maison
             int roundNumber = 1;
             while (isAlive(character1) && isAlive(character2))
             {
-                Console.WriteLine("LETS START THE ROUND {0} ? (push enter key)", roundNumber);
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("LET'S START THE ROUND {0} ? (push enter key)", roundNumber);
+                Console.ResetColor();
                 Console.ReadLine();
                 round(character1, character2);
                 roundNumber++;
@@ -698,7 +700,9 @@ namespace devoir_maison
         public void battleRoyaleRound(List<Character> fightersList)
         {
             //si les combattants sont vivants à tester ?
-            foreach (Character fighter in fightersList)
+            List<Character> fightersListSortedByInitiative = battleRoyaleFightersInitiative(fightersList);
+
+            foreach (Character fighter in fightersListSortedByInitiative)
             {
                 Console.WriteLine("ATTAQUE DE {0}", fighter.GetName());
                 Character opponent = pickRandomFighter(fightersList, fighter);
@@ -713,7 +717,9 @@ namespace devoir_maison
             int roundNumber = 1;
             while (areFightersStillAlive(fightersList))
             {
+                Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("LETS START THE ROUND {0} ? (push enter key)", roundNumber);
+                Console.ResetColor();
                 Console.ReadLine();
                 battleRoyaleRound(fightersList);
                 roundNumber++;
@@ -753,8 +759,7 @@ namespace devoir_maison
         public void battleRoyaleGood()
         {
             List<Character> allFighters = battleRoyaleFightersList();
-            List<Character> allFightersByInitiative = battleRoyaleFightersInitiative(allFighters);
-            battleRoyaleFight(allFightersByInitiative);
+            battleRoyaleFight(allFighters);
         }
 
         public Character pickRandomFighter(List<Character> fighterList, Character attacker)
