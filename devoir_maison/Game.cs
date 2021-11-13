@@ -632,10 +632,10 @@ namespace devoir_maison
 
             var fightersSorted = from entry in fightersUnsorted orderby entry.Value descending select entry;
 
-            foreach (KeyValuePair<Character, int> player in fightersSorted)
+            foreach (KeyValuePair<Character, int> fighters in fightersUnsorted)
             {
-                Console.WriteLine("Key: {0}, Value: {1}",
-                    player.Key.GetName(), player.Value);
+                Console.WriteLine("Character name: {0}, Initiative: {1}",
+                    fighters.Key.GetName(), fighters.Value);
             }
 
             List<Character> fightersListInitiative = fightersSorted.Select(kvp => kvp.Key).ToList();
@@ -646,9 +646,11 @@ namespace devoir_maison
         public void battleRoyaleRound(List<Character> fightersList)
         {
             //si les combattants sont vivants à tester ?
-
-            pickRandomFighter(fightersList);
-
+            foreach (Character fighter in fightersList)
+            {
+                Character opponent = pickRandomFighter(fightersList, fighter);
+                attackAndDefend(fighter, opponent);
+            }
         }
 
         public void battleRoyaleFight(List <Character> fightersList)
@@ -692,10 +694,11 @@ namespace devoir_maison
             }
         }
 
-        public void battleRoyaleGood()
+        public void battleRoyaleGood(List<Character> fighters)
         {
-            List<Character> fighters = battleRoyaleFighterList();
-            battleRoyaleFightersInitiative(fighters);
+
+
+
         }
 
         public Character pickRandomFighter(List<Character> fighterList, Character attacker)
