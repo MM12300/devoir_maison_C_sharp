@@ -594,6 +594,24 @@ namespace devoir_maison
             }
         }
 
+        public void battleRoyaleResetAttackNumber(List<Character> fightersList)
+        {
+            foreach(Character fighter in fightersList){
+                //BERSERKER RULE
+                if (fighter.GetCharacterType() == "Berserker" && fighter.GetCurrentLife() < (fighter.GetMaximumLife() / 2))
+                {
+                    Console.WriteLine("{0} is a {1} with less than half of its total life points {2}/{3}", fighter.GetName(), fighter.GetCharacterType(), fighter.GetCurrentLife(), fighter.GetMaximumLife());
+                    fighter.SetCurrentAttackNumber(4);
+                    fighter.SetTotalAttackNumber(4);
+                    Console.WriteLine("Attack number is set at {0}", fighter.GetCurrentAttackNumber());
+                }
+                else
+                {
+                    fighter.SetCurrentAttackNumber(fighter.GetTotalAttackNumber());
+                }
+            }
+        }
+
         public List<Character> battleRoyaleFightersList()
         {
             Character jojo = new Testing_character("jojo");
@@ -664,6 +682,8 @@ namespace devoir_maison
                 Character opponent = pickRandomFighter(fightersList, fighter);
                 attackAndDefend(fighter, opponent);
             }
+
+            battleRoyaleResetAttackNumber(fightersList);
         }
 
         public void battleRoyaleFight(List <Character> fightersList)

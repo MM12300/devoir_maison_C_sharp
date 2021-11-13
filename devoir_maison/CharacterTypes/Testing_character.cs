@@ -9,8 +9,8 @@
             defense = 100;
             initiative = 80;
             damages = 20;
-            maximumLife = 300;
-            currentLife = 300;
+            maximumLife = 100;
+            currentLife = 100;
             totalAttackNumber = 2;
             currentAttackNumber = 2;
             characterType = "Testing_character";
