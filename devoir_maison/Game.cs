@@ -783,19 +783,9 @@ namespace devoir_maison
             opponentsList.Remove(attacker);
 
             //PRIEST RULE
-            if(attacker.GetCharacterType() != "Priest")
+            if(attacker.GetCharacterType() == "Priest")
             {
-                Random random = new Random();
-                Thread.Sleep(100);
-                int randomFighterIndex = random.Next(0, opponentsList.Count() - 1);
-
-                Console.BackgroundColor = ConsoleColor.DarkMagenta;
-                Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
-                Console.ResetColor();
-            }
-            else
-            {
-                foreach(Character opponent in opponentsList)
+                foreach (Character opponent in opponentsList)
                 {
                     if (opponent.GetIsLiving())
                     {
