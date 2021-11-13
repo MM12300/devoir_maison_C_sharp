@@ -594,7 +594,7 @@ namespace devoir_maison
             }
         }
 
-        public List<Character> battleRoyaleFighterList()
+        public List<Character> battleRoyaleFightersList()
         {
             Character jojo = new Priest("jojo");
             Character jiji = new Priest("jiji");
@@ -617,6 +617,7 @@ namespace devoir_maison
 
         public List<Character> battleRoyaleFightersInitiative(List<Character> fightersList)
         {
+            
             Dictionary<Character, int> fightersUnsorted = new Dictionary<Character, int>();
 
             foreach (Character fighter in fightersList)
@@ -624,21 +625,33 @@ namespace devoir_maison
                 fightersUnsorted.Add(fighter, initiative(fighter));
             }
 
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Fighters list :");
             foreach (KeyValuePair<Character, int> fighters in fightersUnsorted)
             {
                 Console.WriteLine("Character name: {0}, Initiative: {1}",
                     fighters.Key.GetName(), fighters.Value);
+                
             }
+            Console.ResetColor();
 
             var fightersSorted = from entry in fightersUnsorted orderby entry.Value descending select entry;
+            Console.WriteLine("-----------");
 
-            foreach (KeyValuePair<Character, int> fighters in fightersUnsorted)
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Fighters list By Initiative :");
+            foreach (KeyValuePair<Character, int> fighters in fightersSorted)
             {
+                
+                
                 Console.WriteLine("Character name: {0}, Initiative: {1}",
                     fighters.Key.GetName(), fighters.Value);
+                
             }
+            Console.ResetColor();
 
             List<Character> fightersListInitiative = fightersSorted.Select(kvp => kvp.Key).ToList();
+            
 
             return fightersListInitiative;
         }
@@ -697,30 +710,23 @@ namespace devoir_maison
 
         public void battleRoyaleGood()
         {
-
-
-
+            List<Character> allFighters = battleRoyaleFightersList();
+            List<Character> allFightersByInitiative = battleRoyaleFightersInitiative(allFighters);
+            battleRoyaleFight(allFightersByInitiative);
         }
 
         public Character pickRandomFighter(List<Character> fighterList, Character attacker)
         {
-            //List<Character> opponentsList = fighterList;
-
             List<Character> opponentsList = new List<Character>(fighterList);
             opponentsList.Remove(attacker);
-
-            Console.WriteLine("Opponents of {0} are : ", attacker.GetName());
-            foreach (Character opponent in opponentsList)
-            {
-                Console.WriteLine("{0}", opponent.GetName());
-            }
 
             Random random = new Random();
             Thread.Sleep(100);
             int randomFighterIndex = random.Next(0, opponentsList.Count() - 1);
-            Console.WriteLine(randomFighterIndex);
 
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
+            Console.ResetColor();
             return opponentsList[randomFighterIndex];
         }
 
