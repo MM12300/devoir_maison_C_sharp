@@ -640,10 +640,10 @@ namespace devoir_maison
 
         public List<Character> battleRoyaleFightersList()
         {
-            Character jojo = new Testing_character("jojo");
-            Character jiji = new Testing_character("jiji");
-            Character jaja = new Priest("jaja");
-            Character juju = new Priest("juju");
+            Character jojo = new Priest("JoJo le PRIEST");
+            Character jiji = new Testing_character("jiji testing");
+            Character jaja = new Testing_character("jaja testing");
+            Character juju = new Vampire("juju le mort-vivant vampire");
             Character test = new Priest("test");
             Character bobby = new Priest("bobby");
             Character billy = new Priest("billy");
@@ -652,8 +652,8 @@ namespace devoir_maison
 
             fightersList.Add(jojo);
             fightersList.Add(jiji);
-            //fightersList.Add(jaja);
-            //fightersList.Add(juju);
+            fightersList.Add(jaja);
+            fightersList.Add(juju);
             //fightersList.Add(test);
 
             return fightersList;
@@ -785,20 +785,26 @@ namespace devoir_maison
             //PRIEST RULE
             if(attacker.GetCharacterType() == "Priest")
             {
+                List<Character> opponentsUndeadList = new List<Character>();
                 foreach (Character opponent in opponentsList)
                 {
-                    if (opponent.GetIsLiving())
+                    if (!opponent.GetIsLiving())
                     {
-                        Console.WriteLine("{0} is a priest and attack living fighters in priority so {1} is removed from opponents list", attacker.GetName(), opponent.GetName());
-                        opponentsList.Remove(opponent);
+                        Console.WriteLine("{0} is a priest and attack living fighters in priority so {1} is added to a new opponents list", attacker.GetName(), opponent.GetName());
+                        opponentsUndeadList.Add(opponent);
                     }
                     else
                     {
-                        Console.WriteLine("{0} is a priest and attack living fighters in priority so {1} is NOT removed from opponents list", attacker.GetName(), opponent.GetName());
+                        Console.WriteLine("{0} is a priest and attack living fighters in priority so {1} is NOT added to a new opponents list", attacker.GetName(), opponent.GetName());
                     }
                 }
+                return pickRandomFighter(attacker, opponentsUndeadList);
             }
-            return pickRandomFighter(attacker, opponentsList);
+            else
+            {
+                return pickRandomFighter(attacker, opponentsList);
+            }
+            
         }
 
         public Character pickRandomFighter(Character attacker, List<Character> opponentsList)
