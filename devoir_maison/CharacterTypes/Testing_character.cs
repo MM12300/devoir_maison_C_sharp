@@ -8,7 +8,7 @@
             attack = 150;
             defense = 100;
             initiative = 80;
-            damages = 150;
+            damages = 100;
             maximumLife = 100;
             currentLife = 100;
             totalAttackNumber = 2;

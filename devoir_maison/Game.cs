@@ -12,121 +12,7 @@ namespace devoir_maison
     //TODO CHANGE CONSOLEWRITELINE AVEC OPERATORS
     class Game
     {
-        Randomizer random = new Randomizer();
-        public int roll()
-        {
-            int randomNumber = random.randomNumber(0,100);
-            return randomNumber;
-        }
-
-        public bool luckyRoll()
-        {
-            int randomNumber = random.randomNumber(0,100);
-
-            Console.WriteLine("Roll of Luck  : {0}", randomNumber);
-
-            if (randomNumber > 50)
-            {
-                Console.WriteLine("Lucky Roll");
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("Not Lucky Roll");
-                return false;
-            }
-        }
-
-        public int rollOf(string typeOfRoll, int rollValue, Character character)
-        {
-            Console.BackgroundColor = ConsoleColor.Blue;
-            int rollResult;
-
-            //ROBOT RULES
-            if(character.GetCharacterType() == "Robot")
-            {
-                if (typeOfRoll == "attack")
-                {
-                    rollResult = 50 + character.GetAttack();
-                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (50 + attack:{2})", character.GetName(), rollResult, character.GetAttack());
-                }
-                else if (typeOfRoll == "initiative")
-                {
-                    rollResult = 50 + character.GetInitiative();
-                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (50 + initiative:{2})", character.GetName(), rollResult, character.GetInitiative());
-
-                }
-                else if (typeOfRoll == "defense")
-                {
-                    rollResult = 50 + character.GetDefense();
-                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (50 + defense:{2})", character.GetName(), rollResult, character.GetDefense());
-                }
-                else
-                {
-                    Console.WriteLine("type of roll must be attack, defense or initiative");
-                    throw new ArgumentException("Type of roll can't have these values : attack, defense, initiative", nameof(typeOfRoll));
-                }
-            }
-            else
-            {
-                if (typeOfRoll == "attack")
-                {
-                    rollResult = rollValue + character.GetAttack();
-                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{3})", character.GetName(), rollResult, rollValue, character.GetAttack());
-
-                }
-                else if (typeOfRoll == "initiative")
-                {
-                    rollResult = rollValue + character.GetInitiative();
-                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{3})", character.GetName(), rollResult, rollValue, character.GetInitiative());
-
-                }
-                else if (typeOfRoll == "defense")
-                {
-                    //ZOMBIE RULE
-                    if (character.GetCharacterType() == "Zombie")
-                    {
-                        Console.WriteLine("{0} defense roll is always 0", character.GetCharacterType());
-                        rollResult = character.GetDefense();
-                    }
-                    else
-                    {
-                        rollResult = rollValue + character.GetDefense();
-                    }
-
-                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", character.GetName(), rollResult, rollValue, character.GetDefense());
-                }
-                else
-                {
-                    //TODO : remove this throw error
-                    rollResult = 0;
-                    Console.WriteLine("type of roll must be attack, defense or initiative");
-                }
-            }
-            
-            
-            
-            Console.ResetColor();
-            return rollResult;
-        }
-
-        public int attack(Character character)
-        {
-            int attackRollValue = rollOf("attack", roll(), character);
-            return attackRollValue;
-        }
-
-        public int defense(Character character)
-        {
-            int defenseRollValue = rollOf("defense", roll(), character);
-            return defenseRollValue;
-        }
-
-        public int initiative(Character character)
-        {
-            int initiativeRollValue = rollOf("initiative", roll(), character);
-            return initiativeRollValue;
-        }
+        private Randomizer random = new Randomizer();
 
         public bool isAlive(Character character)
         {
@@ -141,12 +27,7 @@ namespace devoir_maison
             }
         }
 
-        public void showLife(Character character)
-        {
-            Console.BackgroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("<3<3<3 -- {0} has {1}/{2} lifepoints -- <3<3<3", character.GetName(), character.GetCurrentLife(), character.GetMaximumLife());
-            Console.ResetColor();
-        }
+
 
         public bool hasAttacks(Character attacker) 
         {
@@ -240,13 +121,13 @@ namespace devoir_maison
                     if (counterAttacker.GetCharacterType() == "Guardian")
                     {
                         Console.WriteLine("The {0} has a double counter-attack : counter-attacke value original ({1}) and now doubled ({2})", counterAttacker.GetCharacterType(), counterAttackValue, counterAttackValue * 2);
-                        counterAttacking = attack(counterAttacker) + (counterAttackValue * -2);
+                        counterAttacking = counterAttacker.fight_attack() + (counterAttackValue * -2);
                     }
                     else
                     {
-                        counterAttacking = attack(counterAttacker) + (counterAttackValue * -1);
+                        counterAttacking = counterAttacker.fight_attack() + (counterAttackValue * -1);
                     }
-                    int counterDefending = defense(counterDefender);
+                    int counterDefending = counterDefender.fight_defense();
 
                     int attack_margin = counterAttacking - counterDefending;
 
@@ -309,8 +190,8 @@ namespace devoir_maison
                     //Remove attacks to attacker
                     attacker.SetCurrentAttackNumber(attacker.GetCurrentAttackNumber() - 1);
                     //calculate attack and defense values
-                    int attacking = attack(attacker);
-                    int defending = defense(defender);
+                    int attacking = attacker.fight_attack();
+                    int defending = defender.fight_defense();
 
                     //(marge d'attaque) calculate delta between attack and defense values
                     int attack_margin = attacking - defending;
@@ -538,7 +419,7 @@ namespace devoir_maison
 
             foreach (Character fighter in fightersList)
             {
-                fightersUnsorted.Add(fighter, initiative(fighter));
+                fightersUnsorted.Add(fighter, fighter.fight_initiative());
             }
 
             Console.BackgroundColor = ConsoleColor.DarkGray;
@@ -688,15 +569,15 @@ namespace devoir_maison
             List<Character> opponentsList = new List<Character>(fightersList);
             opponentsList.Remove(kamikaze);
 
-            int attacking = attack(kamikaze);
+            int attacking = kamikaze.fight_attack();
 
             foreach (Character fighter in opponentsList)
             {
-                if (!luckyRoll())
+                if (!fighter.luckyRoll())
                 {
                     Console.WriteLine("{0} is not lucky and so {1} the {2} attacks him", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
                     kamikaze.SetCurrentAttackNumber(kamikaze.GetCurrentAttackNumber() - 1);
-                    int defending = defense(fighter);
+                    int defending = fighter.fight_defense();
                     int attack_margin = attacking - defending;
                     if(attack_margin > 0)
                     {
