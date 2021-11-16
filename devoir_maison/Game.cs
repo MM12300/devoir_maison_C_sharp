@@ -28,7 +28,6 @@ namespace devoir_maison
         }
 
 
-
         public bool hasAttacks(Character attacker) 
         {
             if(attacker.GetCurrentAttackNumber() > 0)
@@ -110,8 +109,8 @@ namespace devoir_maison
             {
                 if (hasAttacks(counterAttacker) && canAttackPain(counterAttacker))
                 {
-                    showLife(counterAttacker);
-                    showLife(counterDefender);
+                    counterAttacker.showLife();
+                    counterDefender.showLife();
 
                     //Remove attacks to attacker
                     counterAttacker.SetCurrentAttackNumber(counterAttacker.GetCurrentAttackNumber() - 1);
@@ -185,8 +184,8 @@ namespace devoir_maison
             if (isAlive(attacker) && isAlive(defender)){
                 if (hasAttacks(attacker) && canAttackPain(attacker))
                 {
-                    showLife(attacker);
-                    showLife(defender);
+                    attacker.showLife();
+                    defender.showLife();
                     //Remove attacks to attacker
                     attacker.SetCurrentAttackNumber(attacker.GetCurrentAttackNumber() - 1);
                     //calculate attack and defense values
@@ -262,8 +261,8 @@ namespace devoir_maison
                     }
                 }
                 Console.WriteLine("{0} attack is OVER", attacker.GetName());
-                showLife(attacker);
-                showLife(defender);
+                attacker.showLife();
+                defender.showLife();
             }
         }
 
