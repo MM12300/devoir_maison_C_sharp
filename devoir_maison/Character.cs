@@ -341,5 +341,55 @@ namespace devoir_maison
                 return true;
             }
         }
+
+        public bool HasAttacks()
+        {
+            if (GetCurrentAttackNumber() > 0)
+            {
+                Console.WriteLine("{0} attacks ({1}/{2})", GetName(), GetCurrentAttackNumber(), GetTotalAttackNumber());
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Attacking is cancelled : {0} has no more attacks ({1}/{2})", GetName(), GetCurrentAttackNumber(), GetTotalAttackNumber());
+                return false;
+            }
+        }
+
+        public void LifeModifier(int lifeModifier)
+        {
+            int newLifeValue = GetCurrentLife() + lifeModifier;
+
+            if (newLifeValue > GetMaximumLife())
+            {
+                Console.WriteLine("new life value is maxed");
+                SetCurrentLife(GetMaximumLife());
+            }
+            else
+            {
+                Console.WriteLine("Life has been changed");
+                SetCurrentLife(newLifeValue);
+            }
+        }
+
+        public void CheckCharacterType()
+        {
+            //ROBOT RULES
+            if (GetCharacterType() == "Robot")
+            {
+                Console.WriteLine("Robot attack was {0}", GetAttack());
+                SetAttack(Convert.ToInt32(GetAttack() * 1.5));
+                Console.WriteLine("Robot attack is now {0}", GetAttack());
+            }
+
+            //PRIEST RULES
+            if (GetCharacterType() == "Priest")
+            {
+                Console.WriteLine("Priest rule");
+                Console.WriteLine("{1} life before : {0}", GetCurrentLife(), GetName());
+                LifeModifier(Convert.ToInt32(GetMaximumLife() * 0.1));
+                Console.WriteLine("{1} life after : {0}", GetCurrentLife(), GetName());
+            }
+        }
     }
 }

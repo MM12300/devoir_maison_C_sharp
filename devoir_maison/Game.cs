@@ -14,22 +14,6 @@ namespace devoir_maison
     {
         private Randomizer random = new Randomizer();
 
-
-
-        public bool HasAttacks(Character attacker) 
-        {
-            if(attacker.GetCurrentAttackNumber() > 0)
-            {
-                Console.WriteLine("{0} attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("Attacking is cancelled : {0} has no more attacks ({1}/{2})", attacker.GetName(), attacker.GetCurrentAttackNumber(), attacker.GetTotalAttackNumber());
-                return false;
-            }
-        }
-
         //PAIN RULES
         public bool CanAttackPain(Character attacker)
         {     
@@ -70,32 +54,13 @@ namespace devoir_maison
             }
         }
 
-        public void CheckCharacterType(Character character)
-        {
-            //ROBOT RULES
-            if(character.GetCharacterType() == "Robot")
-            {
-                Console.WriteLine("Robot attack was {0}", character.GetAttack());
-                character.SetAttack(Convert.ToInt32(character.GetAttack() * 1.5));
-                Console.WriteLine("Robot attack is now {0}", character.GetAttack());
-            }
-
-            //PRIEST RULES
-            if(character.GetCharacterType() == "Priest")
-            {
-                Console.WriteLine("Priest rule");
-                Console.WriteLine("{1} life before : {0}", character.GetCurrentLife(), character.GetName());
-                LifeModifier(character, (Convert.ToInt32(character.GetMaximumLife() * 0.1)));
-                Console.WriteLine("{1} life after : {0}", character.GetCurrentLife(), character.GetName());
-            }
-        }
 
         public void CounterAttack(Character counterAttacker, Character counterDefender, int counterAttackValue)
         {
             //CHECK IF ATTACKERS AND DEFENDERS ARE ALIVE
             if (counterAttacker.IsAlive() && counterDefender.IsAlive())
             {
-                if (HasAttacks(counterAttacker) && CanAttackPain(counterAttacker))
+                if (counterAttacker.HasAttacks() && CanAttackPain(counterAttacker))
                 {
                     counterAttacker.ShowLife();
                     counterDefender.ShowLife();
@@ -144,7 +109,7 @@ namespace devoir_maison
                         if (counterAttacker.GetCharacterType() == "Vampire")
                         {
                             Console.WriteLine("VAmpire life modifier");
-                            LifeModifier(counterAttacker, (counterAttacker.GetCurrentLife() + (damageGiven / 2)));
+                            counterAttacker.LifeModifier((counterAttacker.GetCurrentLife() + (damageGiven / 2)));
                         }
 
                         counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - damageGiven);
@@ -171,7 +136,7 @@ namespace devoir_maison
             //CHECK IF ATTACKERS AND DEFENDERS ARE ALIVE
             if (attacker.IsAlive() && defender.IsAlive())
             {
-                if (HasAttacks(attacker) && CanAttackPain(attacker))
+                if (attacker.HasAttacks() && CanAttackPain(attacker))
                 {
                     attacker.ShowLife();
                     defender.ShowLife();
@@ -206,7 +171,7 @@ namespace devoir_maison
                         if (attacker.GetCharacterType() == "Vampire")
                         {
                             Console.WriteLine("Vampire life modifier");
-                            LifeModifier(attacker, (attacker.GetCurrentLife() + (damageGiven / 2)));
+                            attacker.LifeModifier((attacker.GetCurrentLife() + (damageGiven / 2)));
                         }
 
                         defender.SetCurrentLife(defender.GetCurrentLife() - damageGiven);
@@ -345,21 +310,7 @@ namespace devoir_maison
             }
         }
 
-        public void LifeModifier(Character character, int lifeModifier)
-        {
-            int newLifeValue = character.GetCurrentLife() + lifeModifier;
-
-            if (newLifeValue > character.GetMaximumLife())
-            {
-                Console.WriteLine("new life value is maxed");
-                character.SetCurrentLife(character.GetMaximumLife());
-            }
-            else
-            {
-                Console.WriteLine("Life has been changed");
-                character.SetCurrentLife(newLifeValue);
-            }
-        }
+       
 
         public void BattleRoyaleResetAttackNumber(List<Character> fightersList)
         {
