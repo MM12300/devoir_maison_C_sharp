@@ -14,7 +14,7 @@ namespace devoir_maison
             //Console.WriteLine("FIGHT BEGINS!");
             //game.fight(billy, bobby);
 
-            game.battleRoyale();
+            game.BattleRoyale();
         }
     }
 }

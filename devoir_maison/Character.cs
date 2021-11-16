@@ -209,7 +209,7 @@ namespace devoir_maison
         }
 
         
-        public int roll()
+        public int Roll()
         {
             Thread.Sleep(1);
             Random random = new Random();
@@ -217,7 +217,7 @@ namespace devoir_maison
             return randomNumber;
         }
 
-        public bool luckyRoll()
+        public bool LuckyRoll()
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 100);
@@ -234,7 +234,7 @@ namespace devoir_maison
             }
         }
 
-        public int rollOf(string typeOfRoll, int rollValue)
+        public int RollOf(string typeOfRoll, int rollValue)
         {
             Console.BackgroundColor = ConsoleColor.Blue;
             int rollResult;
@@ -304,29 +304,42 @@ namespace devoir_maison
             return rollResult;
         }
 
-        public int fight_attack()
+        public int Fight_attack()
         {
-            int attackRollValue = rollOf("attack", roll());
+            int attackRollValue = RollOf("attack", Roll());
             return attackRollValue;
         }
 
-        public int fight_defense()
+        public int Fight_defense()
         {
-            int defenseRollValue = rollOf("defense", roll());
+            int defenseRollValue = RollOf("defense", Roll());
             return defenseRollValue;
         }
 
-        public int fight_initiative()
+        public int Fight_initiative()
         {
-            int initiativeRollValue = rollOf("initiative", roll());
+            int initiativeRollValue = RollOf("initiative", Roll());
             return initiativeRollValue;
         }
 
-        public void showLife()
+        public void ShowLife()
         {
             Console.BackgroundColor = ConsoleColor.Magenta;
             Console.WriteLine("<3<3<3 -- {0} has {1}/{2} lifepoints -- <3<3<3", GetName(), GetCurrentLife(), GetMaximumLife());
             Console.ResetColor();
+        }
+
+        public bool IsAlive()
+        {
+            if (GetCurrentLife() < 0)
+            {
+                Console.WriteLine("{0} ({1}) is dead", GetName(), GetCharacterType());
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
