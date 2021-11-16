@@ -96,7 +96,7 @@ namespace devoir_maison
                         rollResult = rollValue + character.GetDefense();
                     }
 
-                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{2})", character.GetName(), rollResult, rollValue, character.GetDefense());
+                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", character.GetName(), rollResult, rollValue, character.GetDefense());
                 }
                 else
                 {
@@ -850,13 +850,12 @@ namespace devoir_maison
                     {
                         Console.WriteLine("{0} attacks is not successfull", kamikaze.GetCharacterType());
                     }
-
-
                 }
                 else
                 {
                     Console.WriteLine("{0} is lucky and avoids attack from {1} the {2}", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
                 }
+                Thread.Sleep(100);
             }
         }
     }
