@@ -112,22 +112,19 @@ namespace devoir_maison
 
         public int attack(Character character)
         {
-            int rollValue = roll();
-            int attackRollValue = rollOf("attack", rollValue, character);
+            int attackRollValue = rollOf("attack", roll(), character);
             return attackRollValue;
         }
 
         public int defense(Character character)
         {
-            int rollValue = roll();
-            int defenseRollValue = rollOf("defense", rollValue, character);
+            int defenseRollValue = rollOf("defense", roll(), character);
             return defenseRollValue;
         }
 
         public int initiative(Character character)
         {
-            int rollValue = roll();
-            int initiativeRollValue = rollOf("initiative", rollValue, character);
+            int initiativeRollValue = rollOf("initiative", roll(), character);
             return initiativeRollValue;
         }
 
