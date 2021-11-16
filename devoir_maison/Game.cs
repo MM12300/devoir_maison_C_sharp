@@ -803,7 +803,6 @@ namespace devoir_maison
             {
                 return pickRandomFighter(attacker, opponentsList);
             }
-            
         }
 
         public Character pickRandomFighter(Character attacker, List<Character> opponentsList)
