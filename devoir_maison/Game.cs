@@ -12,16 +12,15 @@ namespace devoir_maison
     //TODO CHANGE CONSOLEWRITELINE AVEC OPERATORS
     class Game
     {
+        Randomizer random = new Randomizer();
         public int roll()
         {
-            Randomizer random = new Randomizer();
             int randomNumber = random.randomNumber(0,100);
             return randomNumber;
         }
 
         public bool luckyRoll()
         {
-            Randomizer random = new Randomizer();
             int randomNumber = random.randomNumber(0,100);
 
             Console.WriteLine("Roll of Luck  : {0}", randomNumber);
@@ -513,7 +512,6 @@ namespace devoir_maison
                         {
                             double painPercentage = ((Convert.ToDouble(damage) - Convert.ToDouble(defenderLifePointsLeft)) * 2) / (Convert.ToDouble(defenderLifePointsLeft) + Convert.ToDouble(damage));
 
-                            Randomizer random = new Randomizer();
                             int roll = random.randomNumber(0,100);
                             double painRoll = Convert.ToDouble(roll);
 
@@ -531,8 +529,7 @@ namespace devoir_maison
                                 }
                                 else
                                 {
-                                    Randomizer pain = new Randomizer();
-                                    roundsToSkip = pain.randomNumber(0, 2);
+                                    roundsToSkip = random.randomNumber(0, 2);
                                 }
 
                                 Console.WriteLine("rounds to skip possible = {0}", roundsToSkip);
@@ -811,7 +808,6 @@ namespace devoir_maison
 
         public Character pickRandomFighter(Character attacker, List<Character> opponentsList)
         {
-            Randomizer random = new Randomizer();
             int randomFighterIndex = random.randomNumber(0, opponentsList.Count() - 1);
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
@@ -841,7 +837,7 @@ namespace devoir_maison
                         int damageGiven = damageModifier(kamikaze, fighter, damage);
                         Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, kamikaze.GetDamages());
                         fighter.SetCurrentLife(fighter.GetCurrentLife() - damageGiven);
-                        Console.WriteLine("{0} **attacks** removes {1} life points to {2}", kamikaze.GetName(), damageGiven, kamikaze.GetName());
+                        Console.WriteLine("{0} **attacks** removes {1} life points to {2}", kamikaze.GetName(), damageGiven, fighter.GetName());
                         pain(fighter, damage, fighter.GetCurrentLife());
                     }
                     else
