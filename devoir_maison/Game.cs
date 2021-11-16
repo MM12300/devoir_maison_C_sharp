@@ -331,6 +331,7 @@ namespace devoir_maison
                         {
                             damage = attack_margin * attacker.GetDamages() / 100;
                         }
+
                         int damageGiven = damageModifier(attacker, defender, damage);
 
                         Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, attacker.GetDamages());
@@ -640,9 +641,9 @@ namespace devoir_maison
 
         public List<Character> battleRoyaleFightersList()
         {
-            Character jojo = new Priest("JoJo le PRIEST");
+            Character jojo = new Testing_character("JoJo le PRIEST");
             Character jiji = new Testing_character("jiji testing");
-            Character jaja = new Testing_character("jaja testing");
+            Character jaja = new Kamikaze("jaja kamikaze");
             Character juju = new Vampire("juju le mort-vivant vampire");
             Character test = new Priest("test");
             Character bobby = new Priest("bobby");
@@ -653,7 +654,7 @@ namespace devoir_maison
             fightersList.Add(jojo);
             fightersList.Add(jiji);
             fightersList.Add(jaja);
-            fightersList.Add(juju);
+            //fightersList.Add(juju);
             //fightersList.Add(test);
 
             return fightersList;
@@ -710,14 +711,14 @@ namespace devoir_maison
                 Console.WriteLine("ATTAQUE DE {0}", fighter.GetName());
 
                 //KAMIKAZE ATTACK
-                if(fighter.GetCharacterType() != "Kamikaze")
+                if(fighter.GetCharacterType() == "Kamikaze")
                 {
-                    Character opponent = chooseOpponent(fightersList, fighter);
-                    battleRoyaleAttackAndDefend(fighter, opponent);
+                    kamikazeAttack(fighter, fightersList);
                 }
                 else
                 {
-                    kamikazeAttack(fighter, fightersList);
+                    Character opponent = chooseOpponent(fightersList, fighter);
+                    battleRoyaleAttackAndDefend(fighter, opponent);
                 }
             }
 
@@ -823,16 +824,26 @@ namespace devoir_maison
             List<Character> opponentsList = new List<Character>(fightersList);
             opponentsList.Remove(kamikaze);
 
-            foreach(Character fighter in fightersList)
+            int attacking = attack(kamikaze);
+
+            foreach (Character fighter in opponentsList)
             {
                 if (!luckyRoll())
                 {
-                    Console.WriteLine("{0} is not lucky and so {1} attacks him", fighter.GetCharacterType(), kamikaze.GetCharacterType());
-                    attackAndDefend(kamikaze, fighter);
+                    Console.WriteLine("{0} is not lucky and so {1} the {2} attacks him", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
+                    kamikaze.SetCurrentAttackNumber(kamikaze.GetCurrentAttackNumber() - 1);
+                    int defending = defense(fighter);
+                    int attack_margin = attacking - defending;
+                    int damage = attack_margin * kamikaze.GetDamages() / 100;
+                    int damageGiven = damageModifier(kamikaze, fighter, damage);
+                    Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, kamikaze.GetDamages());
+                    fighter.SetCurrentLife(fighter.GetCurrentLife() - damageGiven);
+                    Console.WriteLine("{0} **attacks** removes {1} life points to {2}", kamikaze.GetName(), damageGiven, kamikaze.GetName());
+                    pain(fighter, damage, fighter.GetCurrentLife());
                 }
                 else
                 {
-                    Console.WriteLine("{0} is lucky and avoids attack from {1}", fighter.GetCharacterType(), kamikaze.GetCharacterType());
+                    Console.WriteLine("{0} is lucky and avoids attack from {1} the {2}", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
                 }
             }
         }
