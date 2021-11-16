@@ -5,10 +5,10 @@
         public Testing_character(string name)
         {
             this.name = name;
-            attack = 100;
+            attack = 150;
             defense = 100;
             initiative = 80;
-            damages = 20;
+            damages = 150;
             maximumLife = 100;
             currentLife = 100;
             totalAttackNumber = 2;

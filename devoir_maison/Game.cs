@@ -369,40 +369,6 @@ namespace devoir_maison
             }
         }
 
-        public void attackAndDefend(Character attacker, Character defender)
-        {
-                if (attacker.GetCurrentLife() > 0 && defender.GetCurrentLife() > 0)
-                {
-                    Console.WriteLine("---------------");
-                    Console.WriteLine("{0} attack BEGINS", attacker.GetName());
-
-                    for (int i = 1; i <= attacker.GetTotalAttackNumber(); i++)
-                    {
-                        if(isAlive(attacker) && isAlive(defender))
-                        {
-                            simpleAttack(attacker, defender);
-                        }
-                    }
-                    Console.WriteLine("{0} attack is OVER", attacker.GetName());
-                    showLife(attacker);
-                    showLife(defender);
-                    Console.WriteLine("---------------");
-                    Console.WriteLine("{0} attack BEGINS", defender.GetName());
-
-                    for (int j = 0; j < defender.GetTotalAttackNumber(); j++)
-                    {
-                        if (isAlive(attacker) && isAlive(defender))
-                        {
-                            simpleAttack(defender, attacker);
-                        }
-                    }
-                    Console.WriteLine("{0} attack is OVER", defender.GetName());
-                    showLife(attacker);
-                    showLife(defender);
-                }
-        }
-
-
         public void battleRoyaleAttackAndDefend(Character attacker, Character defender)
         {
             if (attacker.GetCurrentLife() > 0 && defender.GetCurrentLife() > 0)
@@ -414,9 +380,6 @@ namespace devoir_maison
                 {
                     if (isAlive(attacker) && isAlive(defender))
                     {
-
-
-
                         simpleAttack(attacker, defender);
                     }
                 }
@@ -424,77 +387,6 @@ namespace devoir_maison
                 showLife(attacker);
                 showLife(defender);
             }
-        }
-
-        public void round(Character character1, Character character2)
-        {
-            if (isAlive(character1) && isAlive(character2))
-            {
-                checkCharacterType(character1);
-                checkCharacterType(character2);
-
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("===================");
-                Console.WriteLine("A NEW ROUND STARTS : {0} LIFEPOINTS : {1} --- {2} LIFEPOINTS : {3}", character1.GetName(), character1.GetCurrentLife(), character2.GetName(), character2.GetCurrentLife());
-                Console.WriteLine("===================");
-                Console.ResetColor();
-
-                //RESET CURENT ATTACK NUMBER (BERSERKER RULE)
-                resetAttackNumber(character1);
-                resetAttackNumber(character2);
-
-                //INITIATIVE
-                int initiativeRollCharacter1 = initiative(character1);
-                int initiativeRollCharacter2 = initiative(character2);
-                if (initiativeRollCharacter1 > initiativeRollCharacter2)
-                {
-                    Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character1.GetName(), character1.GetTotalAttackNumber());
-                    attackAndDefend(character1, character2);
-                }
-                else if (initiativeRollCharacter1 < initiativeRollCharacter2)
-                {
-                    Console.WriteLine("@@@@@@ {0} has initiative @@@@@@", character2.GetName(), character2.GetTotalAttackNumber());
-                    attackAndDefend(character2, character1);
-                }else if(initiativeRollCharacter1 == initiativeRollCharacter2)
-                {
-                    if(luckyRoll())
-                    {
-                        attackAndDefend(character1, character2);
-                    }
-                    else
-                    {
-                        attackAndDefend(character2, character1);
-                    }
-                }
-
-                attenuatePain(character1);
-                attenuatePain(character2);
-
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("===================");
-                Console.WriteLine("THE ROUND IS OVER : {0} LIFEPOINTS : {1} --- {2} LIFEPOINTS : {3}", character1.GetName(), character1.GetCurrentLife(), character2.GetName(), character2.GetCurrentLife());
-                Console.WriteLine("===================");
-                Console.ResetColor();
-            }
-            else
-            {
-                Console.WriteLine("One fighter is dead !");
-            }
-        }
-
-        public string fight(Character character1, Character character2)
-        {
-            int roundNumber = 1;
-            while (isAlive(character1) && isAlive(character2))
-            {
-                Console.BackgroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("LET'S START THE ROUND {0} ? (push enter key)", roundNumber);
-                Console.ResetColor();
-                Console.ReadLine();
-                round(character1, character2);
-                roundNumber++;
-            }
-            return isAlive(character1) ? character1.GetName() + " won" : character2.GetName();
         }
 
         //PAIN RULES
@@ -603,22 +495,6 @@ namespace devoir_maison
             }
         }
 
-        public void resetAttackNumber(Character character)
-        {
-            //BERSERKER RULE
-            if (character.GetCharacterType() == "Berserker" && character.GetCurrentLife() < (character.GetMaximumLife()/2))
-            {
-                Console.WriteLine("{0} is a {1} with less than half of its total life points {2}/{3}", character.GetName(), character.GetCharacterType(), character.GetCurrentLife(), character.GetMaximumLife());
-                character.SetCurrentAttackNumber(4);
-                character.SetTotalAttackNumber(4);
-                Console.WriteLine("Attack number is set at {0}", character.GetCurrentAttackNumber());
-            }
-            else
-            {
-                character.SetCurrentAttackNumber(character.GetTotalAttackNumber());
-            }
-        }
-
         public void battleRoyaleResetAttackNumber(List<Character> fightersList)
         {
             foreach(Character fighter in fightersList){
@@ -651,7 +527,7 @@ namespace devoir_maison
 
             fightersList.Add(jojo);
             fightersList.Add(jiji);
-            fightersList.Add(jaja);
+            //fightersList.Add(jaja);
             //fightersList.Add(juju);
             //fightersList.Add(test);
 
@@ -719,12 +595,8 @@ namespace devoir_maison
                     battleRoyaleAttackAndDefend(fighter, opponent);
                 }
             }
-
             battleRoyaleResetAttackNumber(fightersList);
         }
-
-
-
 
         public void battleRoyaleFight(List <Character> fightersList)
         {
