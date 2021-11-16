@@ -14,17 +14,16 @@ namespace devoir_maison
     {
         public int roll()
         {
-            Random random = new Random();
-            int randomNumber = random.Next(1, 100);
-            //WITHOUT DELAY ADDED THE ROLLS ALWAYS SEND THE SAME NUMBERS
-            Thread.Sleep(100);
+            Randomizer random = new Randomizer();
+            int randomNumber = random.randomNumber(0,100);
             return randomNumber;
         }
 
         public bool luckyRoll()
         {
-            Random random = new Random();
-            int randomNumber = random.Next(1, 100);
+            Randomizer random = new Randomizer();
+            int randomNumber = random.randomNumber(0,100);
+
             Console.WriteLine("Roll of Luck  : {0}", randomNumber);
 
             if (randomNumber > 50)
@@ -514,8 +513,8 @@ namespace devoir_maison
                         {
                             double painPercentage = ((Convert.ToDouble(damage) - Convert.ToDouble(defenderLifePointsLeft)) * 2) / (Convert.ToDouble(defenderLifePointsLeft) + Convert.ToDouble(damage));
 
-                            Random random = new Random();
-                            int roll = random.Next(1, 100);
+                            Randomizer random = new Randomizer();
+                            int roll = random.randomNumber(0,100);
                             double painRoll = Convert.ToDouble(roll);
 
                             Console.WriteLine("painPercentage = {0}, painRoll = {1}", painPercentage * 100, painRoll);
@@ -532,8 +531,8 @@ namespace devoir_maison
                                 }
                                 else
                                 {
-                                    Random pain = new Random();
-                                    roundsToSkip = pain.Next(0, 2);
+                                    Randomizer pain = new Randomizer();
+                                    roundsToSkip = pain.randomNumber(0, 2);
                                 }
 
                                 Console.WriteLine("rounds to skip possible = {0}", roundsToSkip);
@@ -812,9 +811,8 @@ namespace devoir_maison
 
         public Character pickRandomFighter(Character attacker, List<Character> opponentsList)
         {
-            Random random = new Random();
-            Thread.Sleep(100);
-            int randomFighterIndex = random.Next(0, opponentsList.Count() - 1);
+            Randomizer random = new Randomizer();
+            int randomFighterIndex = random.randomNumber(0, opponentsList.Count() - 1);
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
             Console.ResetColor();
@@ -855,7 +853,6 @@ namespace devoir_maison
                 {
                     Console.WriteLine("{0} is lucky and avoids attack from {1} the {2}", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
                 }
-                Thread.Sleep(100);
             }
         }
     }
