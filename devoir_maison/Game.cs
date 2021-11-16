@@ -74,13 +74,13 @@ namespace devoir_maison
                 if (typeOfRoll == "attack")
                 {
                     rollResult = rollValue + character.GetAttack();
-                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{2})", character.GetName(), rollResult, rollValue, character.GetAttack());
+                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{3})", character.GetName(), rollResult, rollValue, character.GetAttack());
 
                 }
                 else if (typeOfRoll == "initiative")
                 {
                     rollResult = rollValue + character.GetInitiative();
-                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{2})", character.GetName(), rollResult, rollValue, character.GetInitiative());
+                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{3})", character.GetName(), rollResult, rollValue, character.GetInitiative());
 
                 }
                 else if (typeOfRoll == "defense")
