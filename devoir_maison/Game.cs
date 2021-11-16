@@ -25,7 +25,9 @@ namespace devoir_maison
         {
             Random random = new Random();
             int randomNumber = random.Next(1, 100);
-            if(randomNumber > 50)
+            Console.WriteLine("Roll of Luck  : {0}", randomNumber);
+
+            if (randomNumber > 50)
             {
                 Console.WriteLine("Lucky Roll");
                 return true;
