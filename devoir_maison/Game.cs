@@ -836,12 +836,22 @@ namespace devoir_maison
                     kamikaze.SetCurrentAttackNumber(kamikaze.GetCurrentAttackNumber() - 1);
                     int defending = defense(fighter);
                     int attack_margin = attacking - defending;
-                    int damage = attack_margin * kamikaze.GetDamages() / 100;
-                    int damageGiven = damageModifier(kamikaze, fighter, damage);
-                    Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, kamikaze.GetDamages());
-                    fighter.SetCurrentLife(fighter.GetCurrentLife() - damageGiven);
-                    Console.WriteLine("{0} **attacks** removes {1} life points to {2}", kamikaze.GetName(), damageGiven, kamikaze.GetName());
-                    pain(fighter, damage, fighter.GetCurrentLife());
+                    if(attack_margin > 0)
+                    {
+                        Console.WriteLine("{0} attacks is successfull", kamikaze.GetCharacterType());
+                        int damage = attack_margin * kamikaze.GetDamages() / 100;
+                        int damageGiven = damageModifier(kamikaze, fighter, damage);
+                        Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, kamikaze.GetDamages());
+                        fighter.SetCurrentLife(fighter.GetCurrentLife() - damageGiven);
+                        Console.WriteLine("{0} **attacks** removes {1} life points to {2}", kamikaze.GetName(), damageGiven, kamikaze.GetName());
+                        pain(fighter, damage, fighter.GetCurrentLife());
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} attacks is not successfull", kamikaze.GetCharacterType());
+                    }
+
+
                 }
                 else
                 {
