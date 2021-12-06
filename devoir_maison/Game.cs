@@ -332,7 +332,7 @@ namespace devoir_maison
         {
             Character jojo = new Zombie("JOJO zobie");
             Character jiji = new Zombie("JIJI zobie");
-            Character jaja = new Zombie("JAJA zobie");
+            Character jaja = new Guardian("JAJA zobie");
             Character juju = new Vampire("juju le mort-vivant vampire");
             Character test = new Priest("test");
             Character bobby = new Priest("bobby");
@@ -433,8 +433,6 @@ namespace devoir_maison
                 BattleRoyaleRound(fightersList);
                 roundNumber++;
             }
-
-            //TODO: Do I need to return a value ?
         }
 
         public bool AreFightersStillAlive(List<Character> fightersList)
@@ -446,10 +444,6 @@ namespace devoir_maison
                 if (fighter.GetCurrentLife() > 0)
                 {
                     aliveFighters.Add(fighter);
-                }
-                else
-                {
-                    Console.WriteLine("{0} is dead", fighter.GetName());
                 }
             }
 
@@ -464,6 +458,7 @@ namespace devoir_maison
                 return false;
             }
         }
+
 
         public void BattleRoyale()
         {
