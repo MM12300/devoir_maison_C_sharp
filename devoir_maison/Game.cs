@@ -331,7 +331,7 @@ namespace devoir_maison
         public List<Character> BattleRoyaleFightersList()
         {
             Character jojo = new Zombie("JOJO zobie");
-            Character jiji = new Robot("JIJI zobie");
+            Character jiji = new Robot("JIJI robot");
             Character jaja = new Guardian("JAJA zobie");
             Character juju = new Vampire("juju le mort-vivant vampire");
             Character test = new Priest("test");

@@ -26,6 +26,7 @@ namespace devoir_maison.CharacterTypes
 
         int IRoll.RollOf(string typeOfRoll, int rollValue)
         {
+            Console.WriteLine("Je suis un robot");
             int rollResult;
             if (typeOfRoll == "attack")
             {
