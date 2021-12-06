@@ -1,9 +1,6 @@
-﻿using System.Threading;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using devoir_maison.CharacterTypes;
 
 
@@ -16,7 +13,7 @@ namespace devoir_maison
 
         //PAIN RULES
         public bool CanAttackPain(Character attacker)
-        {     
+        {
             if (attacker.GetIsLiving())
             {
                 if (attacker.GetPain() > -1)
@@ -155,7 +152,7 @@ namespace devoir_maison
                         if (attacker.GetCharacterType() == "Berserker")
                         {
                             int berserkerLostLifePoints = attacker.GetMaximumLife() - attacker.GetCurrentLife();
-                            damage = attack_margin * (attacker.GetDamages()+berserkerLostLifePoints) / 100;
+                            damage = attack_margin * (attacker.GetDamages() + berserkerLostLifePoints) / 100;
                             Console.WriteLine("Berserker type of attack , lost live points : {0} = {1} - {2}", berserkerLostLifePoints, attacker.GetMaximumLife(), attacker.GetCurrentLife());
                         }
                         else
@@ -202,7 +199,7 @@ namespace devoir_maison
 
         public void BattleRoyaleAttackAndDefend(Character attacker, Character defender)
         {
-            if (attacker.GetCurrentLife() > 0 && defender.GetCurrentLife() > 0)
+            if (attacker.IsAlive() && defender.IsAlive())
             {
                 Console.WriteLine("---------------");
                 Console.WriteLine("{0} attack BEGINS", attacker.GetName());
@@ -225,7 +222,8 @@ namespace devoir_maison
         {
             if (character.IsAlive())
             {
-                if(character.GetIsLiving() || character.GetCharacterType() == "Ghoul"){
+                if (character.GetIsLiving() || character.GetCharacterType() == "Ghoul")
+                {
                     Console.WriteLine("{0} is a {1}", character.GetName(), character.GetCharacterType());
                     //BERSERKER AND PAIN RULE
                     if (character.GetCharacterType() != "Berserker")
@@ -235,7 +233,7 @@ namespace devoir_maison
                         {
                             double painPercentage = ((Convert.ToDouble(damage) - Convert.ToDouble(defenderLifePointsLeft)) * 2) / (Convert.ToDouble(defenderLifePointsLeft) + Convert.ToDouble(damage));
 
-                            int roll = random.RandomNumber(0,100);
+                            int roll = random.RandomNumber(0, 100);
                             double painRoll = Convert.ToDouble(roll);
 
                             Console.WriteLine("painPercentage = {0}, painRoll = {1}", painPercentage * 100, painRoll);
@@ -297,7 +295,8 @@ namespace devoir_maison
         public int DamageModifier(Character attacker, Character defender, int damage)
         {
             // if defender = blessed AND attacker = cursed OR defender = cursed AND attacker = blessed, life points lost after attack multiplied by 2
-            if( (defender.GetIsBlessed() && attacker.GetCursedDamage()) || (defender.GetIsCursed() && attacker.GetBlessedDamage()) ){
+            if ((defender.GetIsBlessed() && attacker.GetCursedDamage()) || (defender.GetIsCursed() && attacker.GetBlessedDamage()))
+            {
                 int doubleDamage = damage * 2;
                 Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Attacker is a {0} and defender is a {1} so damage*2 = {2} * 2 = {3}", attacker.GetCharacterType(), defender.GetCharacterType(), damage, doubleDamage);
@@ -310,11 +309,10 @@ namespace devoir_maison
             }
         }
 
-       
-
         public void BattleRoyaleResetAttackNumber(List<Character> fightersList)
         {
-            foreach(Character fighter in fightersList){
+            foreach (Character fighter in fightersList)
+            {
                 //BERSERKER RULE
                 if (fighter.GetCharacterType() == "Berserker" && fighter.GetCurrentLife() < (fighter.GetMaximumLife() / 2))
                 {
@@ -332,9 +330,9 @@ namespace devoir_maison
 
         public List<Character> BattleRoyaleFightersList()
         {
-            Character jojo = new Testing_character("JoJo le PRIEST");
+            Character jojo = new Testing_character("JoJo testing");
             Character jiji = new Testing_character("jiji testing");
-            Character jaja = new Kamikaze("jaja kamikaze");
+            Character jaja = new Testing_character("jaja testing");
             Character juju = new Vampire("juju le mort-vivant vampire");
             Character test = new Priest("test");
             Character bobby = new Priest("bobby");
@@ -343,7 +341,8 @@ namespace devoir_maison
             List<Character> fightersList = new List<Character>
             {
                 jojo,
-                jiji
+                jiji,
+                jaja
             };
             //fightersList.Add(jaja);
             //fightersList.Add(juju);
@@ -354,12 +353,16 @@ namespace devoir_maison
 
         public List<Character> BattleRoyaleFightersInitiative(List<Character> fightersList)
         {
-            
+
             Dictionary<Character, int> fightersUnsorted = new Dictionary<Character, int>();
 
             foreach (Character fighter in fightersList)
             {
-                fightersUnsorted.Add(fighter, fighter.Fight_initiative());
+                if (fighter.IsAlive())
+                {
+                    fightersUnsorted.Add(fighter, fighter.Fight_initiative());
+                }
+
             }
 
             Console.BackgroundColor = ConsoleColor.DarkGray;
@@ -368,7 +371,7 @@ namespace devoir_maison
             {
                 Console.WriteLine("Character name: {0}, Initiative: {1}",
                     fighters.Key.GetName(), fighters.Value);
-                
+
             }
             Console.ResetColor();
 
@@ -379,16 +382,13 @@ namespace devoir_maison
             Console.WriteLine("Fighters list By Initiative :");
             foreach (KeyValuePair<Character, int> fighters in fightersSorted)
             {
-                
-                
                 Console.WriteLine("Character name: {0}, Initiative: {1}",
                     fighters.Key.GetName(), fighters.Value);
-                
+
             }
             Console.ResetColor();
 
             List<Character> fightersListInitiative = fightersSorted.Select(kvp => kvp.Key).ToList();
-            
 
             return fightersListInitiative;
         }
@@ -403,20 +403,25 @@ namespace devoir_maison
                 Console.WriteLine("ATTAQUE DE {0}", fighter.GetName());
 
                 //KAMIKAZE ATTACK
-                if(fighter.GetCharacterType() == "Kamikaze")
+                if (fighter.GetCharacterType() == "Kamikaze")
                 {
-                    KamikazeAttack(fighter, fightersList);
+                    KamikazeAttack(fighter, fightersListSortedByInitiative);
                 }
                 else
                 {
-                    Character opponent = ChooseOpponent(fightersList, fighter);
+                    Character opponent = ChooseOpponent(fightersListSortedByInitiative, fighter);
                     BattleRoyaleAttackAndDefend(fighter, opponent);
                 }
             }
-            BattleRoyaleResetAttackNumber(fightersList);
+            Scavenging(fightersListSortedByInitiative);
+            BattleRoyaleResetAttackNumber(fightersListSortedByInitiative);
+
+
+            //SCAVENGER GET LIFEPOINTS ONLY AT THE END OF THE ROUND
+
         }
 
-        public void BattleRoyaleFight(List <Character> fightersList)
+        public void BattleRoyaleFight(List<Character> fightersList)
         {
             int roundNumber = 1;
             while (AreFightersStillAlive(fightersList))
@@ -428,17 +433,17 @@ namespace devoir_maison
                 BattleRoyaleRound(fightersList);
                 roundNumber++;
             }
-            
+
             //TODO: Do I need to return a value ?
         }
-        
+
         public bool AreFightersStillAlive(List<Character> fightersList)
         {
             List<Character> aliveFighters = new List<Character>();
-            
+
             foreach (Character fighter in fightersList)
             {
-                if(fighter.GetCurrentLife() > 0)
+                if (fighter.GetCurrentLife() > 0)
                 {
                     aliveFighters.Add(fighter);
                 }
@@ -448,14 +453,14 @@ namespace devoir_maison
                 }
             }
 
-            if(aliveFighters.Count() >= 2)
+            if (aliveFighters.Count() >= 2)
             {
                 Console.WriteLine("{0} still on the fight", aliveFighters.Count());
                 return true;
             }
             else
             {
-                Console.WriteLine("only one fighter is left : {0} is the winner", aliveFighters[0]);
+                Console.WriteLine("only one fighter is left : {0} is the winner", aliveFighters[0].GetName());
                 return false;
             }
         }
@@ -471,11 +476,21 @@ namespace devoir_maison
             List<Character> opponentsList = new List<Character>(fighterList);
             opponentsList.Remove(attacker);
 
+            List<Character> opponentsListAlive = new List<Character>();
+
+            foreach (Character opponent in opponentsList)
+            {
+                if (opponent.IsAlive())
+                {
+                    opponentsListAlive.Add(opponent);
+                }
+            }
+
             //PRIEST RULE
-            if(attacker.GetCharacterType() == "Priest")
+            if (attacker.GetCharacterType() == "Priest")
             {
                 List<Character> opponentsUndeadList = new List<Character>();
-                foreach (Character opponent in opponentsList)
+                foreach (Character opponent in opponentsListAlive)
                 {
                     if (!opponent.GetIsLiving())
                     {
@@ -491,7 +506,7 @@ namespace devoir_maison
             }
             else
             {
-                return PickRandomFighter(attacker, opponentsList);
+                return PickRandomFighter(attacker, opponentsListAlive);
             }
         }
 
@@ -519,7 +534,7 @@ namespace devoir_maison
                     kamikaze.SetCurrentAttackNumber(kamikaze.GetCurrentAttackNumber() - 1);
                     int defending = fighter.Fight_defense();
                     int attack_margin = attacking - defending;
-                    if(attack_margin > 0)
+                    if (attack_margin > 0)
                     {
                         Console.WriteLine("{0} attacks is successfull", kamikaze.GetCharacterType());
                         int damage = attack_margin * kamikaze.GetDamages() / 100;
@@ -537,6 +552,36 @@ namespace devoir_maison
                 else
                 {
                     Console.WriteLine("{0} is lucky and avoids attack from {1} the {2}", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
+                }
+            }
+        }
+
+        public void Scavenging(List<Character> fighters)
+        {
+            List<Character> scavengers = new List<Character>();
+
+            foreach (Character character in fighters)
+            {
+                if (character.GetCharacterType() == "Zombie")
+                {
+                    scavengers.Add(character);
+                }
+            }
+
+            foreach (Character character in fighters)
+            {
+                if (!character.IsAlive())
+                {
+                    foreach (Character scavenger in scavengers)
+                    {
+                        int scavengerAddedLife = random.RandomNumber(50, 100);
+                        Console.WriteLine("{0} is eating {1} and gain {2} lifepoints", scavenger.GetName(), character.GetName(), scavengerAddedLife);
+                        scavenger.SetCurrentLife(scavenger.GetCurrentLife() + scavengerAddedLife);
+                        if (scavenger.GetCurrentLife() > scavenger.GetMaximumLife())
+                        {
+                            scavenger.SetCurrentLife(scavenger.GetMaximumLife());
+                        }
+                    }
                 }
             }
         }
