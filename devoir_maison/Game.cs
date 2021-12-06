@@ -331,7 +331,7 @@ namespace devoir_maison
         public List<Character> BattleRoyaleFightersList()
         {
             Character jojo = new Zombie("JOJO zobie");
-            Character jiji = new Zombie("JIJI zobie");
+            Character jiji = new Robot("JIJI zobie");
             Character jaja = new Guardian("JAJA zobie");
             Character juju = new Vampire("juju le mort-vivant vampire");
             Character test = new Priest("test");
@@ -342,7 +342,6 @@ namespace devoir_maison
             {
                 jojo,
                 jiji,
-                jaja
             };
             //fightersList.Add(jaja);
             //fightersList.Add(juju);

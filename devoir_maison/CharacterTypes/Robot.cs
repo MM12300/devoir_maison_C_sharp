@@ -1,6 +1,9 @@
-﻿namespace devoir_maison.CharacterTypes
+﻿using devoir_maison.Interfaces;
+using System;
+
+namespace devoir_maison.CharacterTypes
 {
-    class Robot : Character
+    class Robot : Character, IRoll
     {
         public Robot(string name)
         {
@@ -19,6 +22,34 @@
             isBlessed = false;
             blessedDamage = false;
             cursedDamage = false;
+        }
+
+        int IRoll.RollOf(string typeOfRoll, int rollValue)
+        {
+            int rollResult;
+            if (typeOfRoll == "attack")
+            {
+                rollResult = 50 + GetAttack();
+                Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (50 + attack:{2})", GetName(), rollResult, GetAttack());
+            }
+            else if (typeOfRoll == "initiative")
+            {
+                rollResult = 50 + this.GetInitiative();
+                Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (50 + initiative:{2})", GetName(), rollResult, GetInitiative());
+
+            }
+            else if (typeOfRoll == "defense")
+            {
+                rollResult = 50 + this.GetDefense();
+                Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (50 + defense:{2})", GetName(), rollResult, GetDefense());
+            }
+            else
+            {
+                Console.WriteLine("type of roll must be attack, defense or initiative");
+                throw new ArgumentException("Type of roll can't have these values : attack, defense, initiative", nameof(typeOfRoll));
+            }
+            return rollResult;
+
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using devoir_maison.Interfaces;
 
 namespace devoir_maison
 {
@@ -234,75 +235,75 @@ namespace devoir_maison
             }
         }
 
-        public int RollOf(string typeOfRoll, int rollValue)
-        {
-            Console.BackgroundColor = ConsoleColor.Blue;
-            int rollResult;
+        //public int RollOf(string typeOfRoll, int rollValue)
+        //{
+        //    Console.BackgroundColor = ConsoleColor.Blue;
+        //    int rollResult;
 
-            //ROBOT RULES
-            if (GetCharacterType() == "Robot")
-            {
-                if (typeOfRoll == "attack")
-                {
-                    rollResult = 50 + GetAttack();
-                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (50 + attack:{2})", GetName(), rollResult, GetAttack());
-                }
-                else if (typeOfRoll == "initiative")
-                {
-                    rollResult = 50 + this.GetInitiative();
-                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (50 + initiative:{2})", GetName(), rollResult, GetInitiative());
+        //    //ROBOT RULES
+        //    if (GetCharacterType() == "Robot")
+        //    {
+        //        if (typeOfRoll == "attack")
+        //        {
+        //            rollResult = 50 + GetAttack();
+        //            Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (50 + attack:{2})", GetName(), rollResult, GetAttack());
+        //        }
+        //        else if (typeOfRoll == "initiative")
+        //        {
+        //            rollResult = 50 + this.GetInitiative();
+        //            Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (50 + initiative:{2})", GetName(), rollResult, GetInitiative());
 
-                }
-                else if (typeOfRoll == "defense")
-                {
-                    rollResult = 50 + this.GetDefense();
-                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (50 + defense:{2})", GetName(), rollResult, GetDefense());
-                }
-                else
-                {
-                    Console.WriteLine("type of roll must be attack, defense or initiative");
-                    throw new ArgumentException("Type of roll can't have these values : attack, defense, initiative", nameof(typeOfRoll));
-                }
-            }
-            else
-            {
-                if (typeOfRoll == "attack")
-                {
-                    rollResult = rollValue + GetAttack();
-                    Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{3})", GetName(), rollResult, rollValue, GetAttack());
+        //        }
+        //        else if (typeOfRoll == "defense")
+        //        {
+        //            rollResult = 50 + this.GetDefense();
+        //            Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (50 + defense:{2})", GetName(), rollResult, GetDefense());
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("type of roll must be attack, defense or initiative");
+        //            throw new ArgumentException("Type of roll can't have these values : attack, defense, initiative", nameof(typeOfRoll));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (typeOfRoll == "attack")
+        //        {
+        //            rollResult = rollValue + GetAttack();
+        //            Console.WriteLine("/!/ROLL/!/ => {0} attack = {1} (roll:{2}+attack:{3})", GetName(), rollResult, rollValue, GetAttack());
 
-                }
-                else if (typeOfRoll == "initiative")
-                {
-                    rollResult = rollValue + GetInitiative();
-                    Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{3})", GetName(), rollResult, rollValue, GetInitiative());
+        //        }
+        //        else if (typeOfRoll == "initiative")
+        //        {
+        //            rollResult = rollValue + GetInitiative();
+        //            Console.WriteLine("/!/ROLL/!/ => {0} initiative = {1} (roll:{2}+initiative:{3})", GetName(), rollResult, rollValue, GetInitiative());
 
-                }
-                else if (typeOfRoll == "defense")
-                {
-                    //ZOMBIE RULE
-                    if (GetCharacterType() == "Zombie")
-                    {
-                        Console.WriteLine("{0} defense roll is always 0", GetCharacterType());
-                        rollResult = GetDefense();
-                    }
-                    else
-                    {
-                        rollResult = rollValue + GetDefense();
-                    }
+        //        }
+        //        else if (typeOfRoll == "defense")
+        //        {
+        //            //ZOMBIE RULE
+        //            if (GetCharacterType() == "Zombie")
+        //            {
+        //                Console.WriteLine("{0} defense roll is always 0", GetCharacterType());
+        //                rollResult = GetDefense();
+        //            }
+        //            else
+        //            {
+        //                rollResult = rollValue + GetDefense();
+        //            }
 
-                    Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", GetName(), rollResult, rollValue, GetDefense());
-                }
-                else
-                {
-                    //TODO : remove this throw error
-                    rollResult = 0;
-                    Console.WriteLine("type of roll must be attack, defense or initiative");
-                }
-            }
-            Console.ResetColor();
-            return rollResult;
-        }
+        //            Console.WriteLine("/!/ROLL/!/ => {0} defense = {1} (roll:{2}+defense:{3})", GetName(), rollResult, rollValue, GetDefense());
+        //        }
+        //        else
+        //        {
+        //            //TODO : remove this throw error
+        //            rollResult = 0;
+        //            Console.WriteLine("type of roll must be attack, defense or initiative");
+        //        }
+        //    }
+        //    Console.ResetColor();
+        //    return rollResult;
+        //}
 
         public int Fight_attack()
         {
@@ -391,5 +392,7 @@ namespace devoir_maison
                 Console.WriteLine("{1} life after : {0}", GetCurrentLife(), GetName());
             }
         }
+
+
     }
 }
