@@ -23,9 +23,5 @@ namespace devoir_maison.CharacterTypes
             blessedDamage = false;
             cursedDamage = false;
         }
-
-        
-
-
     }
 }

@@ -359,9 +359,9 @@ namespace devoir_maison
             {
                 if (fighter.IsAlive())
                 {
+                    fighter.CheckCharacterType();
                     fightersUnsorted.Add(fighter, fighter.Fight_initiative());
                 }
-
             }
 
             Console.BackgroundColor = ConsoleColor.DarkGray;
@@ -570,11 +570,7 @@ namespace devoir_maison
                     {
                         int scavengerAddedLife = random.RandomNumber(50, 100);
                         Console.WriteLine("{0} is eating {1} and gain {2} lifepoints", scavenger.GetName(), character.GetName(), scavengerAddedLife);
-                        scavenger.SetCurrentLife(scavenger.GetCurrentLife() + scavengerAddedLife);
-                        if (scavenger.GetCurrentLife() > scavenger.GetMaximumLife())
-                        {
-                            scavenger.SetCurrentLife(scavenger.GetMaximumLife());
-                        }
+                        scavenger.LifeModifier(scavengerAddedLife);
                     }
                 }
             }
