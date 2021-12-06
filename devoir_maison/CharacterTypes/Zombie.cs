@@ -9,8 +9,8 @@
             defense = 0;
             initiative = 20;
             damages = 60;
-            maximumLife = 1000;
-            currentLife = 1500;
+            maximumLife = 100;
+            currentLife = 100;
             totalAttackNumber = 1;
             currentAttackNumber = 1;
             characterType = "Zombie";

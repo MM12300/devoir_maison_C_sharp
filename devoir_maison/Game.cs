@@ -330,9 +330,9 @@ namespace devoir_maison
 
         public List<Character> BattleRoyaleFightersList()
         {
-            Character jojo = new Testing_character("JoJo testing");
-            Character jiji = new Testing_character("jiji testing");
-            Character jaja = new Testing_character("jaja testing");
+            Character jojo = new Zombie("JOJO zobie");
+            Character jiji = new Zombie("JIJI zobie");
+            Character jaja = new Zombie("JAJA zobie");
             Character juju = new Vampire("juju le mort-vivant vampire");
             Character test = new Priest("test");
             Character bobby = new Priest("bobby");
@@ -562,7 +562,7 @@ namespace devoir_maison
 
             foreach (Character character in fighters)
             {
-                if (character.GetCharacterType() == "Zombie")
+                if (character.GetCharacterType() == "Zombie" && character.GetCurrentLife() > 0)
                 {
                     scavengers.Add(character);
                 }
