@@ -10,6 +10,150 @@ namespace devoir_maison
     class Game
     {
         private Randomizer random = new Randomizer();
+            
+        //GAME INTRO
+        public string GameMode()
+        {
+            Console.WriteLine("Would you like to fight in dual mode or in Battle-Royale mode ?");
+            Console.WriteLine("1 - Dual : 2 fighters only");
+            Console.WriteLine("2 - Battle-Royale : 2 to 8 fighters");
+            string input = Console.ReadLine();
+
+            if (input == "1")
+            {
+                Console.WriteLine("Dual Mode !");
+                return "Dual";
+            } else if (input == "2")
+            {
+                Console.WriteLine("Battle-Royale !");
+                return "Battle-Royale";
+            }else
+            {
+                return GameMode();
+            }
+        }
+
+
+        public string createFighterName()
+        {
+            Console.WriteLine("- What is your fighter name ? (max 12 characters :");
+            string name = Console.ReadLine();
+            if (name.Length < 12)
+            {
+                return name;
+            }
+            else
+            {
+                return createFighterName();
+            }
+        }
+
+        public string createFighterType()
+        {
+            Console.WriteLine("- What is your fighter type ?");
+            Console.WriteLine("You can choose between : Berserker, Ghoul, Guardian, Kamikaze, Lich, Priest, Robot, Vampire, Warrior and Zombie");
+            string type = Console.ReadLine();
+            if(type != "Berserker" || type != "Ghoul" || type != "Guardian" || type != "Kamikaze" || type != "Lich" || type != "Priest" || type != "Robot" || type != "Vampire" || type != "Warrior" || type != "Zombie")
+            {
+                return createFighterType();
+            }
+            else
+            {
+                return type;
+            }
+        }
+
+        public Character createFighter()
+        {
+            string name = createFighterName();
+            string type = createFighterType();
+
+            if (type == "Berserker")
+            {
+                return new Berserker(name);
+            }else if (type == "Ghoul")
+            {
+                return new Ghoul(name);
+            }
+            else if (type == "Guardian")
+            {
+                return new Guardian(name);
+            }
+            else if (type == "Kamikaze")
+            {
+                return new Kamikaze(name);
+            }
+            else if (type == "Lich")
+            {
+                return new Lich(name);
+            }
+            else if (type == "Priest")
+            {
+                return new Priest(name);
+            }
+            else if (type == "Robot")
+            {
+                return new Robot(name);
+            }
+            else if (type == "Vampire")
+            {
+                return new Vampire(name);
+            }
+            else if (type == "Warrior")
+            {
+                return new Warrior(name);
+            }
+            else if (type == "Zombie")
+            {
+                return new Zombie(name);
+            }
+            else
+            {
+                return createFighter();
+            }
+
+        }
+
+        public List<Character> Fighters(string mode)
+        {
+            List<Character> fightersList = new List<Character>();
+
+            if (mode == "Dual")
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Console.WriteLine("Make your fighter n-{0}", i);
+                    Character fighter = createFighter();
+                    fightersList.Add(fighter);
+
+                }
+            }
+            else if (mode == "Battle-Royale")
+            {
+                for (int i = 0; i < fightersNumberChoice() - 1; i++)
+                {
+                    Console.WriteLine("Make your fighter n-{0}", i);
+                    Character fighter = createFighter();
+                    fightersList.Add(fighter);
+                }
+            }
+            return fightersList;
+        }
+
+        public int fightersNumberChoice()
+        {
+            Console.WriteLine("How many fighters in your Battle-Royale ? (2 to 8)");
+            string input = Console.ReadLine();
+            if ((int.Parse(input) >= 3 && int.Parse(input) <= 8) && int.TryParse(input, out int n))
+            {
+                Console.WriteLine("You choose to have {0} fighters for your Battle-Royale");
+                return int.Parse(input);
+            }
+            else
+            {
+                return fightersNumberChoice();
+            }
+        }
 
         //PAIN RULES
         public bool CanAttackPain(Character attacker)

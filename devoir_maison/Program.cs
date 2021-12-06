@@ -7,21 +7,22 @@ namespace devoir_maison
     {
         static void Main(string[] args)
         {
-            Testing_character test = new Testing_character("bob");
-            Console.WriteLine("bob life is {0}", test.GetCurrentLife());
-            test.SetCurrentLife(1);
-            Console.WriteLine("bob life is {0}", test.GetCurrentLife());
-            test.SetCurrentLife(10000);
-            Console.WriteLine("bob life is {0}", test.GetCurrentLife());
-            test.SetCurrentLife(12);
-            Console.WriteLine("bob life is {0}", test.GetCurrentLife());
-            test.LifeModifier(11);
-            Console.WriteLine("bob life is {0}", test.GetCurrentLife());
-            test.LifeModifier(111111);
-            Console.WriteLine("bob life is {0}", test.GetCurrentLife());
-
-
             Game game = new Game();
+            Console.WriteLine("Welcome to Battle-Royale Versus Fighting Limited 2021");
+            Console.WriteLine("Between 2 and 8 fighters can compete into the Battle-Royale Arena");
+            string mode = game.GameMode();
+
+
+
+
+            Console.WriteLine("How many fighters would like to confront ?");
+            string fightersNumber = Console.ReadLine();
+            game.fightersNumberChoice(fightersNumber);
+
+
+
+
+            
             //Character billy = new Priest("priest");
             //Character bobby = new Lich("lich");
             
@@ -30,5 +31,7 @@ namespace devoir_maison
 
             game.BattleRoyale();
         }
+
+
     }
 }
