@@ -28,7 +28,7 @@ namespace devoir_maison
             Console.WriteLine("3 - Dual : Test Scenario with two fighters");
             Console.WriteLine("4 - Battle-Royale : Test Scenario with a fighter of each type for deadly Battle-Royale");
 
-            Console.WriteLine("(Type '1' or '2')");
+            Console.WriteLine("(Type '1', '2', '3' or '4')");
             string input = Console.ReadLine();
 
             if (input == "1")
@@ -166,19 +166,13 @@ namespace devoir_maison
             }
             else if (mode == "Dual Test Scenario")
             {
-                for (int i = 0; i < fightersNumberChoice() - 1; i++)
-                {
                     Character fighter_one = new Ghoul("Billy the Ghoul");
                     Character fighter_two = new Kamikaze("Bob the Kamikaze");
                     fightersList.Add(fighter_one);
                     fightersList.Add(fighter_two);
-
-                }
             }
             else if (mode == "Battle-Royale Test Scenario")
             {
-                for (int i = 0; i < fightersNumberChoice() - 1; i++)
-                {
                     Character berserker = new Berserker("Bob the Berserker");
                     Character ghoul = new Ghoul("Billy the Ghoul");
                     Character guardian = new Guardian("John the Guardian");
@@ -200,7 +194,6 @@ namespace devoir_maison
                     fightersList.Add(vampire);
                     fightersList.Add(warrior);
                     fightersList.Add(zombie);
-                }
             }
             return fightersList;
         }
@@ -607,7 +600,9 @@ namespace devoir_maison
 
             foreach (Character fighter in fightersListSortedByInitiative)
             {
-                Console.WriteLine("ATTAQUE DE {0}", fighter.GetName());
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.WriteLine("----- ATTACK OF {0} -----", fighter.GetName());
+                Console.ResetColor();
 
                 //KAMIKAZE ATTACK
                 if (fighter.GetCharacterType() == "Kamikaze")
@@ -723,39 +718,47 @@ namespace devoir_maison
 
         public void KamikazeAttack(Character kamikaze, List<Character> fightersList)
         {
-            List<Character> opponentsList = new List<Character>(fightersList);
-            opponentsList.Remove(kamikaze);
-
-            int attacking = kamikaze.Fight_attack();
-
-            foreach (Character fighter in opponentsList)
+            if (kamikaze.IsAlive()) 
             {
-                if (!fighter.LuckyRoll())
+                List<Character> opponentsList = new List<Character>(fightersList);
+                opponentsList.Remove(kamikaze);
+
+                int attacking = kamikaze.Fight_attack();
+
+                foreach (Character fighter in opponentsList)
                 {
-                    Console.WriteLine("{0} is not lucky and so {1} the {2} attacks him", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
-                    kamikaze.SetCurrentAttackNumber(kamikaze.GetCurrentAttackNumber() - 1);
-                    int defending = fighter.Fight_defense();
-                    int attack_margin = attacking - defending;
-                    if (attack_margin > 0)
+                    if (!fighter.LuckyRoll())
                     {
-                        Console.WriteLine("{0} attacks is successfull", kamikaze.GetCharacterType());
-                        int damage = attack_margin * kamikaze.GetDamages() / 100;
-                        int damageGiven = DamageModifier(kamikaze, fighter, damage);
-                        Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, kamikaze.GetDamages());
-                        fighter.SetCurrentLife(fighter.GetCurrentLife() - damageGiven);
-                        Console.WriteLine("{0} **attacks** removes {1} life points to {2}", kamikaze.GetName(), damageGiven, fighter.GetName());
-                        Pain(fighter, damage, fighter.GetCurrentLife());
+                        Console.WriteLine("{0} is not lucky and so {1} the {2} attacks him", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
+                        kamikaze.SetCurrentAttackNumber(kamikaze.GetCurrentAttackNumber() - 1);
+                        int defending = fighter.Fight_defense();
+                        int attack_margin = attacking - defending;
+                        if (attack_margin > 0)
+                        {
+                            Console.WriteLine("{0} attacks is successfull", kamikaze.GetCharacterType());
+                            int damage = attack_margin * kamikaze.GetDamages() / 100;
+                            int damageGiven = DamageModifier(kamikaze, fighter, damage);
+                            Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, kamikaze.GetDamages());
+                            fighter.SetCurrentLife(fighter.GetCurrentLife() - damageGiven);
+                            Console.WriteLine("{0} **attacks** removes {1} life points to {2}", kamikaze.GetName(), damageGiven, fighter.GetName());
+                            Pain(fighter, damage, fighter.GetCurrentLife());
+                        }
+                        else
+                        {
+                            Console.WriteLine("{0} attacks is not successfull", kamikaze.GetCharacterType());
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("{0} attacks is not successfull", kamikaze.GetCharacterType());
+                        Console.WriteLine("{0} is lucky and avoids attack from {1} the {2}", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
                     }
                 }
-                else
-                {
-                    Console.WriteLine("{0} is lucky and avoids attack from {1} the {2}", fighter.GetCharacterType(), kamikaze.GetName(), kamikaze.GetCharacterType());
-                }
             }
+            else
+            {
+                Console.WriteLine("Kamikaze is dead");
+            }
+
         }
 
         public void Scavenging(List<Character> fighters)
