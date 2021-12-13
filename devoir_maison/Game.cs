@@ -12,11 +12,23 @@ namespace devoir_maison
         private Randomizer random = new Randomizer();
             
         //GAME INTRO
+        public List<Character> GameIntro()
+        {
+            string gameMode = GameMode();
+            List<Character> fightersList = Fighters(gameMode);
+
+            return fightersList;
+        }
+
         public string GameMode()
         {
             Console.WriteLine("Would you like to fight in dual mode or in Battle-Royale mode ?");
             Console.WriteLine("1 - Dual : 2 fighters only");
             Console.WriteLine("2 - Battle-Royale : 2 to 8 fighters");
+            Console.WriteLine("3 - Dual : Test Scenario with two fighters");
+            Console.WriteLine("4 - Battle-Royale : Test Scenario with a fighter of each type for deadly Battle-Royale");
+
+            Console.WriteLine("(Type '1' or '2')");
             string input = Console.ReadLine();
 
             if (input == "1")
@@ -27,19 +39,30 @@ namespace devoir_maison
             {
                 Console.WriteLine("Battle-Royale !");
                 return "Battle-Royale";
-            }else
+            }
+            else if (input == "3")
+            {
+                Console.WriteLine("Test Scenario with two fighters !");
+                return "Dual Test Scenario";
+            }
+            else if (input == "4")
+            {
+                Console.WriteLine("Test Scenario with a fighter of each type for deadly Battle-Royale !");
+                return "Battle-Royale Test Scenario";
+            }
+            else
             {
                 return GameMode();
             }
         }
 
-
         public string createFighterName()
         {
-            Console.WriteLine("- What is your fighter name ? (max 12 characters :");
+            Console.WriteLine("- What is your fighter name ? (max 12 characters)");
             string name = Console.ReadLine();
             if (name.Length < 12)
             {
+                Console.WriteLine("Great choice, {0} is a good name for a fighter.", name);
                 return name;
             }
             else
@@ -52,13 +75,15 @@ namespace devoir_maison
         {
             Console.WriteLine("- What is your fighter type ?");
             Console.WriteLine("You can choose between : Berserker, Ghoul, Guardian, Kamikaze, Lich, Priest, Robot, Vampire, Warrior and Zombie");
+            Console.WriteLine("(Write the fighter type completely (case sensitive)");
             string type = Console.ReadLine();
-            if(type != "Berserker" || type != "Ghoul" || type != "Guardian" || type != "Kamikaze" || type != "Lich" || type != "Priest" || type != "Robot" || type != "Vampire" || type != "Warrior" || type != "Zombie")
+            if(type != "Berserker" && type != "Ghoul" && type != "Guardian" && type != "Kamikaze" && type != "Lich" && type != "Priest" && type != "Robot" && type != "Vampire" && type != "Warrior" && type != "Zombie")
             {
                 return createFighterType();
             }
             else
             {
+                Console.WriteLine("{0} are very powerful !", type);
                 return type;
             }
         }
@@ -67,6 +92,9 @@ namespace devoir_maison
         {
             string name = createFighterName();
             string type = createFighterType();
+
+            Console.WriteLine("You created {0} the {1}", name, type);
+
 
             if (type == "Berserker")
             {
@@ -120,12 +148,11 @@ namespace devoir_maison
 
             if (mode == "Dual")
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 1; i < 3; i++)
                 {
-                    Console.WriteLine("Make your fighter n-{0}", i);
+                    Console.WriteLine("Make your fighter number {0}", i);
                     Character fighter = createFighter();
                     fightersList.Add(fighter);
-
                 }
             }
             else if (mode == "Battle-Royale")
@@ -135,6 +162,44 @@ namespace devoir_maison
                     Console.WriteLine("Make your fighter n-{0}", i);
                     Character fighter = createFighter();
                     fightersList.Add(fighter);
+                }
+            }
+            else if (mode == "Dual Test Scenario")
+            {
+                for (int i = 0; i < fightersNumberChoice() - 1; i++)
+                {
+                    Character fighter_one = new Ghoul("Billy the Ghoul");
+                    Character fighter_two = new Kamikaze("Bob the Kamikaze");
+                    fightersList.Add(fighter_one);
+                    fightersList.Add(fighter_two);
+
+                }
+            }
+            else if (mode == "Battle-Royale Test Scenario")
+            {
+                for (int i = 0; i < fightersNumberChoice() - 1; i++)
+                {
+                    Character berserker = new Berserker("Bob the Berserker");
+                    Character ghoul = new Ghoul("Billy the Ghoul");
+                    Character guardian = new Guardian("John the Guardian");
+                    Character kamikaze = new Kamikaze("Jane the Kamikaze");
+                    Character lich = new Lich("Miguel the Lich");
+                    Character priest = new Priest("Morgan the Priest");
+                    Character robot = new Robot("Beebop  the Robot");
+                    Character vampire = new Vampire("Tom the Priest");
+                    Character warrior = new Warrior("Conan the Warrior");
+                    Character zombie = new Zombie("Romero the Zombie");
+
+                    fightersList.Add(berserker);
+                    fightersList.Add(ghoul);
+                    fightersList.Add(guardian);
+                    fightersList.Add(kamikaze);
+                    fightersList.Add(lich);
+                    fightersList.Add(priest);
+                    fightersList.Add(robot);
+                    fightersList.Add(vampire);
+                    fightersList.Add(warrior);
+                    fightersList.Add(zombie);
                 }
             }
             return fightersList;
@@ -194,7 +259,6 @@ namespace devoir_maison
                 Console.WriteLine("{0} pain decreases from {1} to {2}", character.GetName(), painBeforeAttenuation, painAfterAttenuation);
             }
         }
-
 
         public void CounterAttack(Character counterAttacker, Character counterDefender, int counterAttackValue)
         {
@@ -564,7 +628,7 @@ namespace devoir_maison
 
         }
 
-        public void BattleRoyaleFight(List<Character> fightersList)
+        public void BattleRoyaleOrDualFight(List<Character> fightersList)
         {
             int roundNumber = 1;
             while (AreFightersStillAlive(fightersList))
@@ -606,7 +670,7 @@ namespace devoir_maison
         public void BattleRoyale()
         {
             List<Character> allFighters = BattleRoyaleFightersList();
-            BattleRoyaleFight(allFighters);
+            BattleRoyaleOrDualFight(allFighters);
         }
 
         public Character ChooseOpponent(List<Character> fighterList, Character attacker)
