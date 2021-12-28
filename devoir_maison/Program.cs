@@ -9,8 +9,12 @@ namespace devoir_maison
         static void Main(string[] args)
         {
             Game game = new Game();
+            Console.WriteLine("------------------------------------------------------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Welcome to Battle-Royale Versus Fighting Limited 2021");
             Console.WriteLine("Between 2 and 8 fighters can compete into the Battle-Royale Arena");
+            Console.ResetColor();
+            Console.WriteLine("------------------------------------------------------------------------------------------------");
             List<Character> fighters = game.GameIntro();
             game.BattleRoyaleOrDualFight(fighters);
                        

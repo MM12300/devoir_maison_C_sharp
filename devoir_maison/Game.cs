@@ -27,27 +27,43 @@ namespace devoir_maison
             Console.WriteLine("2 - Battle-Royale : 2 to 8 fighters");
             Console.WriteLine("3 - Dual : Test Scenario with two fighters");
             Console.WriteLine("4 - Battle-Royale : Test Scenario with a fighter of each type for deadly Battle-Royale");
-
             Console.WriteLine("(Type '1', '2', '3' or '4')");
+            Console.WriteLine("------------------------------------------------------------------------------------------------");
             string input = Console.ReadLine();
 
             if (input == "1")
             {
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Dual Mode !");
+                Console.ResetColor();
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
                 return "Dual";
             } else if (input == "2")
             {
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Battle-Royale !");
+                Console.ResetColor();
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
                 return "Battle-Royale";
             }
             else if (input == "3")
             {
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Test Scenario with two fighters !");
+                Console.ResetColor();
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
                 return "Dual Test Scenario";
             }
             else if (input == "4")
             {
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Test Scenario with a fighter of each type for deadly Battle-Royale !");
+                Console.ResetColor();
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
                 return "Battle-Royale Test Scenario";
             }
             else
@@ -92,8 +108,11 @@ namespace devoir_maison
         {
             string name = createFighterName();
             string type = createFighterType();
-
+            Console.WriteLine("------------------------------------------------------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("You created {0} the {1}", name, type);
+            Console.ResetColor();
+            Console.WriteLine("------------------------------------------------------------------------------------------------");
 
 
             if (type == "Berserker")
