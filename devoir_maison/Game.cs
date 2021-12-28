@@ -150,7 +150,7 @@ namespace devoir_maison
             {
                 for (int i = 1; i < 3; i++)
                 {
-                    Console.WriteLine("Make your fighter number {0}", i);
+                    Console.WriteLine("Create your fighter number {0}", i);
                     Character fighter = createFighter();
                     fightersList.Add(fighter);
                 }
@@ -159,7 +159,7 @@ namespace devoir_maison
             {
                 for (int i = 0; i < fightersNumberChoice() - 1; i++)
                 {
-                    Console.WriteLine("Make your fighter n-{0}", i);
+                    Console.WriteLine("Create your fighter number {0}", i);
                     Character fighter = createFighter();
                     fightersList.Add(fighter);
                 }
@@ -651,7 +651,7 @@ namespace devoir_maison
 
             if (aliveFighters.Count() >= 2)
             {
-                Console.WriteLine("{0} still on the fight", aliveFighters.Count());
+                Console.WriteLine("{0} fighters are alive and ready to fight", aliveFighters.Count());
                 return true;
             }
             else
@@ -709,11 +709,19 @@ namespace devoir_maison
 
         public Character PickRandomFighter(Character attacker, List<Character> opponentsList)
         {
-            int randomFighterIndex = random.RandomNumber(0, opponentsList.Count() - 1);
-            Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
-            Console.ResetColor();
-            return opponentsList[randomFighterIndex];
+            if(opponentsList.Count() - 1 > 0)
+            {
+                int randomFighterIndex = random.RandomNumber(0, opponentsList.Count() - 1);
+                Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
+                Console.ResetColor();
+                return opponentsList[randomFighterIndex];
+            }
+            else
+            {
+                return opponentsList[0];
+            }
+
         }
 
         public void KamikazeAttack(Character kamikaze, List<Character> fightersList)
