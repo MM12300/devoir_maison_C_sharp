@@ -729,12 +729,12 @@ namespace devoir_maison
                 {
                     if (!opponent.GetIsLiving())
                     {
-                        Console.WriteLine("{0} is a priest and attack living fighters in priority so {1} is added to a new opponents list", attacker.GetName(), opponent.GetName());
+                        Console.WriteLine("{0} is a priest and attack undead fighters in priority so {1} is added to a new opponents list", attacker.GetName(), opponent.GetName());
                         opponentsUndeadList.Add(opponent);
                     }
                     else
                     {
-                        Console.WriteLine("{0} is a priest and attack living fighters in priority so {1} is NOT added to a new opponents list", attacker.GetName(), opponent.GetName());
+                        Console.WriteLine("{0} is a priest and attack undead fighters in priority so {1} is NOT added to a new opponents list", attacker.GetName(), opponent.GetName());
                     }
                 }
                 return PickRandomFighter(attacker, opponentsUndeadList);
