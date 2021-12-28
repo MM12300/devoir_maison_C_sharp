@@ -632,13 +632,8 @@ namespace devoir_maison
                 }
                 else
                 {
-                        Console.WriteLine("------------------------------------------------------------------");
-                        Console.WriteLine("COUNT IS {0}", fightersListSortedByInitiative.Count);
                         Character opponent = ChooseOpponent(fightersListSortedByInitiative, fighter);
                         if (opponent != null) {
-                            Console.BackgroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Choose opponent");
-                            Console.ResetColor();
                             BattleRoyaleAttackAndDefend(fighter, opponent);
                         }
                     else
@@ -656,7 +651,7 @@ namespace devoir_maison
             int roundNumber = 1;
             while (AreFightersStillAlive(fightersList))
             {
-                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("LETS START THE ROUND {0} ? (push enter key)", roundNumber);
                 Console.ResetColor();
                 Console.ReadLine();
@@ -744,11 +739,7 @@ namespace devoir_maison
 
         public Character PickRandomFighter(Character attacker, List<Character> opponentsList)
         {
-            Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("COUNT IS {0}", opponentsList.Count());
-
             int randomFighterIndex = random.RandomNumber(0, opponentsList.Count() - 1);
-                
             Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
             Console.ResetColor();
             return opponentsList[randomFighterIndex];
