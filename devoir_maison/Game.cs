@@ -452,7 +452,7 @@ namespace devoir_maison
         {
             if (character.IsAlive())
             {
-                if (character.GetIsLiving() || character.GetCharacterType() == "Ghoul")
+                if ((character.GetIsLiving() && character.GetCharacterType() != "Robot") || character.GetCharacterType() == "Ghoul")
                 {
                     Console.WriteLine("{0} is a {1}", character.GetName(), character.GetCharacterType());
                     //BERSERKER AND PAIN RULE
