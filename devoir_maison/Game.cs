@@ -611,8 +611,15 @@ namespace devoir_maison
                 }
                 else
                 {
-                    Character opponent = ChooseOpponent(fightersListSortedByInitiative, fighter);
-                    BattleRoyaleAttackAndDefend(fighter, opponent);
+                    if (fightersListSortedByInitiative.Count() > 1)
+                    {
+                        Character opponent = ChooseOpponent(fightersListSortedByInitiative, fighter);
+                        BattleRoyaleAttackAndDefend(fighter, opponent);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Only one fighter is left");
+                    }
                 }
             }
             Scavenging(fightersListSortedByInitiative);
@@ -709,18 +716,11 @@ namespace devoir_maison
 
         public Character PickRandomFighter(Character attacker, List<Character> opponentsList)
         {
-            if(opponentsList.Count() - 1 > 0)
-            {
                 int randomFighterIndex = random.RandomNumber(0, opponentsList.Count() - 1);
                 Console.BackgroundColor = ConsoleColor.DarkMagenta;
                 Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
                 Console.ResetColor();
                 return opponentsList[randomFighterIndex];
-            }
-            else
-            {
-                return opponentsList[0];
-            }
 
         }
 

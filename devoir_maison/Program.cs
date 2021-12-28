@@ -13,7 +13,6 @@ namespace devoir_maison
             Console.WriteLine("Between 2 and 8 fighters can compete into the Battle-Royale Arena");
             List<Character> fighters = game.GameIntro();
             game.BattleRoyaleOrDualFight(fighters);
-
                        
             //Character billy = new Priest("priest");
             //Character bobby = new Lich("lich");
@@ -23,7 +22,5 @@ namespace devoir_maison
 
             //game.BattleRoyale();
         }
-
-
     }
 }
