@@ -600,6 +600,8 @@ namespace devoir_maison
 
             foreach (Character fighter in fightersListSortedByInitiative)
             {
+                AttenuatePain(fighter);
+
                 Console.BackgroundColor = ConsoleColor.Blue;
                 Console.WriteLine("----- ATTACK OF {0} -----", fighter.GetName());
                 Console.ResetColor();
@@ -611,23 +613,23 @@ namespace devoir_maison
                 }
                 else
                 {
-                    if (fightersListSortedByInitiative.Count() > 1)
-                    {
+                        Console.WriteLine("------------------------------------------------------------------");
+                        Console.WriteLine("COUNT IS {0}", fightersListSortedByInitiative.Count);
                         Character opponent = ChooseOpponent(fightersListSortedByInitiative, fighter);
-                        BattleRoyaleAttackAndDefend(fighter, opponent);
-                    }
+                        if (opponent != null) {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Choose opponent");
+                            Console.ResetColor();
+                            BattleRoyaleAttackAndDefend(fighter, opponent);
+                        }
                     else
                     {
-                        Console.WriteLine("Only one fighter is left");
+                        Console.WriteLine("Only one fighter is alive.");
                     }
                 }
             }
             Scavenging(fightersListSortedByInitiative);
             BattleRoyaleResetAttackNumber(fightersListSortedByInitiative);
-
-
-            //SCAVENGER GET LIFEPOINTS ONLY AT THE END OF THE ROUND
-
         }
 
         public void BattleRoyaleOrDualFight(List<Character> fightersList)
@@ -710,18 +712,27 @@ namespace devoir_maison
             }
             else
             {
-                return PickRandomFighter(attacker, opponentsListAlive);
+                if(opponentsListAlive.Count != 0)
+                {
+                    return PickRandomFighter(attacker, opponentsListAlive);
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
         public Character PickRandomFighter(Character attacker, List<Character> opponentsList)
         {
-                int randomFighterIndex = random.RandomNumber(0, opponentsList.Count() - 1);
-                Console.BackgroundColor = ConsoleColor.DarkMagenta;
-                Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
-                Console.ResetColor();
-                return opponentsList[randomFighterIndex];
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("COUNT IS {0}", opponentsList.Count());
 
+            int randomFighterIndex = random.RandomNumber(0, opponentsList.Count() - 1);
+                
+            Console.WriteLine("{0} is attacking {1}", attacker.GetName(), opponentsList[randomFighterIndex].GetName());
+            Console.ResetColor();
+            return opponentsList[randomFighterIndex];
         }
 
         public void KamikazeAttack(Character kamikaze, List<Character> fightersList)
@@ -794,5 +805,6 @@ namespace devoir_maison
                 }
             }
         }
+
     }
 }
