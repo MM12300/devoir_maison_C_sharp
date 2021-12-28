@@ -737,7 +737,16 @@ namespace devoir_maison
                         Console.WriteLine("{0} is a priest and attack undead fighters in priority so {1} is NOT added to a new opponents list", attacker.GetName(), opponent.GetName());
                     }
                 }
-                return PickRandomFighter(attacker, opponentsUndeadList);
+
+                if(opponentsUndeadList.Count()> 1)
+                {
+                    return PickRandomFighter(attacker, opponentsUndeadList);
+                }
+                else
+                {
+                    return PickRandomFighter(attacker, opponentsListAlive);
+                }
+                
             }
             else
             {
