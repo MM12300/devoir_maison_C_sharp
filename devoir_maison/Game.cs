@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using devoir_maison.CharacterTypes;
+using System.Threading;
 
 
 namespace devoir_maison
@@ -10,7 +11,7 @@ namespace devoir_maison
     class Game
     {
         private Randomizer random = new Randomizer();
-            
+
         //GAME INTRO
         public List<Character> GameIntro()
         {
@@ -23,10 +24,10 @@ namespace devoir_maison
         public string GameMode()
         {
             Console.WriteLine("Would you like to fight in dual mode or in Battle-Royale mode ?");
-            Console.WriteLine("1 - Dual : 2 fighters only");
-            Console.WriteLine("2 - Battle-Royale : 2 to 8 fighters");
-            Console.WriteLine("3 - Dual : Test Scenario with two fighters");
-            Console.WriteLine("4 - Battle-Royale : Test Scenario with a fighter of each type for deadly Battle-Royale");
+            Console.WriteLine("1 - (DUAL-MODE) - Choose (name and type) 2 fighters and confront them !");
+            Console.WriteLine("2 - (BATTLE-ROYALE) - Choose (name and type) 2 to 8 fighters and let them fight in the Arena !");
+            Console.WriteLine("3 - SCENARIO - (DUAL MODE) - Select 2 fighters randomly and confront them !");
+            Console.WriteLine("4 - SCENARIO - (BATTLE-ROYALE) - Let all 10 types of fighters foght into a deadly battle-royale !");
             Console.WriteLine("(Type '1', '2', '3' or '4')");
             Console.WriteLine("------------------------------------------------------------------------------------------------");
             string input = Console.ReadLine();
@@ -39,7 +40,8 @@ namespace devoir_maison
                 Console.ResetColor();
                 Console.WriteLine("------------------------------------------------------------------------------------------------");
                 return "Dual";
-            } else if (input == "2")
+            }
+            else if (input == "2")
             {
                 Console.WriteLine("------------------------------------------------------------------------------------------------");
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -93,7 +95,7 @@ namespace devoir_maison
             Console.WriteLine("You can choose between : Berserker, Ghoul, Guardian, Kamikaze, Lich, Priest, Robot, Vampire, Warrior and Zombie");
             Console.WriteLine("(Write the fighter type completely (case sensitive)");
             string type = Console.ReadLine();
-            if(type != "Berserker" && type != "Ghoul" && type != "Guardian" && type != "Kamikaze" && type != "Lich" && type != "Priest" && type != "Robot" && type != "Vampire" && type != "Warrior" && type != "Zombie")
+            if (type != "Berserker" && type != "Ghoul" && type != "Guardian" && type != "Kamikaze" && type != "Lich" && type != "Priest" && type != "Robot" && type != "Vampire" && type != "Warrior" && type != "Zombie")
             {
                 return createFighterType();
             }
@@ -118,7 +120,8 @@ namespace devoir_maison
             if (type == "Berserker")
             {
                 return new Berserker(name);
-            }else if (type == "Ghoul")
+            }
+            else if (type == "Ghoul")
             {
                 return new Ghoul(name);
             }
@@ -185,34 +188,36 @@ namespace devoir_maison
             }
             else if (mode == "Dual Test Scenario")
             {
-                    Character fighter_one = new Ghoul("Billy the Ghoul");
-                    Character fighter_two = new Kamikaze("Bob the Kamikaze");
-                    fightersList.Add(fighter_one);
-                    fightersList.Add(fighter_two);
+                Character fighter_one = randomCharacter();
+                Thread.Sleep(100);
+                Character fighter_two = randomCharacter();
+                fightersList.Add(fighter_one);
+                fightersList.Add(fighter_two);
+                Console.WriteLine("{0} the {1} will fight against {2} the {3}", fighter_one.GetName(), fighter_one.GetCharacterType(), fighter_two.GetName(), fighter_two.GetCharacterType());
             }
             else if (mode == "Battle-Royale Test Scenario")
             {
-                    Character berserker = new Berserker("Bob the Berserker");
-                    Character ghoul = new Ghoul("Billy the Ghoul");
-                    Character guardian = new Guardian("John the Guardian");
-                    Character kamikaze = new Kamikaze("Jane the Kamikaze");
-                    Character lich = new Lich("Miguel the Lich");
-                    Character priest = new Priest("Morgan the Priest");
-                    Character robot = new Robot("Beebop  the Robot");
-                    Character vampire = new Vampire("Tom the Priest");
-                    Character warrior = new Warrior("Conan the Warrior");
-                    Character zombie = new Zombie("Romero the Zombie");
+                Character berserker = new Berserker("Bob the Berserker");
+                Character ghoul = new Ghoul("Billy the Ghoul");
+                Character guardian = new Guardian("John the Guardian");
+                Character kamikaze = new Kamikaze("Jane the Kamikaze");
+                Character lich = new Lich("Miguel the Lich");
+                Character priest = new Priest("Morgan the Priest");
+                Character robot = new Robot("Beebop  the Robot");
+                Character vampire = new Vampire("Tom the Priest");
+                Character warrior = new Warrior("Conan the Warrior");
+                Character zombie = new Zombie("Romero the Zombie");
 
-                    fightersList.Add(berserker);
-                    fightersList.Add(ghoul);
-                    fightersList.Add(guardian);
-                    fightersList.Add(kamikaze);
-                    fightersList.Add(lich);
-                    fightersList.Add(priest);
-                    fightersList.Add(robot);
-                    fightersList.Add(vampire);
-                    fightersList.Add(warrior);
-                    fightersList.Add(zombie);
+                fightersList.Add(berserker);
+                fightersList.Add(ghoul);
+                fightersList.Add(guardian);
+                fightersList.Add(kamikaze);
+                fightersList.Add(lich);
+                fightersList.Add(priest);
+                fightersList.Add(robot);
+                fightersList.Add(vampire);
+                fightersList.Add(warrior);
+                fightersList.Add(zombie);
             }
             return fightersList;
         }
@@ -302,7 +307,7 @@ namespace devoir_maison
 
                     if (attack_margin > 0)
                     {
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("COUNTER ATTACK SUCCESS");
                         Console.ResetColor();
 
@@ -330,13 +335,16 @@ namespace devoir_maison
                         }
 
                         counterDefender.SetCurrentLife(counterDefender.GetCurrentLife() - damageGiven);
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("{0} **attacks** removes {1} life points to {2}", counterAttacker.GetName(), damageGiven, counterDefender.GetName());
+                        Console.ResetColor();
+
                         Pain(counterDefender, damage, counterDefender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
                     else if (attack_margin <= 0)
                     {
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("{0} has failded so {1} counter-attack BACK", counterAttacker.GetName(), counterDefender.GetName());
                         Console.WriteLine("Counter-Attack value = {0}", attack_margin);
                         Console.ResetColor();
@@ -392,13 +400,15 @@ namespace devoir_maison
                         }
 
                         defender.SetCurrentLife(defender.GetCurrentLife() - damageGiven);
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("{0} **attacks** removes {1} life points to {2}", attacker.GetName(), damageGiven, defender.GetName());
+                        Console.ResetColor();
                         Pain(defender, damage, defender.GetCurrentLife());
                     }
                     //Delta negative = defender counter-attack
                     else if (attack_margin <= 0)
                     {
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("{0} counter-attack", defender.GetName());
                         Console.WriteLine("Counter-Attacke value = {0}", attack_margin);
                         Console.ResetColor();
@@ -518,7 +528,7 @@ namespace devoir_maison
             if ((defender.GetIsBlessed() && attacker.GetCursedDamage()) || (defender.GetIsCursed() && attacker.GetBlessedDamage()))
             {
                 int doubleDamage = damage * 2;
-                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Attacker is a {0} and defender is a {1} so damage*2 = {2} * 2 = {3}", attacker.GetCharacterType(), defender.GetCharacterType(), damage, doubleDamage);
                 Console.ResetColor();
                 return doubleDamage;
@@ -632,10 +642,11 @@ namespace devoir_maison
                 }
                 else
                 {
-                        Character opponent = ChooseOpponent(fightersListSortedByInitiative, fighter);
-                        if (opponent != null) {
-                            BattleRoyaleAttackAndDefend(fighter, opponent);
-                        }
+                    Character opponent = ChooseOpponent(fightersListSortedByInitiative, fighter);
+                    if (opponent != null)
+                    {
+                        BattleRoyaleAttackAndDefend(fighter, opponent);
+                    }
                     else
                     {
                         Console.WriteLine("Only one fighter is alive.");
@@ -679,7 +690,11 @@ namespace devoir_maison
             }
             else
             {
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("only one fighter is left : {0} is the winner", aliveFighters[0].GetName());
+                Console.ResetColor();
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
                 return false;
             }
         }
@@ -726,7 +741,7 @@ namespace devoir_maison
             }
             else
             {
-                if(opponentsListAlive.Count != 0)
+                if (opponentsListAlive.Count != 0)
                 {
                     return PickRandomFighter(attacker, opponentsListAlive);
                 }
@@ -747,7 +762,7 @@ namespace devoir_maison
 
         public void KamikazeAttack(Character kamikaze, List<Character> fightersList)
         {
-            if (kamikaze.IsAlive()) 
+            if (kamikaze.IsAlive())
             {
                 List<Character> opponentsList = new List<Character>(fightersList);
                 opponentsList.Remove(kamikaze);
@@ -769,7 +784,9 @@ namespace devoir_maison
                             int damageGiven = DamageModifier(kamikaze, fighter, damage);
                             Console.WriteLine("DamageGiven ({0}) = {1} * {2} /100", damageGiven, attack_margin, kamikaze.GetDamages());
                             fighter.SetCurrentLife(fighter.GetCurrentLife() - damageGiven);
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
                             Console.WriteLine("{0} **attacks** removes {1} life points to {2}", kamikaze.GetName(), damageGiven, fighter.GetName());
+                            Console.ResetColor();
                             Pain(fighter, damage, fighter.GetCurrentLife());
                         }
                         else
@@ -814,6 +831,61 @@ namespace devoir_maison
                     }
                 }
             }
+        }
+
+        public Character randomCharacter()
+        {
+            int randomNumber = random.RandomNumber(1, 10);
+
+            if (randomNumber == 1)
+            {
+                return new Berserker(RandomString(10));
+            }
+            else if (randomNumber == 2)
+            {
+                return new Ghoul(RandomString(10));
+            }
+            else if (randomNumber == 3)
+            {
+                return new Guardian(RandomString(10));
+            }
+            else if (randomNumber == 4)
+            {
+                return new Kamikaze(RandomString(10));
+            }
+            else if (randomNumber == 5)
+            {
+                return new Lich(RandomString(10));
+            }
+            else if (randomNumber == 6)
+            {
+                return new Priest(RandomString(10));
+            }
+            else if (randomNumber == 7)
+            {
+                return new Robot(RandomString(10));
+            }
+            else if (randomNumber == 8)
+            {
+                return new Vampire(RandomString(10));
+            }
+            else if (randomNumber == 9)
+            {
+                return new Warrior(RandomString(10));
+            }
+            else 
+            {
+                return new Zombie(RandomString(10));
+            }
+
+        }
+
+        public static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
     }

@@ -246,7 +246,7 @@ namespace devoir_maison
 
         public void ShowLife()
         {
-            Console.BackgroundColor = ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("<3<3<3 -- {0} has {1}/{2} lifepoints -- <3<3<3", GetName(), GetCurrentLife(), GetMaximumLife());
             Console.ResetColor();
         }
