@@ -714,11 +714,6 @@ namespace devoir_maison
                 }
             }
 
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("WHERE IS THE BUG 1, count of oppentsListAlive = {0}", opponentsListAlive.Count()) ;
-            Console.ResetColor();
-
-
             //PRIEST RULE
             if (attacker.GetCharacterType() == "Priest" && opponentsListAlive.Count()!=0)
             {
@@ -738,16 +733,10 @@ namespace devoir_maison
 
                 if (opponentsUndeadList.Count() > 1)
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("WHERE IS THE BUG 1");
-                    Console.ResetColor();
                     return PickRandomFighter(attacker, opponentsUndeadList);
                 }
                 else
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("WHERE IS THE BUG 2");
-                    Console.ResetColor();
                     return PickRandomFighter(attacker, opponentsListAlive);
                 }
 
@@ -756,16 +745,10 @@ namespace devoir_maison
             {
                 if (opponentsListAlive.Count != 0)
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("WHERE IS THE BUG 3");
-                    Console.ResetColor();
                     return PickRandomFighter(attacker, opponentsListAlive);
                 }
                 else
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("WHERE IS THE BUG 4");
-                    Console.ResetColor();
                     return null;
                 }
             }
