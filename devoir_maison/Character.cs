@@ -32,16 +32,22 @@ namespace devoir_maison
 
         protected string name;
 
+        //Living Characters are sensitive to pain, non-living character are not sensitive to pain
         protected bool isLiving;
 
+        //Amount of pain for the caracter
         protected int pain;
 
+        //Blessed characters received two times more damage from characters with cursed damage
         protected bool isBlessed;
 
+        //Cursed characters received two times more damage from characters with blessed damage
         protected bool isCursed;
 
+        //Some characters can give blessed damage
         protected bool blessedDamage;
 
+        //Some characters can give cursed damage
         protected bool cursedDamage;
 
         protected Randomizer random = new Randomizer();
@@ -218,15 +224,19 @@ namespace devoir_maison
             this.cursedDamage = cursedDamage;
         }
 
-        
+        //
         public int Roll()
         {
+            //Random is calculated from a seed based on the system clock
+            //Pause code execution allows the program to fetch a new seed
+            //This avoid two consecutive random number calculated to be identic 
             Thread.Sleep(1);
             Random random = new Random();
             int randomNumber = random.Next(0, 100);
             return randomNumber;
         }
 
+        //Calculates a chance on two to be a success (or a fail)
         public bool LuckyRoll()
         {
             Random random = new Random();
@@ -244,6 +254,7 @@ namespace devoir_maison
             }
         }
 
+        //Life displ;ays in console
         public void ShowLife()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -251,6 +262,7 @@ namespace devoir_maison
             Console.ResetColor();
         }
 
+        //Check if the Character is alive
         public bool IsAlive()
         {
             if (GetCurrentLife() < 0)
@@ -264,6 +276,7 @@ namespace devoir_maison
             }
         }
 
+        //Check if the Character has attacks
         public bool HasAttacks()
         {
             if (GetCurrentAttackNumber() > 0)
@@ -278,12 +291,14 @@ namespace devoir_maison
             }
         }
 
+        //Changes Character current life from a modifier (life amount)
         public void LifeModifier(int lifeModifier)
         {
             int newLifeValue = GetCurrentLife() + lifeModifier;
             SetCurrentLife(newLifeValue);
         }
 
+        //Check the Character type in order to apply specific rules
         public void CheckCharacterType()
         {
             //ROBOT RULES
@@ -304,6 +319,7 @@ namespace devoir_maison
             }
         }
 
+        //Method used to calculate the result for different type of rolls
         public int RollOf(string typeOfRoll, int rollValue)
         {
                 int rollResult;
@@ -341,18 +357,21 @@ namespace devoir_maison
                 return rollResult;
         }
 
+        //Attack action
         public int Fight_attack()
         {
             int attackRollValue = (this as IRoll).RollOf("attack", Roll());
             return attackRollValue;
         }
 
+        //Defense action
         public int Fight_defense()
         {
             int defenseRollValue = (this as IRoll).RollOf("defense", Roll());
             return defenseRollValue;
         }
 
+        //Initiative action
         public int Fight_initiative()
         {
             int initiativeRollValue = (this as IRoll).RollOf("initiative", Roll());
