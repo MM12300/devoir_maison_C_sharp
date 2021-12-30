@@ -17,6 +17,11 @@ namespace devoir_maison
             Console.WriteLine("------------------------------------------------------------------------------------------------");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Welcome to Battle-Royale Versus Fighting Limited 2021");
+            Console.WriteLine(" _____     _   _   _        _____             _     ");
+            Console.WriteLine("| __  |___| |_| |_| |___   | __  |___ _ _ ___| |___ ");
+            Console.WriteLine("| __ -| .'|  _|  _| | -_|  |    -| . | | | .'| | -_|");
+            Console.WriteLine("|_____|__,|_| |_| |_|___|  |__|__|___|_  |__,|_|___|");
+            Console.WriteLine("                                     |___|          ");
             Console.WriteLine("Between 2 and 8 fighters can compete into the Battle-Royale Arena");
             Console.ResetColor();
             Console.WriteLine("------------------------------------------------------------------------------------------------");
@@ -686,7 +691,7 @@ namespace devoir_maison
             {
                 Console.WriteLine("------------------------------------------------------------------------------------------------");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("only one fighter is left : {0} is the winner", aliveFighters[0].GetName());
+                Console.WriteLine("/!/ /!/ /!/ -- Only one fighter is still alive ====> {0} is the winner", aliveFighters[0].GetName());
                 Console.ResetColor();
                 Console.WriteLine("------------------------------------------------------------------------------------------------");
                 return false;
