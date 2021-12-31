@@ -720,7 +720,7 @@ namespace devoir_maison
             {
                 Console.WriteLine("------------------------------------------------------------------------------------------------");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("/!/ /!/ /!/ -- Only one fighter is still alive ====> {0} the {1} is the winner", aliveFighters[0].GetName(), aliveFighters[0].GetCharacterType());
+                Console.WriteLine("/!/ /!/ /!/ -- Only one fighter is still alive ====> {0} is the winner", aliveFighters[0].GetName());
                 Console.ResetColor();
                 Console.WriteLine("------------------------------------------------------------------------------------------------");
                 return false;
