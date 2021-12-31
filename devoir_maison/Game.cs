@@ -16,12 +16,14 @@ namespace devoir_maison
         {
             Console.WriteLine("------------------------------------------------------------------------------------------------");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Welcome to Battle-Royale Versus Fighting Limited 2021");
+            Console.WriteLine("Welcome to Battle-Royale Versus Fighting Limited 2021 ©");
+            Console.WriteLine("/////////////////////////////////////////////////////////////");
             Console.WriteLine(" _____     _   _   _        _____             _     ");
             Console.WriteLine("| __  |___| |_| |_| |___   | __  |___ _ _ ___| |___ ");
             Console.WriteLine("| __ -| .'|  _|  _| | -_|  |    -| . | | | .'| | -_|");
             Console.WriteLine("|_____|__,|_| |_| |_|___|  |__|__|___|_  |__,|_|___|");
             Console.WriteLine("                                     |___|          ");
+            Console.WriteLine("/////////////////////////////////////////////////////////////");
             Console.WriteLine("Between 2 and 8 fighters can compete into the Battle-Royale Arena");
             Console.ResetColor();
             Console.WriteLine("------------------------------------------------------------------------------------------------");
@@ -38,7 +40,7 @@ namespace devoir_maison
             Console.WriteLine("1 - (DUAL-MODE) - Choose (name and type) 2 fighters and confront them !");
             Console.WriteLine("2 - (BATTLE-ROYALE) - Choose (name and type) 2 to 8 fighters and let them fight in the Arena !");
             Console.WriteLine("3 - SCENARIO - (DUAL MODE) - Select 2 fighters randomly and confront them !");
-            Console.WriteLine("4 - SCENARIO - (BATTLE-ROYALE) - Let all 10 types of fighters foght into a deadly battle-royale !");
+            Console.WriteLine("4 - SCENARIO - (BATTLE-ROYALE) - Let all 10 types of fighters fight into a deadly battle-royale !");
             Console.WriteLine("(Type '1', '2', '3' or '4')");
             Console.WriteLine("------------------------------------------------------------------------------------------------");
             string input = Console.ReadLine();
@@ -88,7 +90,7 @@ namespace devoir_maison
         //User input to choose a name for a fighter
         public string createFighterName()
         {
-            Console.WriteLine("- What is your fighter name ? (max 12 characters)");
+            Console.WriteLine("- Name your figher ? (max 12 characters)");
             string name = Console.ReadLine();
             if (name.Length < 12)
             {
@@ -104,7 +106,7 @@ namespace devoir_maison
         //User input to choose a type for a fighter
         public string createFighterType()
         {
-            Console.WriteLine("- What is your fighter type ?");
+            Console.WriteLine("- Choose the fighter type ?");
             Console.WriteLine("You can choose between : Berserker, Ghoul, Guardian, Kamikaze, Lich, Priest, Robot, Vampire, Warrior and Zombie");
             Console.WriteLine("(Write the fighter type completely (case sensitive)");
             string type = Console.ReadLine();
@@ -185,16 +187,17 @@ namespace devoir_maison
             {
                 for (int i = 1; i < 3; i++)
                 {
-                    Console.WriteLine("Create your fighter number {0}", i);
+                    Console.WriteLine("---- / Create your fighter number {0} / ----", i);
                     Character fighter = createFighter();
                     fightersList.Add(fighter);
                 }
             }
             else if (mode == "Battle-Royale")
             {
-                for (int i = 0; i < fightersNumberChoice() - 1; i++)
+                int fighterNumber = fightersNumberChoice();
+                for (int i = 1; i < fighterNumber + 1; i++)
                 {
-                    Console.WriteLine("Create your fighter number {0}", i);
+                    Console.WriteLine("---- / Create your fighter number {0} / ----", i);
                     Character fighter = createFighter();
                     fightersList.Add(fighter);
                 }
@@ -240,15 +243,24 @@ namespace devoir_maison
         {
             Console.WriteLine("How many fighters in your Battle-Royale ? (2 to 8)");
             string input = Console.ReadLine();
-            if ((int.Parse(input) >= 3 && int.Parse(input) <= 8) && int.TryParse(input, out int n))
+            if (input.All(char.IsDigit))
             {
-                Console.WriteLine("You choose to have {0} fighters for your Battle-Royale");
-                return int.Parse(input);
+
+                if ((int.Parse(input) >= 3 && int.Parse(input) <= 8))
+                {
+                    Console.WriteLine("You choose to have {0} fighters for your Battle-Royale", input);
+                    return int.Parse(input);
+                }
+                else
+                {
+                    return fightersNumberChoice();
+                }
             }
             else
             {
                 return fightersNumberChoice();
             }
+
         }
 
         //ATTACKS
@@ -691,7 +703,7 @@ namespace devoir_maison
             {
                 Console.WriteLine("------------------------------------------------------------------------------------------------");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("/!/ /!/ /!/ -- Only one fighter is still alive ====> {0} is the winner", aliveFighters[0].GetName());
+                Console.WriteLine("/!/ /!/ /!/ -- Only one fighter is still alive ====> {0} the {1} is the winner", aliveFighters[0].GetName(), aliveFighters[0].GetCharacterType());
                 Console.ResetColor();
                 Console.WriteLine("------------------------------------------------------------------------------------------------");
                 return false;
