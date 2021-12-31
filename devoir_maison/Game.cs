@@ -209,7 +209,7 @@ namespace devoir_maison
                 Character fighter_two = randomCharacter();
                 fightersList.Add(fighter_one);
                 fightersList.Add(fighter_two);
-                Console.WriteLine("{0} the {1} will fight against {2} the {3}", fighter_one.GetName(), fighter_one.GetCharacterType(), fighter_two.GetName(), fighter_two.GetCharacterType());
+                Console.WriteLine("{0} will fight against {1}", fighter_one.GetName(), fighter_two.GetName());
             }
             else if (mode == "Battle-Royale Test Scenario")
             {
@@ -854,48 +854,51 @@ namespace devoir_maison
         public Character randomCharacter()
         {
             int randomNumber = random.RandomNumber(1, 10);
+            Character newCharacter = new Character();
 
             if (randomNumber == 1)
             {
-                return new Berserker(RandomString(10));
+                newCharacter = new Berserker(RandomString(10));
             }
             else if (randomNumber == 2)
             {
-                return new Ghoul(RandomString(10));
+                newCharacter = new Ghoul(RandomString(10));
             }
             else if (randomNumber == 3)
             {
-                return new Guardian(RandomString(10));
+                newCharacter = new Guardian(RandomString(10));
             }
             else if (randomNumber == 4)
             {
-                return new Kamikaze(RandomString(10));
+                newCharacter = new Kamikaze (RandomString(10));
             }
             else if (randomNumber == 5)
             {
-                return new Lich(RandomString(10));
+                newCharacter = new Lich(RandomString(10));
             }
             else if (randomNumber == 6)
             {
-                return new Priest(RandomString(10));
+                newCharacter = new Priest(RandomString(10));
             }
             else if (randomNumber == 7)
             {
-                return new Robot(RandomString(10));
+                newCharacter = new Robot(RandomString(10));
             }
             else if (randomNumber == 8)
             {
-                return new Vampire(RandomString(10));
+                newCharacter = new Vampire(RandomString(10));
             }
             else if (randomNumber == 9)
             {
-                return new Warrior(RandomString(10));
+                newCharacter = new Warrior(RandomString(10));
             }
             else
             {
-                return new Zombie(RandomString(10));
+                newCharacter = new Zombie(RandomString(10));
             }
 
+            newCharacter.SetName(newCharacter.GetName() + " the " + newCharacter.GetCharacterType());
+            return newCharacter;
         }
 
         //Create a random name for a Character
