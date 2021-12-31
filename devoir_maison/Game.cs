@@ -670,6 +670,7 @@ namespace devoir_maison
         public void BattleRoyaleOrDualFight(List<Character> fightersList)
         {
             int roundNumber = 1;
+
             while (AreFightersStillAlive(fightersList))
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -677,7 +678,23 @@ namespace devoir_maison
                 Console.ResetColor();
                 Console.ReadLine();
                 BattleRoyaleRound(fightersList);
-                roundNumber++;
+                roundNumber++; 
+
+                //ROUND LIMIT
+                if (roundNumber > 25)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red; 
+                    Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    Console.WriteLine("Maximum number of rounds has been reached");
+                    Console.WriteLine("Consequently all the fighters are winning !");
+                    Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    foreach (Character fighter in fightersList)
+                    {
+                        Console.WriteLine("{0} is a winner", fighter.GetName());
+                    }
+                    Console.ResetColor();
+                    break;
+                }
             }
         }
 
