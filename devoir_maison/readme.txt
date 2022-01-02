@@ -3,7 +3,9 @@ INET400 - Devoir maison : initiation au C#
 
 Le projet est disponible au téléchargement à l'adresse suivante : https://github.com/MM12300/devoir_maison_C_sharp
 
-Pour exécuter le projet, il faut lancer le programme (ctrl + F5 avec Visual Studio) et choisir une option du menu.
+Pour exécuter le projet :
+- lancer l'executable devoir_maison.application, installer le programme et à partir du même fichier lancer le jeu, puis suivre les options proposées.
+- il faut lancer le programme à partir d'un éditeur de code (ctrl + F5 avec Visual Studio) et choisir une option du menu.
 Pour connaître les détails du menu en question, voir ci-dessous.
 
 ------------------------------------------------------------------------------------------------------------------
